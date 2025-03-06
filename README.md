@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# procyon - SNUCSEアーカイブプロジェクト
 
-## Getting Started
+## 概要
+Procyonは、SNUCSEコミュニティのための学術資料を保存・提供するアーカイブプロジェクトです。  
+Next.jsを用いて構築され、以下の3つの主要機能を備えています。
 
-First, run the development server:
+### 1. **書籍アーカイブ**
+- 教科書や一般書籍のPDFファイルを提供。
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### 2. **試験アーカイブ**
+- 過去の試験問題を保存し、共有。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 3. **資料アーカイブ**
+- 講義ノートやその他の授業関連資料を収集。
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 認証
+- Googleアカウントによるログインが可能。
+- `@snu.ac.kr` ドメインのメールアドレスを持つユーザーのみ登録可能。
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 使用技術
+- **フレームワーク:** Next.js (App Router)
+- **認証:** Google OAuth (`@snu.ac.kr` ドメイン限定)
+- **ストレージ:** JSONベースのメタデータでアーカイブ管理
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+# procyon - SNUCSE Archive Project
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Overview
+Procyon is an archive project designed to store and provide various academic resources for the SNUCSE community.  
+This project is built using Next.js and consists of three main functionalities:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### 1. **Book Archive**
+- Provides PDF files of textbooks and general books related to the curriculum.
 
-## Deploy on Vercel
+### 2. **Exam Archive**
+- Stores and shares past exam papers for various courses.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 3. **Material Archive**
+- Contains lecture notes and other course-related materials.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Authentication
+- Users can log in via Google accounts.
+- Only users with `@snu.ac.kr` email addresses are allowed to register.
+
+## Technologies Used
+- **Framework:** Next.js (App Router)
+- **Authentication:** Google OAuth (Restricted to `@snu.ac.kr` domain)
+- **Storage:** JSON-based metadata for organizing archived files
