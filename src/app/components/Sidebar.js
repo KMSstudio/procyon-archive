@@ -27,7 +27,7 @@ export default function Sidebar({ isAdmin, links }) {
   }, []);
 
   const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text).then(() => alert(`복사: ${text}`)).catch(() => alert("복사 실패"));
+    navigator.clipboard.writeText(text).then(() => alert(`Copy Link!`)).catch(() => alert("복사 실패"));
   };
 
   return (
@@ -86,6 +86,7 @@ export default function Sidebar({ isAdmin, links }) {
           ))}
         </div>
       </div>
+
     </aside>
   );
 }

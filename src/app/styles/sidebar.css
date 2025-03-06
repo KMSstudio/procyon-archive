@@ -175,7 +175,14 @@
 .link-info a {
     color: white;
     white-space: nowrap;
+    text-decoration: none;
     margin: 0 5px;
+    
+    transition: all 0.3s ease;
+}
+
+.link-info a:hover {
+    color: rgb(247, 143, 30);
 }
 
 .link-icon {
