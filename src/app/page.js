@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import NavBar from "./components/NavBar";
 import Sidebar from "./components/Sidebar";
-import ButtonList from "./components/ButtonList";
 import "./styles/index.css";
 
 export default function HomePage() {
@@ -30,11 +29,19 @@ export default function HomePage() {
       <div className="content-container">
         <Sidebar isAdmin={isAdmin} links={links} />
         <main className="main-content">
+          {/* Main Title */}
           <div className="main-content-title">
-            <h1>SNUCSE DB</h1>
-            <p>Seoul National University - Computer Science and Engineering Database</p>
+            <h1>Procyon</h1>
+            <p>Seoul National University - Computer Science and Engineering Archive</p>
           </div>
-          <ButtonList buttons={buttons} />
+          {/* Button List */}
+          <div className="buttons">
+            {buttons.map((button, index) => (
+              <form key={index} action={button.href} method="get">
+                <button type="submit">{button.name}</button>
+              </form>
+            ))}
+          </div>
           <div className="special-thanks">
             <a href="/">Special Thanks</a>
           </div>
