@@ -1,21 +1,27 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import "../styles/navbar.css";
 
 export default function NavBar({ navs }) {
   const { data: session } = useSession();
+  const pathname = usePathname();
 
   return (
     <header id="navbar">
       <h1>CSE Archive</h1>
       <nav className="nav">
         <Link href="/">Home</Link>
-        {/* Login Link */}
+        {/* User Login */}
         {session ? (
-          <Link href="/user/logout">Logout</Link>
+          <Link href={pathname} onClick={(e) => { e.preventDefault(); signOut({ callbackUrl: pathname }); }}>
+            Logout
+          </Link>
         ) : (
-          <Link href="/user/login">Login</Link>
+          <Link href={pathname} onClick={(e) => { e.preventDefault(); signIn("google", { callbackUrl: pathname }); }}>
+            Login
+          </Link>
         )}
         {/* Navigation */}
         {navs &&
