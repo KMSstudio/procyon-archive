@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
+import AuthProvider from "./components/SessionProvider";
 import "./styles/navbar.css";
-import "./styles/index.css"
+import "./styles/index.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +16,9 @@ export default function RootLayout({ children }) {
       <head>
         <meta name="google" content="notranslate" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   );
 }

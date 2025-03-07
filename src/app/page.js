@@ -9,7 +9,6 @@ export default function HomePage() {
   const [links, setLinks] = useState([]);
   const [buttons, setButtons] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [user, setUser] = useState(null);
 
   useEffect(() => {
     fetch("/api/nav")
@@ -19,22 +18,20 @@ export default function HomePage() {
         setLinks(data.links);
         setButtons(data.buttons);
         setIsAdmin(data.is_admin);
-        setUser(data.user);
-      });
+      })
+      .catch((err) => console.error("Failed to fetch navs:", err));
   }, []);
 
   return (
     <div className="main-container">
-      <NavBar user={user} navs={navs} />
+      <NavBar navs={navs} />
       <div className="content-container">
         <Sidebar isAdmin={isAdmin} links={links} />
         <main className="main-content">
-          {/* Main Title */}
           <div className="main-content-title">
             <h1>Procyon</h1>
             <p>Seoul National University - Computer Science and Engineering Archive</p>
           </div>
-          {/* Button List */}
           <div className="buttons">
             {buttons.map((button, index) => (
               <form key={index} action={button.href} method="get">
