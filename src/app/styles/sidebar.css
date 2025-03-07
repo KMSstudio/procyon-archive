@@ -189,3 +189,29 @@
     width: 24px;
     height: 24px;
 }
+
+/* Special Thanks */
+
+.special-thanks {
+    margin-top: auto;
+    margin-bottom: 30px;
+    font-size: 18px;
+    height: 25px;
+}
+
+.special-thanks a {
+    background-color: #ddd;
+    color: transparent;
+    background-clip: text;
+
+    text-decoration: none;
+    font-size: 18px;
+    font-style: italic;
+
+    transition: all 0.3s ease;
+}
+
+.special-thanks a:hover {
+    background-color: rgb(247, 143, 30);
+    background-clip: text;
+}

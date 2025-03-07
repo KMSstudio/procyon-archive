@@ -5,7 +5,7 @@ import "../styles/navbar.css"; // 네비게이션 스타일 가져오기
 export default function NavBar({ user, navs }) {
   return (
     <header id="navbar">
-      <h1>CSE rules the world</h1>
+      <h1>CSE Archive</h1>
       <nav className="nav">
         <Link href="/">Home</Link>
         {user ? <Link href="/logout">Logout</Link> : <Link href="/login/google">Login</Link>}

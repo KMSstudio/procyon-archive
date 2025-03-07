@@ -86,7 +86,10 @@ export default function Sidebar({ isAdmin, links }) {
           ))}
         </div>
       </div>
-
+      
+      <div className="special-thanks">
+        <a href="/">Special Thanks</a>
+      </div>
     </aside>
   );
 }

@@ -83,26 +83,3 @@ html, body, .main-container {
     background-color: white;
     color: black;
 }
-
-.special-thanks {
-    margin-top: 50px;
-    font-size: 18px;
-    height: 25px;
-}
-
-.special-thanks a {
-    background-color: #fff;
-    color: transparent;
-    background-clip: text;
-
-    text-decoration: none;
-    font-size: 18px;
-    font-style: italic;
-
-    transition: all 0.3s ease;
-}
-
-.special-thanks a:hover {
-    background-color: rgb(247, 143, 30);
-    background-clip: text;
-}

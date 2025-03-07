@@ -42,9 +42,6 @@ export default function HomePage() {
               </form>
             ))}
           </div>
-          <div className="special-thanks">
-            <a href="/">Special Thanks</a>
-          </div>
         </main>
       </div>
     </div>
