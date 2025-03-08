@@ -1,37 +1,23 @@
-"use client";
-import { useState, useEffect } from "react";
-
-import NavBar from "./components/NavBar";
-import Sidebar from "@/app/components/Sidebar";
-
+// Styles (CSS)
 import "./styles/index.css";
 
-import { getCachedData } from "@/utils/cache";
+// Components
+import NavBar from "./components/NavBar";
+import Sidebar from "@/app/components/Sidebar";
+// Next-auth
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+// Constants
+import navData from "@/config/navConstant.json";
+import { getUserInfo } from "@/utils/auth";
 
-export default function HomePage() {
-  const [navs, setNavs] = useState([]);
-  const [links, setLinks] = useState([]);
-  const [buttons, setButtons] = useState([]);
-  const [isAdmin, setIsAdmin] = useState(false);
+export default async function HomePage() {
+  // Load Static data
+  const session = await getServerSession(authOptions);
+  const userData = getUserInfo(session);
 
-  useEffect(() => {
-    // Navigation Bar Data
-    getCachedData("navLists", "/api/const/nav").then((data) => {
-      if (data) {
-        setNavs(data.navs || []);
-        setLinks(data.links || []);
-        setButtons(data.buttons || []);
-      }
-    });
-
-    // Get User Info
-    fetch("/api/user/info")
-      .then((res) => res.json())
-      .then((data) => {
-        setIsAdmin(data.is_user_admin);
-      })
-      .catch((err) => console.error("Failed to fetch user info:", err));
-  }, []);
+  const { navs = [], links = [], buttons = [] } = navData;
+  const { is_user_admin: isAdmin } = userData;
 
   return (
     <div className="main-container">

@@ -18,7 +18,7 @@ export default function FileList({ files, extLists }) {
             <a href={file.downloadLink} download={!file.isFolder}>
               {file.name}
             </a>
-            <img src="/image/ico/download.png" alt="Zip" class="download-zip-each-btn"></img>
+            <img src="/image/ico/download.png" alt="Zip" className="download-zip-each-btn"></img>
           </div>
         ))
       ) : (

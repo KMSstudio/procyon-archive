@@ -1,51 +1,36 @@
-"use client";
-import { useEffect, useState } from "react";
-
 import NavBar from "@/app/components/NavBar";
-import ReferenceFileList from "../../components/FileList";
+import ReferenceFileList from "@/app/components/FileList";
+// Constants
+import extListsData from "@/config/extLists.json";
+import navData from "@/config/navConstant.json";
 
-import { usePathname } from "next/navigation";
-import { getCachedData } from "@/utils/cache";
+export default async function ReferencePage({ params }) {
+  const path = params.path ? `/${params.path.join("/")}` : "";
+  const fetchUrl = `${process.env.BASE_URL}/api/drive/show${path}`;
+  
+  let files = [];
 
-export default function ReferencePage() {
-  // Nav
-  const [navs, setNavs] = useState([]);
-  const [links, setLinks] = useState([]);
-  const [buttons, setButtons] = useState([]);
-  // File List
-  const [files, setFiles] = useState([]);
-  // Extension List
-  const [extLists, setExtLists] = useState({});
-  const pathname = usePathname(); // Get current path
+  try {
+    const response = await fetch(fetchUrl, { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error("Failed to fetch files");
+    }
+    files = await response.json();
+  } catch (error) {
+    console.error("Error fetching files:", error);
+  }
 
-  useEffect(() => {
-    if (!pathname) return;
-
-    fetch(`/api/drive/show/${pathname.replace("/drive", "")}`)
-      .then((res) => res.json())
-      .then((data) => setFiles(data))
-      .catch((error) => console.error("Error fetching files:", error));
-
-    // File Extension Icon Data
-    getCachedData("extLists", "/api/const/ext").then(setExtLists);
-
-    // Navigation Bar Data
-    getCachedData("navLists", "/api/const/nav").then((data) => {
-      if (data) {
-        setNavs(data.navs || []);
-        setLinks(data.links || []);
-        setButtons(data.buttons || []);
-      }
-    });
-  }, [pathname]);
+  // Navigation Data
+  const { navs = [], links = [], buttons = [] } = navData;
+  const extLists = extListsData;
 
   return (
     <div className="main-container">
       <NavBar navs={navs} />
       <div className="container">
         <header>
-            <h1>Contents of Reference</h1>
-            <div className="button-group"></div>
+          <h1>Contents of Reference</h1>
+          <div className="button-group"></div>
         </header>
 
         <ReferenceFileList files={files} extLists={extLists} />
