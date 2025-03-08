@@ -9,7 +9,7 @@ const auth = new google.auth.GoogleAuth({
 const drive = google.drive({ version: "v3", auth });
 
 // Root folder ID in Google Drive (procyon/data/reference)
-const ROOT_FOLDER_ID = "1_FuuLHZmAl60LxJdQGin8t3595OCsxu-";
+const ROOT_FOLDER_ID = "1E3sAvlsK40bmRDsKnIWBmzrs-0HUGEu4";
 
 /**
  * Retrieves the folder ID for a given path in Google Drive.
@@ -67,7 +67,7 @@ export async function GET(req, { params }) {
     const files = response.data.files.map((file) => {
       const isFolder = file.mimeType === "application/vnd.google-apps.folder";
       const ext = isFolder ? "&folder" : (file.name.includes(".") ? file.name.split(".").pop() : "");
-      const downloadLink = isFolder ? `/reference/${folderPath}/${file.name}` : `/api/drive/export/${file.id}`;
+      const downloadLink = isFolder ? `/drive/${folderPath}/${file.name}` : `/api/drive/export/${file.id}`;
 
       return {
         id: file.id,

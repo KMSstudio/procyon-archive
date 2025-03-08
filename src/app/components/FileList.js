@@ -15,7 +15,7 @@ export default function FileList({ files, extLists }) {
         updatedFiles.map((file) => (
           <div key={file.id} className="file-item" data-file-name={file.name} data-file-ext={file.ext}>
             <img src={file.img} alt="File Icon" className="file-icon" />
-            <a href={file.ext === "&folder" ? "/" : file.downloadLink} download={file.ext !== "&folder"}>
+            <a href={file.downloadLink} download={file.ext !== "&folder"}>
               {file.name}
             </a>
             <img src="/image/ico/download.png" alt="Zip" class="download-zip-each-btn"></img>

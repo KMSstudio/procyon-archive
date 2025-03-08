@@ -21,7 +21,7 @@ export default function ReferencePage() {
   useEffect(() => {
     if (!pathname) return;
 
-    fetch(`/api/drive/reference${pathname.replace("/reference", "")}`)
+    fetch(`/api/drive/show/${pathname.replace("/drive", "")}`)
       .then((res) => res.json())
       .then((data) => setFiles(data))
       .catch((error) => console.error("Error fetching files:", error));
