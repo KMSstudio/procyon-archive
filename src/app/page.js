@@ -1,8 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
+
 import NavBar from "./components/NavBar";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "@/app/components/Sidebar";
+
 import "./styles/index.css";
+
+import { getCachedData } from "@/utils/cache";
 
 export default function HomePage() {
   const [navs, setNavs] = useState([]);
@@ -12,14 +16,13 @@ export default function HomePage() {
 
   useEffect(() => {
     // Navigation Bar Data
-    fetch("/api/const/nav")
-      .then((res) => res.json())
-      .then((data) => {
-        setNavs(data.navs);
-        setLinks(data.links);
-        setButtons(data.buttons);
-      })
-      .catch((err) => console.error("Failed to fetch navs:", err));
+    getCachedData("navLists", "/api/const/nav").then((data) => {
+      if (data) {
+        setNavs(data.navs || []);
+        setLinks(data.links || []);
+        setButtons(data.buttons || []);
+      }
+    });
 
     // Get User Info
     fetch("/api/user/info")

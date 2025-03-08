@@ -78,7 +78,6 @@ export async function GET(req, { params }) {
       };
     });
 
-    console.log(files);
     return NextResponse.json(files, { status: 200 });
   } catch (error) {
     console.error(`Error in GET request: ${error.message}`);

@@ -18,6 +18,7 @@ export default function FileList({ files, extLists }) {
             <a href={file.ext === "&folder" ? "/" : file.downloadLink} download={file.ext !== "&folder"}>
               {file.name}
             </a>
+            <img src="/image/ico/download.png" alt="Zip" class="download-zip-each-btn"></img>
           </div>
         ))
       ) : (
