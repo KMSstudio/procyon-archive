@@ -64,7 +64,7 @@ export async function GET(req, { params }) {
       fields: "files(id, name, mimeType, webViewLink, webContentLink, exportLinks)",
     });
 
-    const files = response.data.files.map((file) => {
+    let files = response.data.files.map((file) => {
       const isFolder = file.mimeType === "application/vnd.google-apps.folder";
       const ext = isFolder ? "&folder" : (file.name.includes(".") ? file.name.split(".").pop() : "");
       const downloadLink = isFolder ? `/drive/${folderPath}/${file.name}` : `/api/drive/export/${file.id}`;
@@ -75,7 +75,15 @@ export async function GET(req, { params }) {
         mimeType: file.mimeType,
         ext: ext,
         downloadLink: downloadLink,
+        isFolder: isFolder,
       };
+    });
+
+    // Sort
+    files.sort((a, b) => {
+      if (a.isFolder && !b.isFolder) return -1; // Folders first
+      if (!a.isFolder && b.isFolder) return 1;
+      return a.name.localeCompare(b.name, "en", { sensitivity: "base" }); // Alphabetical sorting
     });
 
     return NextResponse.json(files, { status: 200 });
