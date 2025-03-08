@@ -1,4 +1,4 @@
-import ReferenceFileList from "../../components/ReferenceFileList";
+import ReferenceFileList from "../../components/FileList";
 
 export default function ReferencePage() {
   return (
