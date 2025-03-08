@@ -16,7 +16,7 @@ export default function ReferencePage() {
       .then((data) => setFiles(data))
       .catch((error) => console.error("Error fetching files:", error));
 
-    fetch("/api/ext")
+    fetch("/api/const/ext")
       .then((res) => res.json())
       .then((data) => setExtLists(data))
       .catch((error) => console.error("Error fetching extension list:", error));

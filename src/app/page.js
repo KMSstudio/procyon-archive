@@ -12,7 +12,7 @@ export default function HomePage() {
 
   useEffect(() => {
     // Navigation Bar Data
-    fetch("/api/nav")
+    fetch("/api/const/nav")
       .then((res) => res.json())
       .then((data) => {
         setNavs(data.navs);
