@@ -1,45 +1,28 @@
 "use client";
-import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import "../styles/filelist.css";
 
-export default function ReferenceFileList() {
-  const [files, setFiles] = useState([]);
-  const pathname = usePathname(); // 현재 경로 가져오기
-
-  useEffect(() => {
-    const fetchFiles = async () => {
-      try {
-        const response = await fetch(`/api${pathname}`);
-        const data = await response.json();
-        if (response.ok) {
-          setFiles(data);
-        } else {
-          console.error("Error:", data.error);
-        }
-      } catch (error) {
-        console.error("파일 목록을 가져오는데 실패:", error);
-      }
-    };
-    fetchFiles();
-  }, [pathname]);
+export default function FileList({ files, extLists }) {
+  const updatedFiles = files.map((file) => ({
+    ...file,
+    img: file.ext === "&folder"
+      ? "/image/ico/folder.png"
+      : extLists[file.ext] || "/image/ico/file.png"
+  }));
 
   return (
-    <div>
-      <h2>Google Drive 파일 목록</h2>
-      <ul>
-        {files.map((file) => (
-          <li key={file.id}>
-            📂 {file.name} -{" "}
-            <a href={file.webViewLink} target="_blank" rel="noopener noreferrer">
-              보기
-            </a>{" "}
-            |{" "}
-            <a href={file.downloadLink} download>
-              다운로드
+    <div className="file-list">
+      {updatedFiles.length > 0 ? (
+        updatedFiles.map((file) => (
+          <div key={file.id} className="file-item" data-file-name={file.name} data-file-ext={file.ext}>
+            <img src={file.img} alt="File Icon" className="file-icon" />
+            <a href={file.ext === "&folder" ? "/" : file.downloadLink} download={file.ext !== "&folder"}>
+              {file.name}
             </a>
-          </li>
-        ))}
-      </ul>
+          </div>
+        ))
+      ) : (
+        <div className="empty-message">No files or folders found.</div>
+      )}
     </div>
   );
 }

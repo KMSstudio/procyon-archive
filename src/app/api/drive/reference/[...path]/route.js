@@ -22,12 +22,11 @@ async function getFolderId(folderPath) {
 
     const folders = folderPath.split("/");
     let parentId = ROOT_FOLDER_ID;
-    
 
     for (const folder of folders) {
       if (!folder) continue;
       const query = `'${parentId}' in parents AND name='${folder}' AND mimeType='application/vnd.google-apps.folder' AND trashed=false`;
-      
+
       try {
         const res = await drive.files.list({
           q: query,
@@ -66,15 +65,20 @@ export async function GET(req, { params }) {
     });
 
     const files = response.data.files.map((file) => {
+      const isFolder = file.mimeType === "application/vnd.google-apps.folder";
+      const ext = isFolder ? "&folder" : (file.name.includes(".") ? file.name.split(".").pop() : "");
+      const downloadLink = isFolder ? `/reference/${folderPath}/${file.name}` : `/api/drive/export/${file.id}`;
+
       return {
         id: file.id,
         name: file.name,
         mimeType: file.mimeType,
-        downloadLink: `/api/drive/export/${file.id}`,
+        ext: ext,
+        downloadLink: downloadLink,
       };
-    });    
-    
-    console.log(files)
+    });
+
+    console.log(files);
     return NextResponse.json(files, { status: 200 });
   } catch (error) {
     console.error(`Error in GET request: ${error.message}`);
