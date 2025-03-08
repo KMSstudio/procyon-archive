@@ -11,15 +11,23 @@ export default function HomePage() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    // Navigation Bar Data
     fetch("/api/nav")
       .then((res) => res.json())
       .then((data) => {
         setNavs(data.navs);
         setLinks(data.links);
         setButtons(data.buttons);
-        setIsAdmin(data.is_admin);
       })
       .catch((err) => console.error("Failed to fetch navs:", err));
+
+    // Get User Info
+    fetch("/api/user/info")
+      .then((res) => res.json())
+      .then((data) => {
+        setIsAdmin(data.is_user_admin);
+      })
+      .catch((err) => console.error("Failed to fetch user info:", err));
   }, []);
 
   return (
