@@ -10,7 +10,11 @@ export default function NavBar({ navs }) {
 
   return (
     <header id="navbar">
-      <h1>CSE Archive</h1>
+      {/* Logo Image */}
+      <Link href="/" className="navbar-logo-container">
+        <img src="/image/logo/full-white.png" alt="CSE Archive Logo" className="navbar-logo" />
+        <img src="/image/logo/highlight-white.png" alt="CSE Archive Logo" className="navbar-hover-logo" />
+      </Link>
       <nav className="nav">
         <Link href="/">Home</Link>
         {/* User Login */}
