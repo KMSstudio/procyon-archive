@@ -11,3 +11,9 @@ DB Structure
 도서id 태그id
 
 태그id 태그이름
+
+---
+
+Bugs
+
+홈페이지 > 다른 창 > 홈페이지 했을 시, Sidebar의 프로필 이미지 정렬이 틀어짐

@@ -43,7 +43,7 @@ export async function GET(req, { params }) {
     });
 
     // Encode filename for proper handling in HTTP headers
-    let { name, mimeType: fileMimeType } = fileMetadata.data;
+    let { name, mimeType: fileMimeType, size } = fileMetadata.data;
     const encodedFileName = encodeURIComponent(name)
       .replace(/%20/g, "+")
       .replace(/%22/g, ""); 
@@ -75,6 +75,8 @@ export async function GET(req, { params }) {
       headers: {
         "Content-Disposition": `attachment; filename*=UTF-8''${encodedFileName}`,
         "Content-Type": fileMimeType,
+        "Content-Length": size,
+        "Transfer-Encoding": "chunked",
       },
     });
   } catch (error) {

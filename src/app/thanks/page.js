@@ -18,7 +18,7 @@ export default function ThanksPage() {
     <div className="main-container">
       <NavBar navs={navs} />
 
-      <div className="content-container">
+      <div className="thanks-content-container">
         {/* Title Section */}
         <div className="title-section">
           <div className="title-background">

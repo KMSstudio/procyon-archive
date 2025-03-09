@@ -9,7 +9,7 @@ body { -ms-overflow-style: none; }
 
 /* Main Container */
 
-.content-container {
+.thanks-content-container {
   width: 80%;
   max-width: 800px;
   margin: 0 auto;
