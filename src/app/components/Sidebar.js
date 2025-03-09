@@ -1,4 +1,9 @@
 "use client";
+
+/*
+ * @/app/components/Sidebar.js
+*/
+
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 

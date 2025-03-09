@@ -1,6 +1,9 @@
+/*
+ * @/app/page.js
+*/
+
 // Styles (CSS)
 import "./styles/index.css";
-
 // Components
 import NavBar from "./components/NavBar";
 import Sidebar from "@/app/components/Sidebar";

@@ -1,10 +1,14 @@
+/*
+ * @/app/drive/[...path]/page.js
+*/
+
 // Components
 import NavBar from "@/app/components/NavBar";
 import ReferenceFileList from "@/app/components/FileList";
 // Constants
 import extListsData from "@/config/extLists.json";
 import navData from "@/config/navConstant.json";
-// CSS
+// Styles (CSS)
 import "@/app/styles/filelist.css";
 // Next Tags
 import Link from "next/link";

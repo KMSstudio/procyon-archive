@@ -1,4 +1,10 @@
+/*
+ * @/app/api/auth/[...nextauth]/route.js
+*/
+
+// Next Auth
 import NextAuth from "next-auth";
+// Google OAuth2
 import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions = {

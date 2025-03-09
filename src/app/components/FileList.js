@@ -1,4 +1,8 @@
-import "../styles/filelist.css";
+/*
+ * @/app/components/FileList.js
+*/
+
+import "@/app/styles/filelist.css";
 
 export default function FileList({ files, extLists }) {
   const updatedFiles = files.map((file) => ({
