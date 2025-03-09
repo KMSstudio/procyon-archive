@@ -1,5 +1,11 @@
-import { google } from "googleapis";
+/*
+ * @/app/api/drive/show/[...path]/route.js
+*/
+
+// Next Response
 import { NextResponse } from "next/server";
+// Google Drive API
+import { google } from "googleapis";
 
 // Service account authentication
 const auth = new google.auth.GoogleAuth({
