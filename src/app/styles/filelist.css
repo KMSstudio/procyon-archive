@@ -77,6 +77,12 @@ h1 {
     color: #fff;
 }
 
+.file-item .loading-icon {
+    height: 18px;
+    width: auto;
+    vertical-align: middle;
+}
+
 .file-item p {
     color: #ccc;
     text-decoration: none;
