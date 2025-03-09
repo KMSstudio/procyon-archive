@@ -1,0 +1,78 @@
+
+/*
+ * Remove Scroll Bar
+*/
+
+::-webkit-scrollbar { display: none; }
+html { scrollbar-width: none; }
+body { -ms-overflow-style: none; }
+
+/* Main Container */
+
+.content-container {
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+/*
+ * Title Section
+*/
+
+.title-section {
+  margin-top: 30px;
+  height: 35vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* background: url('/image/background/301.jpg') center/cover no-repeat; */
+}
+
+.title-background {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.title-logo {
+  position: absolute;
+  width: auto;
+  height: 50%;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.default-logo { opacity: 1; }
+.hover-logo { opacity: 0; }
+.title-background:hover .default-logo { opacity: 0; }
+.title-background:hover .hover-logo { opacity: 1; }
+
+/*
+ * Profile Section
+*/
+
+.profile-section {
+  width: 100%;
+}
+
+/*
+ * Server Information
+*/
+
+.server-info {
+  /* TopBottom LeftRIght */
+  margin: 30px 50px;
+  font-size: 14px;
+  color: #bbb;
+  text-align: center;
+}  

@@ -1,0 +1,46 @@
+
+/* Profile */
+
+.profile-item:first-of-type {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 30px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.profile-text {
+  text-align: left;
+}
+
+.profile-text h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.profile-text .email {
+  color: #ccc;
+  font-size: 14px;
+}
+
+.profile-text .description {
+  font-size: 16px;
+  color: #aaa;
+}
+
+.profile-text .description p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #aaa;
+}

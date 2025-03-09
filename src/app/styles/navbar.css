@@ -10,8 +10,9 @@
   -webkit-user-select:none;
   -moz-user-select:none;
   -ms-user-select:none;
-  user-select:none
+  user-select:none;
 }
+
 
 #navbar h1 {
   margin: 0 20px;
