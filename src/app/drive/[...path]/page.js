@@ -4,7 +4,7 @@
 
 // Components
 import NavBar from "@/app/components/NavBar";
-import ReferenceFileList from "@/app/components/FileList";
+import FileList from "@/app/components/FileList";
 // Constants
 import extListsData from "@/config/extLists.json";
 import navData from "@/config/navConstant.json";
@@ -46,7 +46,7 @@ export default async function ReferencePage({ params }) {
           <div className="button-group"></div>
         </header>
 
-        <ReferenceFileList files={files} extLists={extLists} />
+        <FileList files={files} extLists={extLists} />
 
         <div className="control-links">
           <Link className="back-link" href="/">

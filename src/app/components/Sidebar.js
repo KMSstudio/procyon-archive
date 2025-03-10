@@ -7,8 +7,8 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 
-import "../styles/index.css";
-import "../styles/sidebar.css";
+import "@/app/styles/index.css";
+import "@/app/styles/components/sidebar.css";
 
 export default function Sidebar({ isAdmin, links }) {
   const profileImageContainerRef = useRef(null);

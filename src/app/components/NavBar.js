@@ -7,7 +7,7 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import "../styles/navbar.css";
+import "@/app/styles/components/navbar.css";
 
 export default function NavBar({ navs }) {
   const { data: session } = useSession();
