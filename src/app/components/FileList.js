@@ -50,7 +50,7 @@ export default function FileList({ files, extLists }) {
           : (<a href={file.downloadLink} onClick={(e) => handleDownload(file, e)}
             style={{ pointerEvents: downloadingFiles[file.id] ? "none" : "auto", display: "flex", alignItems: "center" }}>
             {downloadingFiles[file.id]
-              ? (<img src="/image/loading.png" alt="Downloading..." className="loading-icon" />)
+              ? (<img src="/image/downloading.png" alt="Downloading..." className="loading-icon" />)
               : (file.name)}
           </a>)}
       </div>
