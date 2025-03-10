@@ -6,6 +6,8 @@
 import NextAuth from "next-auth";
 // Google OAuth2
 import GoogleProvider from "next-auth/providers/google";
+// AWS Dynamo DB
+import { updateUserAccess } from '@/utils/userDB';
 
 export const authOptions = {
   providers: [
@@ -17,7 +19,11 @@ export const authOptions = {
   callbacks: {
     async signIn({ account, profile }) {
       // permit just @snu.ac.kr email
-      if (profile?.email?.endsWith("@snu.ac.kr")) { return true; }
+      // if (profile?.email?.endsWith("@snu.ac.kr")) { 
+      if (true) { 
+        updateUserAccess(profile.email);
+        return true;
+      }
       return false;
     },
     async session({ session, token }) {

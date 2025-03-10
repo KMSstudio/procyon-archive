@@ -39,13 +39,13 @@ export default function Sidebar({ isAdmin, links }) {
     <aside className="sidebar">
       <div id="profile-section">
         {/* Profile Image */}
-        <div ref={profileImageContainerRef} className="profile-circle">
+        <div ref={profileImageContainerRef} className="mainpage-profile-circle">
           <Image
             src="/image/profile/snu-logo.png"
             alt="프로필 이미지"
             width={150}
             height={150}
-            className="profile-image"
+            className="mainpage-profile-image"
             unoptimized
           />
         </div>

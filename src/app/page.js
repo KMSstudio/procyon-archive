@@ -17,7 +17,7 @@ import { getUserInfo } from "@/utils/auth";
 export default async function HomePage() {
   // Load Static data
   const session = await getServerSession(authOptions);
-  const userData = getUserInfo(session);
+  const userData = await getUserInfo(session);
 
   const { navs = [], links = [], buttons = [] } = navData;
   const { is_user_admin: isAdmin } = userData;

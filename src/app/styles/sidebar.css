@@ -17,7 +17,7 @@
 }
 
 /* profile images*/
-.profile-circle {
+.mainpage-profile-circle {
     width: 150px;
     height: 150px;
     background-color: white;
@@ -31,7 +31,7 @@
     overflow: hidden;
 }
 
-.profile-image {
+.mainpage-profile-image {
     width: 100%;
     height: 100%;
     border-radius: 50%;
@@ -41,7 +41,7 @@
     transform-origin: center;
 }
 
-.profile-image:hover {
+.mainpage-profile-image:hover {
     transform: scale(1.1);
 }
 
