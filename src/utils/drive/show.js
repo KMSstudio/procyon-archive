@@ -1,0 +1,72 @@
+// @/utils/gdrive/show.js
+
+import { google } from "googleapis";
+import serviceAccount from "@/config/service-account.json";
+
+// サ一ビスアカウント認証
+const auth = new google.auth.GoogleAuth({
+  credentials: serviceAccount,
+  scopes: ["https://www.googleapis.com/auth/drive.readonly"],
+});
+
+const drive = google.drive({ version: "v3", auth });
+
+// ル一トフォルダID (Google Driveのル一トフォルダ)
+const ROOT_FOLDER_ID = process.env.GOOGLE_DRIVE_ROOTFOLDER_ID;
+
+/**
+ * 指定されたGoogle Driveフォルダのファイルリストを取得する関数
+ * @param {string} folderPath - 例: 'folder1/folder2'
+ * @returns {Promise<Array>} - ファイルリスト（オブジェクトの配列）
+ */
+export async function getDriveFiles(folderPath) {
+  try {
+    if (!folderPath || folderPath.trim() === "") return [];
+
+    const folders = folderPath.split("/").map(decodeURIComponent); // 한글 폴더명 디코딩
+    let parentId = ROOT_FOLDER_ID;
+
+    // 指定されたパスのフォルダIDを検索
+    for (const folder of folders) {
+      if (!folder) continue;
+      const query = `'${parentId}' in parents AND name='${folder}' AND mimeType='application/vnd.google-apps.folder' AND trashed=false`;
+
+      try {
+        const res = await drive.files.list({
+          q: query,
+          fields: "files(id, name)",
+        });
+
+        if (!res.data.files || res.data.files.length === 0) return [];
+        parentId = res.data.files[0].id;
+      } catch (apiError) {
+        console.error(`Google Drive API エラー: ${apiError.message}`);
+        return [];
+      }
+    }
+
+    // フォルダ內のファイルリストを取得
+    const response = await drive.files.list({
+      q: `'${parentId}' in parents and trashed=false`,
+      fields: "files(id, name, mimeType)",
+    });
+
+    return response.data.files.map((file) => ({
+      id: file.id,
+      name: file.name,
+      mimeType: file.mimeType,
+      isFolder: file.mimeType === "application/vnd.google-apps.folder",
+      ext: file.mimeType === "application/vnd.google-apps.folder" 
+        ? "&folder" 
+        : file.name.includes(".") 
+          ? file.name.split(".").pop() 
+          : "",
+      downloadLink: file.mimeType === "application/vnd.google-apps.folder"
+        ? `/drive/${folderPath}/${file.name}`
+        : `/api/drive/export/${file.id}`,
+    }));
+  } catch (error) {
+    console.error(`getDriveFiles エラ一: ${error.message}`);
+    return [];
+  }
+}

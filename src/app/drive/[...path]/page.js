@@ -5,6 +5,8 @@
 // Components
 import NavBar from "@/app/components/NavBar";
 import FileList from "@/app/components/FileList";
+// Utils (Google Drive)
+import { getDriveFiles } from "@/utils/drive/show";
 // Constants
 import extListsData from "@/config/extLists.json";
 import navData from "@/config/navConstant.json";
@@ -14,20 +16,8 @@ import "@/app/styles/filelist.css";
 import Link from "next/link";
 
 export default async function ReferencePage({ params }) {
-  const path = params.path ? `/${params.path.join("/")}` : "";
-  const fetchUrl = `${process.env.BASE_URL}/api/drive/show${path}`;
-
-  let files = [];
-
-  try {
-    const response = await fetch(fetchUrl, { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error("Failed to fetch files");
-    }
-    files = await response.json();
-  } catch (error) {
-    console.error("Error fetching files:", error);
-  }
+  const path = params.path ? params.path.join("/") : "";
+  const files = await getDriveFiles(path);
 
   const backPath = params.path && params.path.length > 1
     ? `/drive/${params.path.slice(0, -1).join("/")}`
