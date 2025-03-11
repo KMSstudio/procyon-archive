@@ -16,11 +16,13 @@ Next.jsを用いて構築され、以下の3つの主要機能を備えていま
 ## 認証
 - Googleアカウントによるログインが可能。
 - `@snu.ac.kr` ドメインのメールアドレスを持つユーザーのみ登録可能。
+- 認証には **Next-Auth** を使用し、セッション管理には **JWTトークン** を採用。
 
 ## 使用技術
 - **フレームワーク:** Next.js (App Router)
-- **認証:** Google OAuth (`@snu.ac.kr` ドメイン限定)
-- **ストレージ:** JSONベースのメタデータでアーカイブ管理
+- **認証:** Google OAuth (`@snu.ac.kr` ドメイン限定, Next-Auth, JWTセッション管理)
+- **データベース:** AWS DynamoDB（ユーザー情報・書籍情報管理）
+- **ストレージ:** Google Drive API（コンテンツファイルの保存・提供）
 
 ---
 
@@ -42,8 +44,10 @@ This project is built using Next.js and consists of three main functionalities:
 ## Authentication
 - Users can log in via Google accounts.
 - Only users with `@snu.ac.kr` email addresses are allowed to register.
+- Authentication is handled using **Next-Auth**, with **JWT tokens** for session management.
 
 ## Technologies Used
 - **Framework:** Next.js (App Router)
-- **Authentication:** Google OAuth (Restricted to `@snu.ac.kr` domain)
-- **Storage:** JSON-based metadata for organizing archived files
+- **Authentication:** Google OAuth (Restricted to `@snu.ac.kr` domain, Next-Auth, JWT-based sessions)
+- **Database:** AWS DynamoDB (For managing user and book information)
+- **Storage:** Google Drive API (For storing and providing content files)
