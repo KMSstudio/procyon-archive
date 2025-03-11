@@ -15,7 +15,7 @@ export const authOptions = {
   },
   callbacks: {
     async signIn({ account, profile }) {
-      if (profile?.email?.endsWith("@snu.ac.kr")) {
+      if (process.env.CURRENT_PHASE == "develop" || profile?.email?.endsWith("@snu.ac.kr")) {
         await updateUserAccess(profile.email);
         return true;
       }
