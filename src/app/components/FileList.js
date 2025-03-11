@@ -11,7 +11,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 // Main component managing the file list
-export default function FileList({ files, extLists }) {
+export default function FileList({ files }) {
   // File download state
   const [downloadingFiles, setDownloadingFiles] = useState({});
   // File download handler
@@ -57,18 +57,10 @@ export default function FileList({ files, extLists }) {
     );
   }
 
-  // Process file data to add appropriate icons
-  const updatedFiles = files.map((file) => ({
-    ...file,
-    img: file.isFolder
-      ? "/image/ico/folder.png"
-      : extLists[file.ext] || "/image/ico/file.png",
-  }));
-
   return (
     <div className="file-list">
-      {updatedFiles.length > 0
-        ? (updatedFiles.map((file) => <FileComponent key={file.id} file={file} />))
+      {files.length > 0
+        ? (files.map((file) => <FileComponent key={file.id} file={file} />))
         : (<div className="empty-message">No files or folders found.</div>)}
     </div>
   );

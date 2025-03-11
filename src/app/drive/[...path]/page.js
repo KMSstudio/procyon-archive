@@ -8,7 +8,6 @@ import FileList from "@/app/components/FileList";
 // Utils (Google Drive)
 import { getDriveFiles } from "@/utils/drive/show";
 // Constants
-import extListsData from "@/config/extLists.json";
 import navData from "@/config/navConstant.json";
 // Styles (CSS)
 import "@/app/styles/filelist.css";
@@ -25,7 +24,6 @@ export default async function ReferencePage({ params }) {
 
   // Navigation Data
   const { navs = [], links = [], buttons = [] } = navData;
-  const extLists = extListsData;
 
   return (
     <div className="main-container">
@@ -36,7 +34,7 @@ export default async function ReferencePage({ params }) {
           <div className="button-group"></div>
         </header>
 
-        <FileList files={files} extLists={extLists} />
+        <FileList files={files} />
 
         <div className="control-links">
           <Link className="back-link" href="/">

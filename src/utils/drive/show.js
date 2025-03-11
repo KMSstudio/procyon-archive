@@ -1,7 +1,10 @@
 // @/utils/gdrive/show.js
 
+// Google Drive API
 import { google } from "googleapis";
 import serviceAccount from "@/config/service-account.json";
+// Constant
+import extLists from "@/config/extLists.json";
 
 // サ一ビスアカウント認証
 const auth = new google.auth.GoogleAuth({
@@ -51,20 +54,26 @@ export async function getDriveFiles(folderPath) {
       fields: "files(id, name, mimeType)",
     });
 
-    return response.data.files.map((file) => ({
-      id: file.id,
-      name: file.name,
-      mimeType: file.mimeType,
-      isFolder: file.mimeType === "application/vnd.google-apps.folder",
-      ext: file.mimeType === "application/vnd.google-apps.folder" 
-        ? "&folder" 
-        : file.name.includes(".") 
-          ? file.name.split(".").pop() 
-          : "",
-      downloadLink: file.mimeType === "application/vnd.google-apps.folder"
-        ? `/drive/${folderPath}/${file.name}`
-        : `/api/drive/export/${file.id}`,
-    }));
+    return response.data.files.map((file) => {
+      const isFolder = file.mimeType === "application/vnd.google-apps.folder";
+      const ext = isFolder
+        ? "&folder"
+        : file.name.includes(".")
+        ? file.name.split(".").pop()
+        : "";
+    
+      return {
+        id: file.id,
+        name: file.name,
+        mimeType: file.mimeType,
+        isFolder,
+        ext,
+        downloadLink: isFolder
+          ? `/drive/${folderPath}/${file.name}`
+          : `/api/drive/export/${file.id}`,
+        img: isFolder ? "/image/ico/folder.png" : extLists[ext] || "/image/ico/file.png",
+      };
+    });    
   } catch (error) {
     console.error(`getDriveFiles エラ一: ${error.message}`);
     return [];

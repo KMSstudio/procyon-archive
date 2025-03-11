@@ -1,0 +1,98 @@
+/* 
+* Book list Section
+*/
+
+#book-section {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #000;
+}
+
+#book-section h2 {
+    margin: 20px 0;
+}
+
+/* Book list */
+
+#book-section .book-list-header {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 0px 10px 10px;
+}
+
+#book-section .header-icon {
+    width: 20px;
+    height: 20px;
+}
+
+#book-section .book-list {
+    display: flex;
+    flex-direction: column;
+}
+
+#book-section .book-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    
+    padding: 10px;
+    
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    background: none;
+}
+
+#book-section .book-item:first-of-type { 
+    border-top: 1px solid rgba(255, 255, 255, 0.2); 
+}
+
+/* File Icon */
+#book-section .book-icon {
+    width: 20px;
+    height: 20px;
+}
+
+/* File Name */
+#book-section .book-name {
+    flex-grow: 1;
+    color: white;
+    margin: 0;
+}
+
+/* Radio Button Group */
+#book-section .book-radio-group {
+    display: flex;
+    gap: 10px;
+}
+
+#book-section .book-radio-group label {
+    color: #bbb;
+    font-size: 14px;
+}
+
+#book-section .book-item input {
+    margin: 3px 4px 0px 4px;
+    width: 12px; height: 12px;
+}
+
+/* Search Bar */
+#book-section .book-search {
+    width: 100%;
+    
+    padding: 8px;
+    margin-bottom: 15px;
+    
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    
+    font-size: 14px;
+    background-color: #333;
+    color: #bbb;
+}
+
+#book-section .book-search:focus {
+    outline: none;
+    border: none;
+}

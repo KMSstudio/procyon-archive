@@ -19,14 +19,3 @@
   display: flex;
   flex: 1;
 }
-
-/* 
- * Book registration section
-*/
-
-.book-section {
-  flex: 1;
-  padding: 20px;
-  border-left: 1px solid #ccc;
-  background: #000;
-}
