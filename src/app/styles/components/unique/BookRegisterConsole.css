@@ -151,3 +151,26 @@
     width: 16px;
     height: 16px;
 }
+
+/* Register Book Button */
+#book-register .book-register-btn {
+    width: 100%;
+    padding: 10px;
+    
+    font-size: 16px;
+    font-weight: bold;
+    
+    color: #bbb;
+    background: transparent;
+    border: 2px solid #888;
+    border-radius: 6px;
+    
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#book-register .book-register-btn:hover {
+    color: white;
+    background: rgb(247, 143, 30);
+    border: 2px solid rgb(247, 143, 30);
+}

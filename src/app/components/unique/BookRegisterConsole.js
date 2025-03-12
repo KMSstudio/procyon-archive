@@ -1,15 +1,10 @@
 "use client";
 
-/*
- * @/app/components/unique/BookRegisterConsole.js
-*/
-
 import { useState } from "react";
 import coreTags from "@/config/coreTag.json";
 import "@/app/styles/components/unique/BookRegisterConsole.css";
 
-export default function BookRegisterConsole() {
-  // 書籍情報（タイトル、版数、著者）
+export default function BookRegisterConsole({ cover, content }) {
   const [title, setTitle] = useState("");
   const [edition, setEdition] = useState("");
   const [author, setAuthor] = useState("");
@@ -46,6 +41,21 @@ export default function BookRegisterConsole() {
   const removeMainTag = (tagName) => { setMainTags(mainTags.filter(tag => tag.name !== tagName)); };
   const removeTag = (tagName) => { setTags(tags.filter(tag => tag !== tagName)); };
 
+  const handleRegister = () => {
+    const data = { title, edition, author, mainTags, tags, cover, content };
+
+    fetch("/api/book/regist", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }).then(response => {
+      if (!response.ok) throw new Error("Registration Fail");
+    }).catch(error => {
+      console.error(`Error While Registration: ${error}`);
+      alert("Error While Registration");
+    });
+  };
+
   return (
     <section id="book-register">
       {/* 書籍情報の入力欄 */}
@@ -81,9 +91,7 @@ export default function BookRegisterConsole() {
         <select value={selectedTag} onChange={(e) => setSelectedTag(e.target.value)}>
           <option value="">Select Core Tag</option>
           {coreTags.map((tag) => (
-            <option key={tag.name} value={tag.name}>
-              {tag.name}
-            </option>
+            <option key={tag.name} value={tag.name}>{tag.name}</option>
           ))}
         </select>
         <button onClick={addMainTag}>+</button>
@@ -94,6 +102,8 @@ export default function BookRegisterConsole() {
         <input type="text" placeholder="Tag" value={tagInput} onChange={(e) => setTagInput(e.target.value)} />
         <button onClick={addTag}>+</button>
       </div>
+
+      <button className="register-button" onClick={handleRegister}>등록</button>
     </section>
   );
 }

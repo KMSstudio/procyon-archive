@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.758.0",
+    "@aws-sdk/client-s3": "^3.758.0",
     "@aws-sdk/lib-dynamodb": "^3.758.0",
     "aws-sdk": "^2.1692.0",
     "googleapis": "^146.0.0",
+    "mime-types": "^2.1.35",
     "next": "^14.2.24",
     "next-auth": "^4.24.11",
     "react": "^18",

@@ -45,7 +45,7 @@ export default function BookSection({ files }) {
       </div>
 
       {/* Register Console */}
-      <BookRegisterConsole />
+      <BookRegisterConsole cover={cover} content={content} />
     </section>
   );
 }
