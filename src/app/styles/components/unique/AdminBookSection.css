@@ -54,6 +54,11 @@
     margin-top: 10px;
 }
 
+#book-section .empty-message a {
+    color: rgb(247, 143, 30);
+    text-decoration: none;
+}
+
 /* File Icon */
 #book-section .book-icon {
     width: 20px;

@@ -135,15 +135,16 @@
     align-items: center;
     justify-content: center;
 
-    background: #007bff;
+    background: #181818;
     color: white;
-    border: none;
+    border: 1px solid #bbb;
     border-radius: 5px;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 #book-register .tag-input-group button:hover {
-    background: #0056b3;
+    background: #333;
 }
 
 /* Tag Icon */
@@ -153,24 +154,27 @@
 }
 
 /* Register Book Button */
-#book-register .book-register-btn {
-    width: 100%;
-    padding: 10px;
-    
-    font-size: 16px;
-    font-weight: bold;
+#book-register .register-button {
+    display: inline-block;
+    min-width: 20%;
+    max-width: 100%;
+    margin-top: 10px;
+    padding: 5px 8px;
+    font-size: 14px;
     
     color: #bbb;
     background: transparent;
-    border: 2px solid #888;
+    border: 1px solid #bbb;
     border-radius: 6px;
     
     cursor: pointer;
     transition: all 0.3s ease;
+    white-space: nowrap;  /* Prevents text from wrapping */
 }
 
-#book-register .book-register-btn:hover {
-    color: white;
+/* Button expands smoothly when text overflows */
+#book-register .register-button:hover {
+    color: #fff;
     background: rgb(247, 143, 30);
-    border: 2px solid rgb(247, 143, 30);
+    border: 1px solid rgb(247, 143, 30);
 }
