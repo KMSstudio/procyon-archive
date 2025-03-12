@@ -8,7 +8,7 @@ import { registerBook } from "@/utils/book/regist";
 export async function POST(req) {
   try {
     const bookData = await req.json();
-    if (!bookData.title || !bookData.edition || !bookData.author || !bookData.cover || !bookData.content) {
+    if (!bookData.title || !bookData.author || !bookData.cover || !bookData.content) {
       return new Response(JSON.stringify({ success: false, error: "Missing required fields" }), { status: 400 });  }
     const result = await registerBook(bookData);
     if (!result.success) {

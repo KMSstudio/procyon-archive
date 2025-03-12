@@ -23,29 +23,32 @@ export default function BookSection({ files }) {
 
       {/* File List */}
       <div className="book-list">
-        {files.map((file) => (
-          <div key={file.id} className="book-item">
-            <img src={file.img} alt="File Icon" className="book-icon"/>
-            <p className="book-name">{file.name}</p>
+        {files.length > 0
+        ? (
+          files.map((file) => (
+            <div key={file.id} className="book-item">
+              <img src={file.img} alt="File Icon" className="book-icon"/>
+              <p className="book-name">{file.name}</p>
 
-            <input
-              type="radio"
-              name="cover"
-              checked={cover === file.name}
-              onChange={() => setCover(file.name)}
-            />
-            <input
-              type="radio"
-              name="content"
-              checked={content === file.name}
-              onChange={() => setContent(file.name)}
-            />
-          </div>
-        ))}
+              <input
+                type="radio"
+                name="cover"
+                checked={cover === file.name}
+                onChange={() => setCover(file.name)}
+              />
+              <input
+                type="radio"
+                name="content"
+                checked={content === file.name}
+                onChange={() => setContent(file.name)}
+              />
+            </div>
+          )))
+        : ( <div className="empty-message">No files found in /book/stage.</div> )}
       </div>
 
       {/* Register Console */}
-      <BookRegisterConsole cover={cover} content={content} />
+      {files.length > 0 && <BookRegisterConsole cover={cover} content={content} />}
     </section>
   );
 }

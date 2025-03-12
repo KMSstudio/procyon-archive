@@ -47,6 +47,13 @@
     border-top: 1px solid rgba(255, 255, 255, 0.2); 
 }
 
+#book-section .empty-message {
+    text-align: center;
+    color: #aaa;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
 /* File Icon */
 #book-section .book-icon {
     width: 20px;
