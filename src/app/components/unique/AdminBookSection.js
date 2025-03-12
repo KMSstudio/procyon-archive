@@ -22,6 +22,7 @@ function BookRegisterConsole({ cover, content }) {
   const [selectedTag, setSelectedTag] = useState("");
   const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const addMainTag = () => {
     if (!selectedTag) return;
@@ -61,27 +62,24 @@ function BookRegisterConsole({ cover, content }) {
   }
 
   const handleRegister = async () => {
-    const data = { 
-      title, 
-      edition, 
-      author, 
-      mainTags: mainTags.map(tag => tag.name), 
-      tags, 
-      cover, 
-      content 
+    const data = { title, edition, author,
+      mainTags: mainTags.map(tag => tag.name), tags,
+      cover, content 
     };
-
+    setIsSubmitting(true);
+  
     try {
       const response = await fetch("/api/book/regist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-
       if (!response.ok) throw new Error("Registration Failed");
     } catch (error) {
       console.error("Error while registering book:", error);
       alert("Error while registering book");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -112,7 +110,9 @@ function BookRegisterConsole({ cover, content }) {
         <button onClick={addTag}>+</button>
       </div>
 
-      <button className="register-button" onClick={handleRegister}>submit</button>
+      <button className="register-button" onClick={handleRegister} disabled={isSubmitting}>
+        {isSubmitting ? "submitting..." : "submit"}
+      </button>
     </section>
   );
 }
