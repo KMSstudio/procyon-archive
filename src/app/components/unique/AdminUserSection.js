@@ -1,5 +1,9 @@
 "use client";
 
+/*
+ * @/app/components/unique/AdminUserSection.js
+*/
+
 import { useState } from "react";
 import "@/app/styles/components/unique/adminusersection.css";
 

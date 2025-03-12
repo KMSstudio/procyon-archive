@@ -1,0 +1,20 @@
+[
+    {
+        "name": "주요서적",
+        "bgColor": "#FFD700",
+        "textColor": "#000000",
+        "icon": "/image/ico/coreTag/book.png"
+    },
+    {
+        "name": "절판된",
+        "bgColor": "#90EE90",
+        "textColor": "#000000",
+        "icon": "/image/ico/coreTag/out_of_print.png"
+    },
+    {
+        "name": "학교교재",
+        "bgColor": "#FFA500",
+        "textColor": "#000000",
+        "icon": "/image/ico/coreTag/school_material.png"
+    }
+]

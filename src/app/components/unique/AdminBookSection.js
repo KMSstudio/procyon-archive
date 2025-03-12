@@ -1,6 +1,11 @@
 "use client";
 
+/*
+ * @/app/components/unique/AdminBookSection.js
+*/
+
 import { useState } from "react";
+import BookRegisterConsole from "@/app/components/unique/BookRegisterConsole"; 
 import "@/app/styles/components/unique/AdminBookSection.css";
 
 export default function BookSection({ files }) {
@@ -38,6 +43,9 @@ export default function BookSection({ files }) {
           </div>
         ))}
       </div>
+
+      {/* Register Console */}
+      <BookRegisterConsole />
     </section>
   );
 }

@@ -1,0 +1,153 @@
+#book-register {
+    padding: 15px;
+    margin-top: 20px;
+    background: #181818;
+    border-radius: 8px;
+    color: white;
+}
+
+#book-register .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+#book-register .title-edition-group {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+#book-register .title-edition-group input:nth-child(1) { flex: 4; }
+#book-register .title-edition-group input:nth-child(2) { flex: 1; }
+
+#book-register .input-group input {
+    width: 100%;
+    min-width: 0;
+    
+    padding: 5px 8px;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    
+    font-size: 14px;
+    background-color: #333;
+    color: #bbb;
+}
+
+#book-register .input-group input:focus {
+    outline: none;
+    border: none;
+}
+
+/* Tag Preview style */
+#book-register .tag-preview {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+#book-register .main-tag {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    gap: 5px;
+    font-size: 10px;
+    
+    cursor: pointer;
+}
+
+#book-register .tag {
+    display: flex;
+    align-items: center;
+    padding: 5px 5px;
+    border-radius: 5px;
+    gap: 5px;
+    font-size: 10px;
+
+    color: #bbb;
+    border: 1px solid #bbb;
+    background: transparent;
+    
+    cursor: pointer;
+}
+
+#book-register .main-tag:hover,
+#book-register .tag:hover {
+    background: #D62828 !important;
+    background-color: #D62828 !important;
+}
+#book-register .tag:hover{ border: 1px solid #D62828; }
+
+/* Tag Selection (DropDown Style) */
+#book-register .tag-input-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    align-items: stretch;
+}
+
+#book-register .tag-input-group select {
+    flex: 1;
+    padding: 5px 5px;
+    
+    border: none;
+    border-radius: 4px;
+    background: #333;
+    color: #bbb;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#book-register .tag-input-group select:focus {
+    outline: none;
+    border: none;
+}
+
+/* Normal Tag Input */
+#book-register .tag-input-group input {
+    flex: 1;
+    
+    padding: 5px 8px;
+    border: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    
+    font-size: 14px;
+    background-color: #333;
+    color: #bbb;
+}
+
+#book-register .tag-input-group input:focus {
+    outline: none;
+    border: none;
+}
+
+/* Add Button */
+#book-register .tag-input-group button {
+    height: auto;
+    width: 35px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#book-register .tag-input-group button:hover {
+    background: #0056b3;
+}
+
+/* Tag Icon */
+#book-register .tag-icon {
+    width: 16px;
+    height: 16px;
+}
