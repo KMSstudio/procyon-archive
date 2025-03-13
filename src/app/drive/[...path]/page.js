@@ -10,7 +10,7 @@ import { getDriveFiles } from "@/utils/drive/show";
 // Constants
 import navData from "@/config/navConstant.json";
 // Styles (CSS)
-import "@/app/styles/filelist.css";
+import "@/app/styles/drive.css";
 // Next Tags
 import Link from "next/link";
 

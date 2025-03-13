@@ -4,7 +4,7 @@
 
 "use client";
 // Style (CSS)
-import "@/app/styles/filelist.css";
+import "@/app/styles/components/list/filelist.css";
 // Use State for Download Status Management
 import { useState } from "react";
 // Next Link

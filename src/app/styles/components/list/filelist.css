@@ -1,46 +1,4 @@
 
-/* Header */
-
-.container {
-    padding: 20px;
-    max-width: 800px;
-    width: 80%;
-    margin: 0 auto;
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-h1 {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-/* 
- * Button Group
-*/
-
-.button-group button {
-    padding: 8px 16px 4px 16px;
-    background-color: #fff;
-    color: #fff;
-    border: 0px solid #fff;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.button-group button:hover {
-    background-color: #ccc;
-}
-
-.button-group .icon {
-    width: 24px;
-    height: 24px;
-}
-
 /* 
  * File List
 */
@@ -142,26 +100,4 @@ h1 {
     color: #aaa;
     font-size: 16px;
     margin-top: 10px;
-}
-
-/*
- * Control Links
-*/
-
-.control-links {
-    display: flex;
-    flex-direction: row;
-}
-
-.back-link {
-    display: block;
-    margin-top: 20px;
-    font-size: 18px;
-    text-decoration: none;
-    color: #fff;
-    margin-right: 20px;
-}
-
-.back-link:hover {
-    text-decoration: underline;
 }
