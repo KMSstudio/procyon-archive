@@ -1,17 +1,79 @@
+/* 검색 섹션 스타일 */
+.search-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  background-color: #222;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
 
-
-.book-page {
+/* 왼쪽 검색 */
+.left-search {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  background-color: #000;
+  gap: 10px;
+  width: 45%;
+}
+
+.left-search input {
+  padding: 8px;
+  
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  
+  font-size: 14px;
+  background-color: #333;
   color: white;
 }
 
-.book-content {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
+.left-search input:focus {
+  outline: none;
+  border: none;
+}
+
+.left-search input:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+/* 오른쪽 태그 검색 */
+.right-search {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 50%;
+}
+
+.right-search .tag-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+.right-search .tag {
+  background: #444;
+  color: white;
+  padding: 5px 10px;
+  font-size: 12px;
+  border-radius: 4px;
+}
+
+.right-search .tag.selected {
+  background-color: #ff9800;
+  color: black;
+}
+
+.right-search .tag:hover {
+  background-color: #777;
+}
+
+/* 책 목록 스타일 */
+.book-list-container {
+  display: flex;
+  flex-direction: column;
 }
 
 .book-list {
@@ -106,4 +168,4 @@
   padding: 5px 10px;
   font-size: 12px;
   border-radius: 4px;
-}  
+}
