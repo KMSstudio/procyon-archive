@@ -45,10 +45,7 @@ export default function FileList({ files }) {
   const handleFolderClick = (file, event) => {
     event.preventDefault();
     setInteractingFolders((prev) => ({ ...prev, [file.id]: true }));
-
-    setTimeout(() => {
-      window.location.href = file.downloadLink;
-    }, 300); // 약간의 딜레이 후 이동
+    window.location.href = file.downloadLink;
   };
 
   // Internal component to render individual file items
