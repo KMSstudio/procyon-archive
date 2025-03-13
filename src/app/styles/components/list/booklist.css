@@ -1,11 +1,12 @@
-/* 검색 섹션 스타일 */
+/* @/app/styles/components/list/booklist.css */
+
+/* 検索セクションのスタイル */
 .search-section {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   padding: 20px;
-  background-color: #222;
-  margin-bottom: 20px;
+  background-color: #000;
   
   user-select: none;
   -webkit-user-select: none;
@@ -13,7 +14,7 @@
   -ms-user-select: none;
 }
 
-/* 왼쪽 검색 */
+/* 左側の検索エリア */
 .left-search {
   display: flex;
   flex-direction: column;
@@ -27,7 +28,7 @@
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 14px;
-  background-color: #333;
+  background-color: #222;
   color: white;
 }
 
@@ -41,7 +42,7 @@
   cursor: not-allowed;
 }
 
-/* 오른쪽 태그 검색 */
+/* 右側のタグ検索エリア */
 .right-search {
   display: flex;
   flex-direction: column;
@@ -85,7 +86,7 @@
 .right-search .tag.selected {
   border: 1.5px solid white;
   padding: 3.5px 8.5px;
-  background-color: #555;
+  background-color: #222;
 }
 
 .right-search .main-tag.selected {
@@ -93,11 +94,10 @@
   padding: 3px 8px;
 }
 
-.right-search .tag:hover {
-  background-color: #777;
-}
+.right-search .tag:hover { background-color: #777; }
+.right-search .main-tag:hover { filter: brightness(120%); }
 
-/* 책 목록 스타일 */
+/* 書籍リストのスタイル */
 .book-list-container {
   display: flex;
   flex-direction: column;

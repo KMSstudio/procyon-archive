@@ -29,7 +29,8 @@ export default async function HomePage() {
         <Sidebar isAdmin={isAdmin} links={links} />
         <main className="main-content">
           <div className="main-content-title">
-            <h1>Procyon</h1>
+            {/* Procyon!! Procyon!! Procyon!! */}
+            <h1>CSE Archive</h1>
             <p>Seoul National University - Computer Science and Engineering Archive</p>
           </div>
           <div className="buttons">
