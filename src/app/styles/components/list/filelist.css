@@ -7,14 +7,19 @@
     margin-top: 20px;
 }
 
+.file-item:first-of-type {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .file-item {
     display: flex;
     background-color: #000;
-    border-radius: 5px;
+    border-radius: 0px;
     justify-content: space-between;
     align-items: center;
-    padding: 5px;
+    padding: 10px;
 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     transition: background-color 0.3s ease
 }
 
