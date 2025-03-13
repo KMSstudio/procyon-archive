@@ -85,24 +85,26 @@ export default function BookList({ books, coreTags }) {
           />
         </div>
         <div className="right-search">
-          {coreTags.map((tag) => (
-            <span
-              key={tag} 
-              className={selectedTags.includes(tag.name) ? "main-tag selected " : "main-tag"} 
-              onClick={() => toggleTag(tag.name)}
-              style={{ backgroundColor: tag.bgColor, color: tag.textColor }}>
-              <img src={tag.icon} alt={tag.name} className="tag-icon" />
-              {tag.name}
-            </span>
-          ))}
-          {allTags.map((tag) => (
-            <span 
-              key={tag} 
-              className={selectedTags.includes(tag) ? "tag selected" : "tag"} 
-              onClick={() => toggleTag(tag)}>
-                {tag}
-            </span>
-          ))}
+          <div className="tag-container">
+            {coreTags.map((tag) => (
+              <span
+                key={tag.name}
+                className={selectedTags.includes(tag.name) ? "main-tag selected" : "main-tag"}
+                onClick={() => toggleTag(tag.name)}
+                style={{ backgroundColor: tag.bgColor, color: tag.textColor }}>
+                <img src={tag.icon} alt={tag.name} className="tag-icon" />
+                {tag.name}
+              </span>
+            ))}
+            {allTags.map((tag) => (
+              <span 
+                key={tag} 
+                className={selectedTags.includes(tag) ? "tag selected" : "tag"} 
+                onClick={() => toggleTag(tag)}>
+                  {tag}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 
