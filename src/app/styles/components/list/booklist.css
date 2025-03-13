@@ -7,6 +7,11 @@
   background-color: #222;
   border-radius: 8px;
   margin-bottom: 20px;
+  
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 /* 왼쪽 검색 */
@@ -19,11 +24,9 @@
 
 .left-search input {
   padding: 8px;
-  
   border: none;
   border-radius: 4px;
   box-sizing: border-box;
-  
   font-size: 14px;
   background-color: #333;
   color: white;
@@ -53,17 +56,34 @@
   margin-right: 5px;
 }
 
-.right-search .tag {
-  background: #444;
-  color: white;
+.right-search .tag,
+.right-search .main-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   padding: 5px 10px;
   font-size: 12px;
   border-radius: 4px;
+  cursor: pointer;
+}
+
+.right-search .tag {
+  color: #bbb;
+  border: 1px solid #bbb;
+  padding: 4px 9px;
+  background: transparent;
 }
 
 .right-search .tag.selected {
-  background-color: #ff9800;
-  color: black;
+  border: 1.5px solid white;
+  padding: 3.5px 8.5px;
+  background-color: #555;
+}
+
+.right-search .main-tag.selected {
+  border: 2px solid white;
+  padding: 3px 8px;
 }
 
 .right-search .tag:hover {
@@ -121,10 +141,8 @@
   margin-left: 15px;
   display: flex;
   flex-direction: column;
-
   height: 100%;
   width: 250px;
-  
   justify-content: flex-start;
 }
 
@@ -164,7 +182,7 @@
 
 .tag {
   background: #444;
-  color: white;
+  color: #bbb;
   padding: 5px 10px;
   font-size: 12px;
   border-radius: 4px;

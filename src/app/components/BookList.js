@@ -10,7 +10,8 @@ export default function BookList({ books, coreTags }) {
   const [selectedTags, setSelectedTags] = useState([]);
 
   // 태그 리스트 수집
-  const allTags = [...new Set(books.flatMap((book) => [...book.mainTags, ...book.tags]))];
+  const allTags = [...new Set(books.flatMap((book) => book.tags))]
+  const mainTags = [...new Set(coreTags.map(tag => tag.name))];
 
   // 검색 핸들러
   const handleSearchChange = (e) => {
@@ -49,9 +50,9 @@ export default function BookList({ books, coreTags }) {
       catch { titleMatch = false; }
     }
     const authorMatch = authorSearch ? book.author.toLowerCase().includes(authorSearch.toLowerCase()) : true;
-    const tagMatch =
-      selectedTags.length === 0 || selectedTags.some((tag) => book.mainTags.includes(tag) || book.tags.includes(tag));
-
+    const tagMatch
+      = selectedTags.length === 0
+      || selectedTags.some((tag) => (book.tags.includes(tag) || book.mainTags.includes(tag)));
     return titleMatch && authorMatch && tagMatch;
   });
 
@@ -84,14 +85,23 @@ export default function BookList({ books, coreTags }) {
           />
         </div>
         <div className="right-search">
+          {coreTags.map((tag) => (
+            <span
+              key={tag} 
+              className={selectedTags.includes(tag.name) ? "main-tag selected " : "main-tag"} 
+              onClick={() => toggleTag(tag.name)}
+              style={{ backgroundColor: tag.bgColor, color: tag.textColor }}>
+              <img src={tag.icon} alt={tag.name} className="tag-icon" />
+              {tag.name}
+            </span>
+          ))}
           {allTags.map((tag) => (
-            <button
-              key={tag}
-              className={selectedTags.includes(tag) ? "tag selected" : "tag"}
-              onClick={() => toggleTag(tag)}
-            >
-              {tag}
-            </button>
+            <span 
+              key={tag} 
+              className={selectedTags.includes(tag) ? "tag selected" : "tag"} 
+              onClick={() => toggleTag(tag)}>
+                {tag}
+            </span>
           ))}
         </div>
       </div>

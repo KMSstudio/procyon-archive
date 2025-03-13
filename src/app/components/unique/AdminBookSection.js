@@ -52,10 +52,7 @@ function BookRegisterConsole({ cover, content }) {
           </span>
         ))}
         {tags.map((tag, index) => (
-          <span key={index} className="tag" onClick={() => removeTag(tag)}>
-            <img src={"/image/ico/tag/tag.png"} alt={tag} className="tag-icon" />
-            {tag}
-          </span>
+          <span key={index} className="tag" onClick={() => removeTag(tag)}> {tag} </span>
         ))}
       </div>
     );
