@@ -17,7 +17,7 @@ export default async function BookPage() {
   const books = await getAllBooks();
 
   return (
-    <div className="book-page">
+    <div className="main-container">
       <NavBar />
       <main className="book-content">
         <BookList books={books} coreTags={coreTags} />

@@ -16,7 +16,7 @@ export default function BookList({ books, coreTags }) {
         <div key={book.id} className="book-item">
           {/* Left: Cover Image */}
           <div className="book-cover">
-            <a href={book.content} download>
+            <a href={book.content} target="_blank">
               <img
                 src={book.cover}
                 alt="Book Cover"
