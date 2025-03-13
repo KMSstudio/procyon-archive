@@ -6,15 +6,12 @@
 
 import "@/app/styles/components/list/booklist.css";
 
-/**
- * Book List (Client Component)
- */
 export default function BookList({ books, coreTags }) {
   return (
     <div className="book-list">
       {books.map((book) => (
         <div key={book.id} className="book-item">
-          {/* Left: Cover Image */}
+          {/* Cover Image */}
           <div className="book-cover">
             <a href={book.content} target="_blank">
               <img
@@ -25,12 +22,11 @@ export default function BookList({ books, coreTags }) {
             </a>
           </div>
 
-          {/* Right: Book Details */}
+          {/* Book Details */}
           <div className="book-info">
             <h3 className="book-title">{book.title}</h3>
             <p className="book-author">{book.author}</p>
 
-            {/* Tags */}
             <div className="book-tags">
               {book.mainTags.map((tag) => {
                 const tagData = coreTags.find(t => t.name === tag);
