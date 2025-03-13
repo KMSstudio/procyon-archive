@@ -1,10 +1,10 @@
 {
     "navs": [
-        { "name": "도서", "href": "/drive/reference" },
+        { "name": "도서", "href": "/drive/book" },
         { "name": "기출", "href": "/drive/exam" }
     ],
     "buttons": [
-        { "name": "도서", "href": "/drive/reference" },
+        { "name": "도서", "href": "/drive/book" },
         { "name": "기출", "href": "/drive/exam" },
         { "name": "수업자료", "href": "/drive/reference" }
     ],

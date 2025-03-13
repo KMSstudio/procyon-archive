@@ -37,7 +37,7 @@
 
 .file-item .loading-icon {
     height: 50px;
-    margin: -16px 0;
+    margin: -20px 0 -12px;
     width: auto;
     vertical-align: middle;
 }
