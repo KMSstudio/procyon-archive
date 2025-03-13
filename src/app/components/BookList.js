@@ -4,10 +4,10 @@
  *  @/app/components/BookList.js
  */
 
-import "@/app/styles/components/booklist.css";
+import "@/app/styles/components/list/booklist.css";
 
 /**
- * 📌 Book List (Client Component)
+ * Book List (Client Component)
  */
 export default function BookList({ books, coreTags }) {
   return (
