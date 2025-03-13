@@ -11,11 +11,11 @@ const client = new DynamoDBClient({
     }
 });
 const dynamoDB = DynamoDBDocumentClient.from(client);
-const TABLE_NAME = "Procyon_User_DB";
+const TABLE_NAME = process.env.AWS_DB_USER_TABLE;
 
 // Caching
 let userCache = new Map(), cacheTimestamps = new Map();
-const CACHE_TTL = 5 * 1000; // 5 minutes
+const CACHE_TTL = (process.env.TTL_USER_DB).split('*').map(Number).reduce((acc, val) => acc * val, 1);
 
 /**
  * Fetch user from DynamoDB (cache applied)
@@ -31,7 +31,7 @@ export async function fetchUser(email) {
             ProjectionExpression: "lastAccessDate, lastContributionDate, isAdmin"
         }));
         if (!Item) return null;
-        userCache.set(email, Item), cacheTimestamps.set(email, now);
+        userCache.set(email, {...Item}), cacheTimestamps.set(email, now);
         return Item;
     } catch (error) {
         console.error(`Error fetching user ${email}:`, error);
@@ -43,16 +43,14 @@ export async function fetchUser(email) {
  * Save user to DynamoDB (cache applied)
  */
 export async function saveUser(email, data) {
-    console.log(`saveUser ${email}`);
     if (!email || !data) return;
-    console.log(`Item ${JSON.stringify(userCache.get(email))}`);
-    console.log(`Item ${JSON.stringify(data)}`);
-    // if (JSON.stringify(userCache.get(email)) === JSON.stringify(data)) { return; }
-    console.log(`Item ${{ email, ...data}}`);
+    console.log(`userChache: ${JSON.stringify(userCache.get(email))}`);
+    console.log(`data: ${JSON.stringify(data)}`);
+    if (JSON.stringify(userCache.get(email)) === JSON.stringify(data)) { return; }
 
     try {
         await dynamoDB.send(new PutCommand({ TableName: TABLE_NAME, Item: { email, ...data } }));
-        userCache.set(email, data), cacheTimestamps.set(email, Date.now());
+        userCache.set(email, {...data}), cacheTimestamps.set(email, Date.now());
     } catch (error) {
         console.error(`Error saving user ${email}:`, error);
         throw error;
@@ -65,9 +63,7 @@ export async function saveUser(email, data) {
 export async function updateUserAccess(email) {
     console.log(`updateAccessDate ${email}`);
     if (!email) return;
-    const today = new Date().toISOString().split('T')[0], user = await fetchUser(email);
-    console.log(`Item ${JSON.stringify(userCache.get(email))}`);
-
+    const today = new Date(Date.now() + 9*3600*1000).toISOString().split('T')[0], user = await fetchUser(email);
     if (!user) await saveUser(email, { lastAccessDate: today, lastContributionDate: '1990-10-13', isAdmin: false });
     else if (user.lastAccessDate != today) { user.lastAccessDate = today, await saveUser(email, user); }
 }

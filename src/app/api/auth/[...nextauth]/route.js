@@ -15,11 +15,17 @@ export const authOptions = {
   },
   callbacks: {
     async signIn({ account, profile }) {
-      if (process.env.CURRENT_PHASE == "develop" || profile?.email?.endsWith("@snu.ac.kr")) {
-        await updateUserAccess(profile.email);
-        return true;
-      }
-      return false;
+      const email = (profile?.email || "");
+      const name = profile?.name || "";
+      // @snu.ac.kr
+      if (!email.endsWith("@snu.ac.kr")) { 
+        return "/login/nosnu"; }
+      // Just for snu 'cse' 'student'
+      if (process.env.AUTH_BLOCK_NOCSE === 'T'  &&  (!name.includes("학생") || !name.includes("컴퓨터공학부"))) { 
+        return "/login/nocse"; }
+      // Login success
+      await updateUserAccess(email);
+      return true;
     },
     async session({ session, token }) {
       session.user.email = token.email;
