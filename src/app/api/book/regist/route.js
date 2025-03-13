@@ -11,8 +11,6 @@ export async function POST(req) {
     if (!bookData.title || !bookData.author || !bookData.cover || !bookData.content) {
       return new Response(JSON.stringify({ success: false, error: "Missing required fields" }), { status: 400 });  }
     const result = await registerBook(bookData);
-    if (!result.success) {
-      return new Response(JSON.stringify(result), { status: 500 }); }
     return new Response(JSON.stringify(result), { status: 200 });
   } catch (error) {
     console.error("Error processing book registration request:", error);

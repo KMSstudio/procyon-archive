@@ -87,12 +87,13 @@ export async function moveDriveFile(fileId, targetPath) {
 }
 
 /**
- * Copies a file from Google Drive and saves it to AWS S3.
+ * Copies a file from Google Drive and saves it to AWS S3 in the correct folder.
  * @param {string} fileId - Google Drive file ID
+ * @param {string} folder - Target folder in S3 ("cover" or "content")
  * @param {string} fileName - Target file name (e.g., "123abc.png")
- * @returns {Promise<string>} - S3 URL of the uploaded image
+ * @returns {Promise<string>} - S3 URL of the uploaded file
  */
-export async function copyDriveFile(fileId, fileName) {
+export async function copyDriveFile(fileId, folder, fileName) {
   try {
     const tempFilePath = path.join(LOCAL_COVER_PATH, fileName);
     await fs.promises.mkdir(LOCAL_COVER_PATH, { recursive: true });
@@ -109,9 +110,12 @@ export async function copyDriveFile(fileId, fileName) {
 
     const fileBuffer = await fs.promises.readFile(tempFilePath);
     const mimeType = mime.lookup(fileName) || "image/png";
+    
+    const s3Key = `${folder}/${fileName}`; // Stores file in the correct S3 folder
+
     await s3.send(new PutObjectCommand({
       Bucket: S3_BUCKET_NAME,
-      Key: fileName,
+      Key: s3Key,
       Body: fileBuffer,
       ContentType: mimeType,
       ACL: "public-read",
@@ -119,9 +123,9 @@ export async function copyDriveFile(fileId, fileName) {
 
     await fs.promises.unlink(tempFilePath);
 
-    return `https://${S3_BUCKET_NAME}.s3.amazonaws.com/${fileName}`;
+    return `https://${S3_BUCKET_NAME}.s3.amazonaws.com/${s3Key}`;
   } catch (error) {
-    console.error(`Failed to copy Google Drive file and upload to S3: ${fileId} → ${fileName}`, error);
+    console.error(`Failed to copy Google Drive file and upload to S3: ${fileId} → ${folder}/${fileName}`, error);
     throw error;
   }
 }
