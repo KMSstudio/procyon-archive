@@ -80,3 +80,21 @@ h1 {
 .back-link:hover {
     text-decoration: underline;
 }
+
+/*
+ * End of booklist
+*/
+.end-of-booklist {
+    margin: 50px 20px;
+    width: 100vw;
+
+    display: flex;
+    justify-content: center;
+}
+
+.end-indicator {
+    display: block;
+    font-size: 18px;
+    text-decoration: none;
+    color: gray;
+}

@@ -30,7 +30,7 @@ export default async function HomePage() {
         <main className="main-content">
           <div className="main-content-title">
             {/* Procyon!! Procyon!! Procyon!! */}
-            <h1>CSE Archive</h1>
+            <h1>CSE: Archive</h1>
             <p>Seoul National University - Computer Science and Engineering Archive</p>
           </div>
           <div className="buttons">
