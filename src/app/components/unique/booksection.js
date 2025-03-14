@@ -1,13 +1,13 @@
 "use client";
 
 /*
- * @/app/components/unique/AdminBookSection.js
+ * @/app/components/unique/BookSection.js
 */
 
 import { useState } from "react";
 // Style (CSS)
-import "@/app/styles/components/unique/AdminBookSection.css";
-import "@/app/styles/components/unique/BookRegisterConsole.css";
+import "@/app/styles/components/unique/booksection.css";
+import "@/app/styles/components/unique/bookregister.css";
 // Constants
 import coreTags from "@/config/coreTag.json";
 
