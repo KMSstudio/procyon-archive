@@ -37,8 +37,8 @@ export default function BookList({ books, coreTags }) {
 
   function BookSearchConsole() {
     return (
-      <div className="search-section">
-        <div className="left-search">
+      <div id="search-section">
+        <div id="left-search">
           <input
             type="text"
             placeholder="일반검색"
@@ -61,7 +61,7 @@ export default function BookList({ books, coreTags }) {
             disabled={search || regexSearch}
           />
         </div>
-        <div className="right-search">
+        <div id="right-search">
           <div className="tag-container">
             {coreTags.map((tag) => (
               <span
@@ -143,7 +143,7 @@ export default function BookList({ books, coreTags }) {
   }
 
   return (
-    <div className="book-list-container">
+    <div id="book-list-container">
       <BookSearchConsole />
       <BookListDisplay />
     </div>

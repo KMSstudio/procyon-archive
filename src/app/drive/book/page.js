@@ -8,13 +8,20 @@ import BookList from "@/app/components/BookList";
 import { getAllBooks } from "@/utils/bookDB";
 // Constants
 import coreTags from "@/config/coreTag.json";
+import Link from "next/link";
 
 export default async function BookPage() {
   const books = await getAllBooks();
 
   return (
-    <main className="book-content">
+    <div>
       <BookList books={books} coreTags={coreTags} />
-    </main>
+
+      <div className="control-links">
+        <Link className="back-link" href="/">
+          여기에 무언가를 써야 합니다
+        </Link>
+      </div>
+  </div>
   );
 }
