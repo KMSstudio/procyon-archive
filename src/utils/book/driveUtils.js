@@ -17,10 +17,10 @@ const BOOK_FOLDER_ID = process.env.GOOGLE_DRIVE_BOOKFOLDER_ID;
 const LOCAL_COVER_PATH = path.resolve("./temp");
 const S3_BUCKET_NAME = process.env.AWS_S3_BOOKCOVER_BUCKET;
 const s3 = new S3Client({ 
-  region: process.env.AWS_REGION,
+  region: process.env.AWS_PRCY_REGION,
   credentials: {  
-      accessKeyId: process.env.AWS_ACCESS_KEY,
-      secretAccessKey: process.env.AWS_SECRET_KEY 
+      accessKeyId: process.env.AWS_PRCY_ACCESS_KEY,
+      secretAccessKey: process.env.AWS_PRCY_SECRET_KEY 
   }
 });
 
