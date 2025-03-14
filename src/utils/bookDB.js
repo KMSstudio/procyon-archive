@@ -2,7 +2,7 @@
 
 // AWS SDK v3
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, GetCommand, PutCommand, ScanCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
+import { DynamoDBDocumentClient, PutCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
 
 const client = new DynamoDBClient({ 
     region: process.env.AWS_PRCY_REGION,
@@ -13,7 +13,6 @@ const client = new DynamoDBClient({
 });
 const docClient = DynamoDBDocumentClient.from(client);
 const BOOK_TABLE_NAME = "Procyon_Book_DB";
-const TAG_TABLE_NAME = "Procyon_Tag_DB";
 
 /**
  * Retrieves all books from Procyon_Book_DB.
@@ -42,40 +41,6 @@ export async function createBook(bookData) {
     }));
   } catch (error) {
     console.error("Failed to register book:", error);
-    throw error;
-  }
-}
-
-/**
- * Updates Procyon_Tag_DB by adding book ID to existing tags or creating new ones.
- * @param {Array<string>} tags - List of tags to be updated
- * @param {string} bookId - Book ID to add to the tag records
- * @returns {Promise<void>}
- */
-export async function updateTagDB(tags, bookId) {
-  try {
-    for (const tag of tags) {
-      const { Item } = await docClient.send(new GetCommand({
-        TableName: TAG_TABLE_NAME,
-        Key: { tag },
-      }));
-
-      if (Item) {
-        await docClient.send(new UpdateCommand({
-          TableName: TAG_TABLE_NAME,
-          Key: { tag },
-          UpdateExpression: "SET books = list_append(books, :newBook)",
-          ExpressionAttributeValues: { ":newBook": [bookId] },
-        }));
-      } else {
-        await docClient.send(new PutCommand({
-          TableName: TAG_TABLE_NAME,
-          Item: { tag, books: [bookId] },
-        }));
-      }
-    }
-  } catch (error) {
-    console.error("Error updating tag database:", error);
     throw error;
   }
 }
