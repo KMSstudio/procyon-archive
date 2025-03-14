@@ -9,7 +9,7 @@ import { google } from "googleapis";
 
 // Service account authentication
 const auth = new google.auth.GoogleAuth({
-  keyFile: "src/config/service-account.json", // Path to service account JSON
+  credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT),
   scopes: ["https://www.googleapis.com/auth/drive.readonly"],
 });
 const drive = google.drive({ version: "v3", auth });

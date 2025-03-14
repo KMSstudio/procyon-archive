@@ -3,11 +3,10 @@
 */
 
 import { google } from "googleapis";
-import path from "path";
 
 // Google Drive authentication (Service Account)
 const auth = new google.auth.GoogleAuth({
-  keyFile: path.resolve("src/config/service-account.json"),
+  credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT),
   scopes: ["https://www.googleapis.com/auth/drive.readonly"],
 });
 

@@ -2,13 +2,12 @@
 
 // Google Drive API
 import { google } from "googleapis";
-import serviceAccount from "@/config/service-account.json";
 // Constant
 import extLists from "@/config/extLists.json";
 
 // サ一ビスアカウント認証
 const auth = new google.auth.GoogleAuth({
-  credentials: serviceAccount,
+  credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT),
   scopes: ["https://www.googleapis.com/auth/drive.readonly"],
 });
 

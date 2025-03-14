@@ -3,11 +3,10 @@ import path from "path";
 import { google } from "googleapis";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import mime from "mime-types";
-import serviceAccount from "@/config/service-account.json";
 
 // Google Arive API
 const auth = new google.auth.GoogleAuth({
-  credentials: serviceAccount,
+  credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT),
   scopes: ["https://www.googleapis.com/auth/drive"],
 });
 const drive = google.drive({ version: "v3", auth });
