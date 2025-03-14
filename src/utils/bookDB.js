@@ -1,3 +1,5 @@
+/* @/utils/bookDB.js */
+
 // AWS SDK v3
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, GetCommand, PutCommand, ScanCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";

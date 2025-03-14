@@ -1,6 +1,4 @@
-/*
-*   @/utils/book/regist.js
-*/
+/* @/utils/book/regist.js */
 
 import { v4 as uuidv4 } from "uuid";
 import { createBook, updateTagDB } from "@/utils/bookDB";
