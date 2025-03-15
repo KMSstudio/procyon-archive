@@ -43,7 +43,7 @@ export default function ThanksPage() {
 
         {/* Server Information */}
         <div className="server-info">
-          <p>후원계좌 - 국민은행 92380100058488</p>
+          <p>procyon 0.3.0</p>
           <p>모든 정보는 서울대학교 컴퓨터공학과에게 공개됩니다. 컴퓨터공학과 내에서의 정보 격차는, 존재해서는 안 됩니다.</p>
         </div>
       </div>
