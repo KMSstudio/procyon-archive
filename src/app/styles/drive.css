@@ -16,6 +16,10 @@
     position: relative;
 }
 
+.div-100vw {
+    width: 100vw;
+}
+
 /* Remove Scroll Bar */
 ::-webkit-scrollbar { display: none; }
 html { scrollbar-width: none; }
@@ -85,7 +89,7 @@ h1 {
  * End of booklist
 */
 .end-of-booklist {
-    margin: 50px 20px;
+    margin: 50px 0px;
     width: 100vw;
 
     display: flex;
