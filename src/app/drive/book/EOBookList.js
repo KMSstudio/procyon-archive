@@ -11,7 +11,7 @@ export default function EndOfBookList() {
           window.scrollTo({ top: 0, behavior: "smooth" });
         }}
       >
-        Here is end of the Book List
+        This is end of the Book List
       </a>
     </div>
   );
