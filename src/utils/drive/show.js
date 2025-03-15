@@ -25,7 +25,7 @@ export async function getDriveFiles(folderPath) {
   try {
     if (!folderPath || folderPath.trim() === "") return [];
 
-    const folders = folderPath.split("/").map(decodeURIComponent); // 한글 폴더명 디코딩
+    const folders = folderPath.split("/").map(decodeURIComponent);
     let parentId = ROOT_FOLDER_ID;
 
     // 指定されたパスのフォルダIDを検索
@@ -53,7 +53,7 @@ export async function getDriveFiles(folderPath) {
       fields: "files(id, name, mimeType)",
     });
 
-    return response.data.files.map((file) => {
+    const result = response.data.files.map((file) => {
       const isFolder = file.mimeType === "application/vnd.google-apps.folder";
       const ext = isFolder
         ? "&folder"
@@ -72,7 +72,15 @@ export async function getDriveFiles(folderPath) {
           : `/api/drive/export/${file.id}`,
         img: isFolder ? "/image/ico/folder.png" : extLists[ext] || "/image/ico/file.png",
       };
-    });    
+    });
+
+    // 名前順に、そしてフォルダがファイルより前に来るようにソート
+    result.sort((a, b) => {
+      if (a.isFolder && !b.isFolder) return -1;
+      if (!a.isFolder && b.isFolder) return 1;
+      return a.name.localeCompare(b.name, "en", { sensitivity: "base" });
+    });
+    return result;
   } catch (error) {
     console.error(`getDriveFiles エラ一: ${error.message}`);
     return [];
