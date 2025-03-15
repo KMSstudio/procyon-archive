@@ -15,7 +15,7 @@ const drive = google.drive({ version: "v3", auth });
 const BOOK_FOLDER_ID = process.env.GOOGLE_DRIVE_BOOKFOLDER_ID;
 
 // AWS S3 API
-const LOCAL_COVER_PATH = path.resolve("./temp");
+const TEMP_STORAGE_PATH = "/tmp";
 const S3_BUCKET_NAME = process.env.AWS_S3_BOOKCOVER_BUCKET;
 const s3 = new S3Client({ 
   region: process.env.AWS_PRCY_REGION,
@@ -87,6 +87,7 @@ export async function moveDriveFile(fileId, targetPath) {
   }
 }
 
+
 /**
  * Copies a file from Google Drive and saves it to AWS S3 in the correct folder.
  * @param {string} fileId - Google Drive file ID
@@ -96,12 +97,16 @@ export async function moveDriveFile(fileId, targetPath) {
  */
 export async function copyDriveFile(fileId, folder, fileName) {
   try {
-    const tempFilePath = path.join(LOCAL_COVER_PATH, fileName);
-    await fs.promises.mkdir(LOCAL_COVER_PATH, { recursive: true });
+    const tempFilePath = path.join(TEMP_STORAGE_PATH, fileName); // ✅ Changed to /tmp for AWS Lambda compatibility
+    await fs.promises.mkdir(TEMP_STORAGE_PATH, { recursive: true });
 
     const response = await drive.files.get({ fileId, alt: "media" }, { responseType: "stream" });
-    const fileStream = fs.createWriteStream(tempFilePath);
 
+    if (!response || !response.data) {
+      throw new Error(`Failed to fetch file from Google Drive: ${fileId}`);
+    }
+
+    const fileStream = fs.createWriteStream(tempFilePath);
     response.data.pipe(fileStream);
 
     await new Promise((resolve, reject) => {
@@ -112,7 +117,7 @@ export async function copyDriveFile(fileId, folder, fileName) {
     const fileBuffer = await fs.promises.readFile(tempFilePath);
     const mimeType = mime.lookup(fileName) || "image/png";
     
-    const s3Key = `${folder}/${fileName}`; // Stores file in the correct S3 folder
+    const s3Key = `${folder}/${fileName}`;
 
     await s3.send(new PutObjectCommand({
       Bucket: S3_BUCKET_NAME,
@@ -122,7 +127,7 @@ export async function copyDriveFile(fileId, folder, fileName) {
       ACL: "public-read",
     }));
 
-    await fs.promises.unlink(tempFilePath);
+    await fs.promises.unlink(tempFilePath); // Ensures temp file is deleted
 
     return `https://${S3_BUCKET_NAME}.s3.amazonaws.com/${s3Key}`;
   } catch (error) {
