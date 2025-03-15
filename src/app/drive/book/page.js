@@ -14,7 +14,7 @@ export default async function BookPage() {
   const books = await getAllBooks();
 
   return (
-    <div className="div-100vw">
+    <div>
       <BookList books={books} coreTags={coreTags} />
       <EOBookList />
     </div>
