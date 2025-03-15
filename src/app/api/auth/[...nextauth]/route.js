@@ -18,10 +18,10 @@ export const authOptions = {
       const email = (profile?.email || "");
       const name = profile?.name || "";
       // @snu.ac.kr
-      if (!email.endsWith("@snu.ac.kr")) { 
+      if (!email.endsWith("@snu.ac.kr")) {
         return "/login/nosnu"; }
       // Just for snu 'cse' 'student'
-      if (process.env.AUTH_BLOCK_NOCSE === 'T'  &&  (!name.includes("학생") || !name.includes("컴퓨터공학부"))) { 
+      if (process.env.AUTH_BLOCK_NOCSE === 'T'  &&  (!name.includes("학생") || !name.includes("컴퓨터공학부"))) {
         return "/login/nocse"; }
       // Login success
       await updateUserAccess(email);
