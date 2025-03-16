@@ -64,7 +64,7 @@ export default function Sidebar({ isAdmin, links }) {
             <img src="/image/ico/open-mail-hover.png" alt="email hover" className="profile-hover-icon" />
           </button>
 
-          <button className="profile-button" onClick={() => window.open("https://github.com/KMSstudio", "_blank")}>
+          <button className="profile-button" onClick={() => window.open("https://github.com/KMSstudio/procyon-archive", "_blank")}>
             <img src="/image/ico/github.png" alt="github" className="profile-icon" />
             <img src="/image/ico/github-hover.png" alt="github hover" className="profile-hover-icon" />
           </button>
