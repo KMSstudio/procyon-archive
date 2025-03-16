@@ -13,15 +13,18 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 // Constants
 import navData from "@/config/navConstant.json";
 import { getUserInfo } from "@/utils/auth";
+import { updateUserAccess } from "@/utils/userDB"
 
 export default async function HomePage() {
   // Load Static data
   const session = await getServerSession(authOptions);
   const userData = await getUserInfo(session);
-
+  
   const { navs = [], links = [], buttons = [] } = navData;
   const { is_user_admin: isAdmin } = userData;
-
+  
+  updateUserAccess(userData.user_email);
+  
   return (
     <div className="main-container">
       <NavBar navs={navs} />
