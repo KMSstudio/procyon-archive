@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
       <head>
         <meta name="google" content="notranslate" />
       </head>
-      <body className={inter.className}>
+      <body className={inter.className} style={{ width: "100vw", height: "100vh" }}>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
