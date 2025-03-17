@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { updateUserAccess } from '@/utils/userDB';
+import { isUserExist, updateUserAccess } from '@/utils/userDB';
 
 export const authOptions = {
   providers: [
@@ -17,6 +17,9 @@ export const authOptions = {
     async signIn({ account, profile }) {
       const email = (profile?.email || "");
       const name = profile?.name || "";
+      // If user registered before, return success
+      if (isUserExist(email)) {
+        return true; }
       // @snu.ac.kr
       if (!email.endsWith("@snu.ac.kr")) {
         return "/login/nosnu"; }

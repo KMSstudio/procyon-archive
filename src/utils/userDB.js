@@ -40,6 +40,15 @@ export async function fetchUser(email) {
 }
 
 /**
+ * Check if user exists in DynamoDB (cache applied)
+ */
+export async function isUserExist(email) {
+    if (!email) return false;
+    const user = await fetchUser(email);
+    return user !== null;
+}
+
+/**
  * Save user to DynamoDB (cache applied)
  */
 export async function saveUser(email, data) {
@@ -64,6 +73,7 @@ export async function updateUserAccess(email) {
     console.log(`updateAccessDate ${email}`);
     if (!email) return;
     const today = new Date(Date.now() + 9*3600*1000).toISOString().split('T')[0], user = await fetchUser(email);
+    console.log(`update Access date: ${email} ${today}`)
     if (!user) await saveUser(email, { lastAccessDate: today, lastContributionDate: '1990-10-13', isAdmin: false });
     else if (user.lastAccessDate != today) { user.lastAccessDate = today, await saveUser(email, user); }
 }
