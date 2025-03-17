@@ -1,21 +1,15 @@
 /* admin.css */
 
-/* Overall layout */
-.admin-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-/* Main content layout */
-.admin-main {
-  flex: 1;
-  display: flex;
-  padding: 20px;
-}
-
 /* Container for user and book sections */
 .admin-sections {
   display: flex;
   flex: 1;
+}
+
+/* Sections */
+.admin-sections section {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background: #000;
 }

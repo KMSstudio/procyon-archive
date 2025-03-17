@@ -1,7 +1,7 @@
 /* @/app/drive/[...path]/page.js */
 
 // Components
-import FileList from "@/app/components/FileList";
+import FileList from "@/app/components/list/FileList";
 // Utils (Google Drive)
 import { getDriveFiles } from "@/utils/drive/show";
 // Styles (CSS)

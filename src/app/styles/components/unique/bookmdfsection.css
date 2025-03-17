@@ -1,0 +1,66 @@
+#book-modify-section {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background: #000;
+}
+
+#book-modify-section h2 {
+  margin: 20px 0;
+}
+
+#book-modify-section .book-search {
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 14px;
+  margin-bottom: 20px;
+  background-color: #222;
+  color: white;
+  width: 100%;
+}
+
+#book-modify-section .book-search:focus {
+  outline: none;
+  border: none;
+}
+
+.book-navigation {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+#book-modify-section .book-navigation .book-item {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 0px;
+}
+
+.book-navigation button {
+  height: 212px;
+
+  background-color: transparent;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-right: none;
+
+  color: white;
+
+  padding: 0px 0px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s;
+}
+
+.book-navigation button:hover {
+  background-color: #222;
+}
+
+.book-navigation button:disabled {
+  background-color: #222;
+  cursor: not-allowed;
+}

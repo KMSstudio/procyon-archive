@@ -67,7 +67,7 @@
     border-radius: 5px;
     gap: 5px;
     font-size: 12px;
-
+    
     color: #bbb;
     border: 1px solid #bbb;
     background: transparent;
@@ -134,7 +134,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
+    
     background: #181818;
     color: white;
     border: 1px solid #bbb;
@@ -151,6 +151,14 @@
 #book-register .tag-icon {
     width: 16px;
     height: 16px;
+}
+
+/* Register/Delete Button Group */
+.button-group {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-top: 15px;
 }
 
 /* Register Book Button */
@@ -172,9 +180,38 @@
     white-space: nowrap;  /* Prevents text from wrapping */
 }
 
-/* Button expands smoothly when text overflows */
 #book-register .register-button:hover {
     color: #fff;
     background: rgb(247, 143, 30);
     border: 1px solid rgb(247, 143, 30);
+}
+
+/* Delete Button */
+#book-register .delete-button {
+    display: inline-block;
+    min-width: 20%;
+    max-width: 100%;
+    margin-top: 10px;
+    padding: 5px 8px;
+    font-size: 14px;
+    
+    color: #c00;
+    background: transparent;
+    border: 1px solid #c00;
+    border-radius: 6px;
+    
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;  /* Prevents text from wrapping */
+}
+
+#book-register .delete-button:hover {
+    color: #f00;
+    background-color: #f88;
+    border: 1px solid #f00;
+}
+
+#book-register .delete-button:disabled {
+    background-color: #ff9999;
+    cursor: not-allowed;
 }

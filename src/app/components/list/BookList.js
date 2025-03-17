@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import BookComponent from "@/app/components/BookComponent";
 import "@/app/styles/components/list/booklist.css";
 
 export default function BookList({ books, coreTags }) {
@@ -87,40 +88,6 @@ export default function BookList({ books, coreTags }) {
     );
   }
 
-  function BookComponent({ book }) {
-    return (
-      <div className="book-item">
-        <div className="book-cover">
-          <a href={book.content} target="_blank">
-            <img src={book.cover} alt="Book Cover" className="cover-image" />
-          </a>
-        </div>
-        <div className="book-info">
-          <h3 className="book-title">{book.title}</h3>
-          <p className="book-author">{book.author}</p>
-          <div className="book-tags">
-            {book.mainTags.map((tag) => {
-              const tagData = coreTags.find((t) => t.name === tag);
-              return tagData ? (
-                <span
-                  key={tag}
-                  className="main-tag"
-                  style={{ backgroundColor: tagData.bgColor, color: tagData.textColor }}
-                >
-                  <img src={tagData.icon} alt={tag} className="tag-icon" />
-                  {tag}
-                </span>
-              ) : null;
-            })}
-            {book.tags.map((tag) => (
-              <span key={tag} className="tag">{tag}</span>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   function BookListDisplay() {
     const filteredBooks = books.filter((book) => {
       let titleMatch = true;
@@ -136,7 +103,7 @@ export default function BookList({ books, coreTags }) {
     return (
       <div className="book-list">
         {filteredBooks.map((book) => (
-          <BookComponent key={book.id} book={book} />
+          <BookComponent key={book.id} book={book} coreTags={coreTags} />
         ))}
       </div>
     );

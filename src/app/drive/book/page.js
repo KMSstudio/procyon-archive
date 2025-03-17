@@ -6,7 +6,7 @@ import "@/app/styles/drive.css";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 // Components
-import BookList from "@/app/components/BookList";
+import BookList from "@/app/components/list/BookList";
 import EOBookList from "./EOBookList";
 // Utils
 import { getUserInfo } from "@/utils/auth";
