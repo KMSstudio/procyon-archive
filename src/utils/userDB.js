@@ -31,8 +31,8 @@ export async function fetchUser(email) {
             ProjectionExpression: "lastAccessDate, lastContributionDate, isAdmin"
         }));
         if (!Item) return null;
-        userCache.set(email, {...Item}), cacheTimestamps.set(email, now);
-        return Item;
+        userCache.set(email, JSON.parse(JSON.stringify(Item))), cacheTimestamps.set(email, now);
+        return JSON.parse(JSON.stringify(Item));
     } catch (error) {
         console.error(`Error fetching user ${email}:`, error);
         throw error;
@@ -72,10 +72,10 @@ export async function saveUser(email, data) {
 export async function updateUserAccess(email) {
     console.log(`updateAccessDate ${email}`);
     if (!email) return;
-    const today = new Date(Date.now() + 9*3600*1000).toISOString().split('T')[0], user = await fetchUser(email);
+    const today = new Date(Date.now() + 9*3600*1000).toISOString().split('T')[0], user = JSON.parse(JSON.stringify(await fetchUser(email)));
     console.log(`update Access date: ${email} ${today}`)
     if (!user) await saveUser(email, { lastAccessDate: today, lastContributionDate: '1990-10-13', isAdmin: false });
-    else if (user.lastAccessDate != today) { user.lastAccessDate = today, await saveUser(email, user); }
+    else if (user.lastAccessDate != today) { user.lastAccessDate = today; await saveUser(email, user); }
 }
 
 /**
