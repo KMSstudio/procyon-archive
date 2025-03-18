@@ -51,6 +51,7 @@ function BookRegisterConsole({ cover, content, initialData }) {
     setMainTags([...mainTags, tagData]);
     setSelectedTag("");
   };
+
   // Add a custom tag manually
   const addTag = () => {
     if (!tagInput.trim()) return;
@@ -200,8 +201,8 @@ function BookRegisterConsole({ cover, content, initialData }) {
 }
 
 /* 
- * BookMdfSection 컴포넌트
- * 책을 검색하고 선택한 책을 수정하는 기능 포함
+ * BookMdfSection Component 
+ * - Provides a search function and book modification interface 
  */
 export default function BookMdfSection({ books, coreTags }) {
   const [query, setQuery] = useState("");
@@ -209,7 +210,7 @@ export default function BookMdfSection({ books, coreTags }) {
   const [idx, setIdx] = useState(0);
   const selectedBook = searchResult.length > 0 ? searchResult[idx] : null;
 
-  // 검색어 입력 시 검색 실행
+  // Execute search when input changes
   const handleSearch = (e) => {
     const searchTerm = e.target.value.toLowerCase();
     setQuery(searchTerm);
@@ -229,7 +230,7 @@ export default function BookMdfSection({ books, coreTags }) {
     <section id="book-modify-section">
       <h2>Modify Book</h2>
 
-      {/* 검색 입력 필드 */}
+      {/* Search input field */}
       <input
         type="text"
         placeholder="Enter book title..."
@@ -238,7 +239,7 @@ export default function BookMdfSection({ books, coreTags }) {
         className="book-search"
       />
 
-      {/* 검색 결과 및 네비게이션 버튼 */}
+      {/* Search results and navigation buttons */}
       {searchResult.length > 0 && (
         <div className="book-navigation">
           <button onClick={() => setIdx((idx - 1 + searchResult.length) % searchResult.length)}>{"<"}</button>
@@ -247,7 +248,7 @@ export default function BookMdfSection({ books, coreTags }) {
         </div>
       )}
 
-      {/* 선택된 책 정보 수정 */}
+      {/* Modify selected book details */}
       {selectedBook && (
         <BookRegisterConsole 
           cover={selectedBook.cover} 

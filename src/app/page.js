@@ -6,7 +6,7 @@
 import "./styles/index.css";
 // Components
 import NavBar from "./components/NavBar";
-import Sidebar from "@/app/components/Sidebar";
+import Sidebar from "@/app/components/main/Sidebar";
 // Next-auth
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";

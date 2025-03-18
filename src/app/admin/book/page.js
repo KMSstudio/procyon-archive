@@ -6,7 +6,7 @@
 import "@/app/styles/admin.css";
 // Components
 import NavBar from "@/app/components/NavBar";
-import BookMdfSection from "@/app/components/unique/modifybooksection";
+import BookMdfSection from "@/app/components/unique/BookMdfSection";
 import BookSection from "@/app/components/unique/booksection";
 // Next Auth
 import { getServerSession } from "next-auth";
