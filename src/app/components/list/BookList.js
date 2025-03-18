@@ -1,44 +1,48 @@
 "use client";
 
-import { useState, useRef, useMemo } from "react";
+import { useState, useMemo } from "react";
 import BookComponent from "@/app/components/BookComponent";
 import "@/app/styles/components/list/booklist.css";
 
 export default function BookList({ books, coreTags }) {
-  const [search, setSearch] = useState("");
-  const [regexSearch, setRegexSearch] = useState("");
-  const [authorSearch, setAuthorSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
+  const [regexInput, setRegexInput] = useState("");
+  const [authorInput, setAuthorInput] = useState("");
+
   const [selectedTags, setSelectedTags] = useState([]);
 
-  const searchRef = useRef(null);
-  const regexRef = useRef(null);
-  const authorRef = useRef(null);
-
-  // 태그 리스트를 useMemo로 캐싱하여 불필요한 렌더링 방지
   const allTags = useMemo(() => [...new Set(books.flatMap((book) => book.tags))], [books]);
 
-  const handleSearchChange = (e) => {
-    setSearch(e.target.value);
-    setRegexSearch(e.target.value ? `.*${e.target.value}.*` : "");
-    setAuthorSearch("");
-    setTimeout(() => searchRef.current?.focus(), 0);
+  const handleSearchBlur = (e, type) => {
+    const value = e.target.value;
+
+    if (type === "search") {
+      setSearchInput(value);
+      setRegexInput(value ? `.*${value}.*` : "");
+      setAuthorInput("");
+    } else if (type === "regex") {
+      setRegexInput(value);
+      setSearchInput("");
+      setAuthorInput("");
+    } else if (type === "author") {
+      setAuthorInput(value);
+      setSearchInput("");
+      setRegexInput("");
+    }
   };
 
-  const handleRegexChange = (e) => {
-    setRegexSearch(e.target.value);
-    setSearch("");
-    setAuthorSearch("");
-    setTimeout(() => regexRef.current?.focus(), 0);
+  const handleSearchFocus = () => {
+    setSearchInput("");
+    setRegexInput("");
+    setAuthorInput("");
   };
 
-  const handleAuthorChange = (e) => {
-    setAuthorSearch(e.target.value);
-    setSearch("");
-    setRegexSearch("");
-    setTimeout(() => authorRef.current?.focus(), 0);
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.target.blur();
+    }
   };
 
-  // ✅ selectedTags 유지 (불필요한 리렌더링 방지)
   const toggleTag = (tag) => {
     setSelectedTags((prevTags) =>
       prevTags.includes(tag) ? prevTags.filter((t) => t !== tag) : [...prevTags, tag]
@@ -50,31 +54,34 @@ export default function BookList({ books, coreTags }) {
       <div id="search-section">
         <div id="left-search">
           <input
-            ref={searchRef}
             type="text"
-            placeholder="일반검색"
-            value={search}
-            onChange={handleSearchChange}
-            readOnly={authorSearch !== ""}
-            className={authorSearch ? "disabled-input" : ""}
+            placeholder="Search"
+            defaultValue={searchInput}
+            onFocus={handleSearchFocus}
+            onBlur={(e) => handleSearchBlur(e, "search")}
+            onKeyDown={handleKeyDown}
+            readOnly={authorInput !== ""}
+            className={authorInput ? "disabled-input" : ""}
           />
           <input
-            ref={regexRef}
             type="text"
-            placeholder="정규식검색"
-            value={regexSearch}
-            onChange={handleRegexChange}
-            readOnly={authorSearch !== ""}
-            className={authorSearch ? "disabled-input" : ""}
+            placeholder="Regex Search"
+            defaultValue={regexInput}
+            onFocus={handleSearchFocus}
+            onBlur={(e) => handleSearchBlur(e, "regex")}
+            onKeyDown={handleKeyDown}
+            readOnly={authorInput !== ""}
+            className={authorInput ? "disabled-input" : ""}
           />
           <input
-            ref={authorRef}
             type="text"
-            placeholder="저자검색"
-            value={authorSearch}
-            onChange={handleAuthorChange}
-            readOnly={search !== "" || regexSearch !== ""}
-            className={search || regexSearch ? "disabled-input" : ""}
+            placeholder="Author Search"
+            defaultValue={authorInput}
+            onFocus={handleSearchFocus}
+            onBlur={(e) => handleSearchBlur(e, "author")}
+            onKeyDown={handleKeyDown}
+            readOnly={searchInput !== "" || regexInput !== ""}
+            className={searchInput || regexInput ? "disabled-input" : ""}
           />
         </div>
         <div id="right-search">
@@ -106,14 +113,14 @@ export default function BookList({ books, coreTags }) {
   function BookListDisplay() {
     const filteredBooks = books.filter((book) => {
       let titleMatch = true;
-      if (regexSearch) {
+      if (regexInput) {
         try { 
-          titleMatch = new RegExp(regexSearch, "i").test(book.title); 
+          titleMatch = new RegExp(regexInput, "i").test(book.title); 
         } catch (error) {
-          titleMatch = book.title.toLowerCase().includes(search.toLowerCase()); // ✅ 예외 처리 후 기본 검색 유지
+          titleMatch = book.title.toLowerCase().includes(searchInput.toLowerCase());
         }
       }
-      const authorMatch = authorSearch ? book.author.toLowerCase().includes(authorSearch.toLowerCase()) : true;
+      const authorMatch = authorInput ? book.author.toLowerCase().includes(authorInput.toLowerCase()) : true;
       const tagMatch = selectedTags.length === 0 || selectedTags.some((tag) => book.tags.includes(tag) || book.mainTags.includes(tag));
       return titleMatch && authorMatch && tagMatch;
     });
