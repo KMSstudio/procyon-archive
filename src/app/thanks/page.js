@@ -6,7 +6,7 @@
 import NavBar from "@/app/components/NavBar";
 import Profile from "@/app/components/Profile";
 // Constants
-import profiles from "@/../public/profile/profile-list.json";
+import profiles from "@/config/profile-list.json";
 import navData from "@/config/navConstant.json";
 // Style (CSS)
 import "@/app/styles/thanks.css";
