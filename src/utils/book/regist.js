@@ -1,7 +1,7 @@
 /* @/utils/book/regist.js */
 
 import { v4 as uuidv4 } from "uuid";
-import { createBook } from "@/utils/bookDB";
+import { createDBBook } from "@/utils/bookDB";
 import { moveDriveFile, copyDriveFile, getDriveFileId } from "@/utils/book/driveUtils";
 
 export async function registerBook(bookData) {
@@ -29,7 +29,7 @@ export async function registerBook(bookData) {
     ]);
 
     // Store book data in DB
-    await createBook({
+    await createDBBook({
       id: newId,
       title: bookData.title,
       edition: bookData.edition,

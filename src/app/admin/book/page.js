@@ -16,7 +16,7 @@ import { redirect } from "next/navigation";
 // Utils
 import { getUserInfo } from "@/utils/auth";
 import { getDriveFiles } from "@/utils/drive/show";
-import { getAllBooks } from "@/utils/bookDB";
+import { getAllDBBooks } from "@/utils/bookDB";
 // Constants
 import navData from "@/config/navConstant.json";
 import coreTags from "@/config/coreTag.json";
@@ -28,7 +28,7 @@ export default async function AdminPage() {
   
   if (!userData?.is_user_admin) { redirect("/"); }
   const files = await getDriveFiles("book/stage");
-  const books = await getAllBooks();
+  const books = await getAllDBBooks();
 
   return (
     <div className="main-container">

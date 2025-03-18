@@ -97,7 +97,7 @@ export async function moveDriveFile(fileId, targetPath) {
  */
 export async function copyDriveFile(fileId, folder, fileName) {
   try {
-    const tempFilePath = path.join(TEMP_STORAGE_PATH, fileName); // ✅ Changed to /tmp for AWS Lambda compatibility
+    const tempFilePath = path.join(TEMP_STORAGE_PATH, fileName);
     await fs.promises.mkdir(TEMP_STORAGE_PATH, { recursive: true });
 
     const response = await drive.files.get({ fileId, alt: "media" }, { responseType: "stream" });
@@ -133,5 +133,30 @@ export async function copyDriveFile(fileId, folder, fileName) {
   } catch (error) {
     console.error(`Failed to copy Google Drive file and upload to S3: ${fileId} → ${folder}/${fileName}`, error);
     throw error;
+  }
+}
+
+/**
+ * Move Google Drive to Trashcan
+ * @param {string} fileUrl - Google Drive File URL.
+ * @returns {Promise<void>}
+ */
+export async function deleteDriveFile(fileUrl) {
+  try {
+    const fileIdMatch = fileUrl.match(/[-\w]{25,}/);
+    const fileId = fileIdMatch ? fileIdMatch[0] : null;
+    if (!fileId) { console.warn(`Invalid Google Drive URL: ${fileUrl}`); return; }
+
+    // Move to trashcan
+    await drive.files.update({
+      fileId,
+      requestBody: {
+        trashed: true,
+      },
+    });
+
+    console.log(`Moved file to trash: ${fileId}`);
+  } catch (error) {
+    console.error("Failed to move file to trash on Google Drive:", error);
   }
 }

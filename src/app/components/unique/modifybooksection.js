@@ -51,7 +51,6 @@ function BookRegisterConsole({ cover, content, initialData }) {
     setMainTags([...mainTags, tagData]);
     setSelectedTag("");
   };
-
   // Add a custom tag manually
   const addTag = () => {
     if (!tagInput.trim()) return;
@@ -60,8 +59,7 @@ function BookRegisterConsole({ cover, content, initialData }) {
   };
 
   // Remove selected tags
-  const removeMainTag = (tagName) =>
-    setMainTags(mainTags.filter((tag) => tag.name !== tagName));
+  const removeMainTag = (tagName) => setMainTags(mainTags.filter((tag) => tag.name !== tagName));
   const removeTag = (tagName) => setTags(tags.filter((tag) => tag !== tagName));
 
   function TagPreview() {
@@ -93,21 +91,19 @@ function BookRegisterConsole({ cover, content, initialData }) {
       title,
       edition,
       author,
-      mainTags: mainTags.map((tag) => tag.name),
-      tags,
-      cover,
-      content,
+      mainTags: mainTags.map(tag => tag.name),
+      tags
     };
+
     setIsSubmitting(true);
 
     try {
       const response = await fetch("/api/book/modify", {
-        method: "POST",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedData),
+        body: JSON.stringify({ bookId: initialData.id, data: updatedData })
       });
       if (!response.ok) throw new Error("Modification Failed");
-      alert("Book information updated successfully");
     } catch (error) {
       console.error("Error modifying book:", error);
       alert("Error modifying book");
@@ -127,7 +123,7 @@ function BookRegisterConsole({ cover, content, initialData }) {
       const response = await fetch("/api/book/delete", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: initialData.id }),
+        body: JSON.stringify({ bookId: initialData.id }),
       });
       if (!response.ok) throw new Error("Deletion Failed");
       alert("Book deleted successfully");
