@@ -6,7 +6,7 @@ export function middleware(req) {
 
   // Retrieve the 'user-agent' from the request headers
   const userAgent = req.headers.get("user-agent")?.toLowerCase() || "";
-//   console.log(userAgent);
+  console.log(userAgent);
 
   // Check if the browser is in the allowed list
   const isValidBrowser = allowedBrowsers.some(browser => userAgent.includes(browser));
