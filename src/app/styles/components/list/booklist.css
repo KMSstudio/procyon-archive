@@ -42,6 +42,11 @@
   cursor: not-allowed;
 }
 
+#left-search input.disabled-input {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
 /* 右側のタグ検索エリア */
 #right-search {
   display: flex;
