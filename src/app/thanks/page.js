@@ -43,7 +43,7 @@ export default function ThanksPage() {
 
         {/* Server Information */}
         <div className="server-info">
-          <p>procyon 0.4.6</p>
+          <p>procyon 0.4.8</p>
           <p>모든 정보는 서울대학교 컴퓨터공학과에게 공개됩니다. 컴퓨터공학과 내에서 정보 격차는 존재해서는 안 됩니다.</p>
         </div>
       </div>
