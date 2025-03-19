@@ -22,16 +22,18 @@ function BookSearchConsole({ books, coreTags, setSearchResult }) {
   const [selectedTags, setSelectedTags] = useState([]);
   const allTags = useMemo(() => [...new Set(books.flatMap((book) => book.tags))], [books]);
 
-  // 検索実行関数（検索条件を直接受け取る）
-  const executeSearch = (regexQuery, authorQuery) => {
+  const executeSearch = (regexQuery, authorQuery, tags) => {
     const filteredBooks = books.filter((book) => {
       let titleMatch = true;
       if (regexQuery) {
-        try { titleMatch = new RegExp(regexQuery, "i").test(book.title); }
-        catch (error) { titleMatch = false; }
+        try {
+          titleMatch = new RegExp(regexQuery, "i").test(book.title);
+        } catch (error) {
+          titleMatch = false;
+        }
       }
       const authorMatch = authorQuery ? book.author.toLowerCase().includes(authorQuery.toLowerCase()) : true;
-      const tagMatch = selectedTags.length === 0 || selectedTags.some((tag) => book.tags.includes(tag) || book.mainTags.includes(tag));
+      const tagMatch = tags.length === 0 || tags.some((tag) => book.tags.includes(tag) || book.mainTags.includes(tag));
 
       return titleMatch && authorMatch && tagMatch;
     });
@@ -52,14 +54,22 @@ function BookSearchConsole({ books, coreTags, setSearchResult }) {
   // キー入力イベントの処理
   const handleOnChange = (e, type) => {
     const value = e.target.value;
-    let regexQuery = "";
-    let authorQuery = "";
+    let regexQuery = regexInput;
+    let authorQuery = authorInput;
 
     if (type === "search") { setSearchInput(value); regexQuery = value ? `.*${value}.*` : ""; }
     else if (type === "regex") { setRegexInput(value); regexQuery = value; }
     else if (type === "author") { setAuthorInput(value); authorQuery = value; }
 
-    executeSearch(regexQuery, authorQuery);
+    executeSearch(regexQuery, authorQuery, selectedTags);
+  };
+
+  const handleTagToggle = (tag) => {
+    setSelectedTags((prev) => {
+      const newTags = prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag];
+      executeSearch(regexInput, authorInput, newTags);
+      return newTags;
+    });
   };
   const handleKeyDown = (e) => { if(e.key === "Enter") {e.target.blur(); } }
 
@@ -69,7 +79,7 @@ function BookSearchConsole({ books, coreTags, setSearchResult }) {
     setRegexInput("");
     setAuthorInput("");
     setDisabledInputs({ search: "", regex: "", author: "" });
-    executeSearch("", "");
+    executeSearch("", "", selectedTags);
   };
 
   return (
@@ -112,14 +122,17 @@ function BookSearchConsole({ books, coreTags, setSearchResult }) {
             <span
               key={tag.name}
               className={selectedTags.includes(tag.name) ? "main-tag selected" : "main-tag"}
-              onClick={() => setSelectedTags((prev) => (prev.includes(tag.name) ? prev.filter((t) => t !== tag.name) : [...prev, tag.name]))}
+              onClick={() => handleTagToggle(tag.name)}
               style={{ backgroundColor: tag.bgColor, color: tag.textColor }}>
               <img src={tag.icon} alt={tag.name} className="tag-icon" />
               {tag.name}
             </span>
           ))}
           {allTags.map((tag) => (
-            <span key={tag} className={selectedTags.includes(tag) ? "tag selected" : "tag"} onClick={() => setSelectedTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]))}>
+            <span
+              key={tag}
+              className={selectedTags.includes(tag) ? "tag selected" : "tag"}
+              onClick={() => handleTagToggle(tag)}>
               {tag}
             </span>
           ))}
