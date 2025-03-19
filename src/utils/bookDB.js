@@ -12,20 +12,30 @@ const client = new DynamoDBClient({
     }
 });
 const docClient = DynamoDBDocumentClient.from(client);
-const BOOK_TABLE_NAME = "Procyon_Book_DB";
+const BOOK_TABLE_NAME = process.env.AWS_DB_BOOK_TABLE;
+
+// 캐싱 설정
+const bookCache = new Map();
+const cacheTimestamps = new Map();
+const CACHE_TTL = 60 * 60 * 1000; // 60분 (1시간)
 
 /**
- * Retrieves book information from DynamoDB.
+ * Retrieves book information from DynamoDB with cache.
  * @param {string} bookId - The ID of the book.
  * @returns {Promise<Object>} - The book data.
  */
 export async function getDBBook(bookId) {
   try {
+    const now = Date.now();
+    if (bookCache.has(bookId) && now - cacheTimestamps.get(bookId) < CACHE_TTL) { return JSON.parse(bookCache.get(bookId)); }
     const { Item: book } = await docClient.send(new GetCommand({
       TableName: BOOK_TABLE_NAME,
       Key: { id: bookId }
     }));
     if (!book) { console.error(`Book with ID ${bookId} not found.`); throw new Error("Book not found"); }
+    // Cache Save
+    bookCache.set(bookId, JSON.stringify(book));
+    cacheTimestamps.set(bookId, now);
     return book;
   } catch (error) {
     console.error("Failed to retrieve book from DynamoDB:", error);
@@ -39,8 +49,15 @@ export async function getDBBook(bookId) {
  */
 export async function getAllDBBooks() {
   try {
+    const now = Date.now();
+    if (bookCache.has("all_books") && now - cacheTimestamps.get("all_books") < CACHE_TTL) { 
+      return JSON.parse(bookCache.get("all_books")); }
     const response = await docClient.send(new ScanCommand({ TableName: BOOK_TABLE_NAME }));
-    return response.Items || [];
+    const books = response.Items || [];
+    // Cache Save
+    bookCache.set("all_books", JSON.stringify(books));
+    cacheTimestamps.set("all_books", now);
+    return books;
   } catch (error) {
     console.error("Error retrieving books:", error);
     throw error;
@@ -48,7 +65,7 @@ export async function getAllDBBooks() {
 }
 
 /**
- * Creates a new book entry in Procyon_Book_DB.
+ * Creates a new book entry in Procyon_Book_DB and updates cache.
  * @param {Object} bookData - Book information
  * @returns {Promise<void>}
  */
@@ -58,6 +75,10 @@ export async function createDBBook(bookData) {
       TableName: BOOK_TABLE_NAME,
       Item: bookData,
     }));
+    // Cache Save
+    bookCache.set(bookData.id, JSON.stringify(bookData));
+    cacheTimestamps.set(bookData.id, Date.now());
+    bookCache.delete("all_books");
   } catch (error) {
     console.error("Failed to register book:", error);
     throw error;
@@ -65,8 +86,8 @@ export async function createDBBook(bookData) {
 }
 
 /**
- * AWS DynamoDB から本のデータを削除する。
- * @param {string} bookId - 削除する本の ID。
+ * Deletes a book from AWS DynamoDB and updates cache.
+ * @param {string} bookId - The ID of the book to delete.
  * @returns {Promise<void>}
  */
 export async function deleteDBBook(bookId) {
@@ -75,44 +96,14 @@ export async function deleteDBBook(bookId) {
       TableName: BOOK_TABLE_NAME,
       Key: { id: bookId }
     }));
+
     console.log(`Deleted book ${bookId} from DynamoDB`);
+    // Cache Save
+    bookCache.delete(bookId);
+    cacheTimestamps.delete(bookId);
+    bookCache.delete("all_books");
   } catch (error) {
     console.error(`Failed to delete book ${bookId} from DynamoDB:`, error);
-    throw error;
-  }
-}
-
-/**
- * Updates an existing book entry in Procyon_Book_DB.
- * @param {string} bookId - ID of the book to update
- * @param {Object} updateData - Updated book data
- * @returns {Promise<void>}
- */
-export async function updateBook(bookId, updateData) {
-  try {
-    const updateExpression = Object.keys(updateData)
-      .map((key, index) => `#${key} = :val${index}`)
-      .join(", ");
-    
-    const expressionAttributeNames = Object.keys(updateData).reduce((acc, key, index) => {
-      acc[`#${key}`] = key;
-      return acc;
-    }, {});
-
-    const expressionAttributeValues = Object.keys(updateData).reduce((acc, key, index) => {
-      acc[`:val${index}`] = updateData[key];
-      return acc;
-    }, {});
-
-    await docClient.send(new UpdateCommand({
-      TableName: BOOK_TABLE_NAME,
-      Key: { id: bookId },
-      UpdateExpression: `SET ${updateExpression}`,
-      ExpressionAttributeNames: expressionAttributeNames,
-      ExpressionAttributeValues: expressionAttributeValues,
-    }));
-  } catch (error) {
-    console.error("Failed to update book:", error);
     throw error;
   }
 }
@@ -126,25 +117,26 @@ export async function updateBook(bookId, updateData) {
 export async function updateDBBook(bookId, updateData) {
   try {
     if (!bookId || typeof updateData !== "object") { 
-      throw new Error("Invalid parameters: bookId and updateData must be provided."); 
-    }
-
+      throw new Error("Invalid parameters: bookId and updateData must be provided."); }
     // `cover` と `content` フィールドを削除
     const filteredData = { ...updateData };
     delete filteredData.cover;
     delete filteredData.content;
-    if (Object.keys(filteredData).length === 0) { console.warn(`No valid fields to update for book ${bookId}`); return; }
-
-    // 更新対象のフィールドを動的に構成
-    const updateExpression = Object.keys(updateData)
+    if (Object.keys(filteredData).length === 0) { 
+      console.warn(`No valid fields to update for book ${bookId}`); return; }
+    // Create Update Query
+    const updateExpression = Object.keys(filteredData)
       .map((key, index) => `#${key} = :val${index}`)
       .join(", ");
 
-    const expressionAttributeNames = Object.keys(updateData).reduce((acc, key, index) => {
-      acc[`#${key}`] = key; return acc;
+    const expressionAttributeNames = Object.keys(filteredData).reduce((acc, key, index) => {
+      acc[`#${key}`] = key; 
+      return acc;
     }, {});
-    const expressionAttributeValues = Object.keys(updateData).reduce((acc, key, index) => {
-      acc[`:val${index}`] = updateData[key]; return acc;
+
+    const expressionAttributeValues = Object.keys(filteredData).reduce((acc, key, index) => {
+      acc[`:val${index}`] = filteredData[key]; 
+      return acc;
     }, {});
 
     // DynamoDB で更新を実行
@@ -157,6 +149,10 @@ export async function updateDBBook(bookId, updateData) {
     }));
 
     console.log(`Updated book ${bookId} in DynamoDB`);
+    // Cache Set
+    bookCache.set(bookId, JSON.stringify({ ...JSON.parse(bookCache.get(bookId) || "{}"), ...filteredData }));
+    cacheTimestamps.set(bookId, Date.now());
+    bookCache.delete("all_books");
   } catch (error) {
     console.error(`Failed to update book ${bookId} in DynamoDB:`, error);
     throw error;
