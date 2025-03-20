@@ -17,9 +17,6 @@ export const authOptions = {
     async signIn({ account, profile }) {
       const email = (profile?.email || "");
       const name = profile?.name || "";
-      // If user registered before, return success
-      if (isUserExist(email)) {
-        return true; }
       // @snu.ac.kr
       if (!email.endsWith("@snu.ac.kr")) {
         return "/err/login/nosnu"; }
