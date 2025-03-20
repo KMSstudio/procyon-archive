@@ -14,7 +14,7 @@ import coreTags from "@/config/coreTag.json";
  * BookRegisterConsole Component 
  * - Provides a form for modifying and deleting book details 
  */
-function BookRegisterConsole({ cover, content, initialData }) {
+function BookRegisterConsole({ initialData }) {
   const [title, setTitle] = useState(initialData?.title || "");
   const [edition, setEdition] = useState(initialData?.edition || "");
   const [author, setAuthor] = useState(initialData?.author || "");

@@ -14,10 +14,10 @@ const client = new DynamoDBClient({
 const docClient = DynamoDBDocumentClient.from(client);
 const BOOK_TABLE_NAME = process.env.AWS_DB_BOOK_TABLE;
 
-// 캐싱 설정
+// Chaching
 const bookCache = new Map();
 const cacheTimestamps = new Map();
-const CACHE_TTL = 60 * 60 * 1000; // 60분 (1시간)
+const CACHE_TTL = (process.env.TTL_BOOK_DB).split('*').map(Number).reduce((acc, val) => acc * val, 1);
 
 /**
  * Retrieves book information from DynamoDB with cache.
