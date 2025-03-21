@@ -22,12 +22,12 @@ export default function UserSection({ users }) {
         {/* Total Summary Item */}
         <div className="user-item">
           <img 
-            src="/image/ico/user-list/admin.png" 
+            src="/image/ico/user-list/terminal.png" 
             alt="Admin Icon" 
             className="user-icon" 
           />
           <div className="user-info">
-            <p className="user-email">total {filteredUsers.length} user found</p>
+            <p className="user-email">total {filteredUsers.length} users are found</p>
             <p className="user-last-access">console</p>
           </div>
         </div>
