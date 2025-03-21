@@ -19,6 +19,20 @@ export default function UserSection({ users }) {
 
       {/* User List */}
       <div className="user-list">
+        {/* Total Summary Item */}
+        <div className="user-item">
+          <img 
+            src="/image/ico/user-list/admin.png" 
+            alt="Admin Icon" 
+            className="user-icon" 
+          />
+          <div className="user-info">
+            <p className="user-email">total {filteredUsers.length} user found</p>
+            <p className="user-last-access">console</p>
+          </div>
+        </div>
+
+        {/* Existing User Items */}
         {filteredUsers.map((user) => (
           <div key={user.email} className="user-item">
             <img 
