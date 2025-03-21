@@ -7,7 +7,12 @@ export async function getUserInfo(session) {
             user_email: null, 
             is_user_admin: false, 
             last_access: null, 
-            last_contribute: null 
+            last_contribute: null,
+            user_info: {
+                student_name: null,
+                student_position: null,
+                student_major: null
+            }
         };
     }
     const user = await fetchUser(session.user.email);
@@ -16,6 +21,11 @@ export async function getUserInfo(session) {
         user_email: session.user.email,
         is_user_admin: user?.isAdmin ?? false,
         last_access: user?.lastAccessDate ?? null,
-        last_contribute: user?.lastContributionDate ?? null
+        last_contribute: user?.lastContributionDate ?? null,
+        user_info: {
+            studentName: user?.studentName ?? null,
+            studentPosition: user?.studentPosition ?? null,
+            studentMajor: user?.studentMajor ?? null
+        }
     };
 }

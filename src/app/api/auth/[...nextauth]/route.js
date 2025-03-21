@@ -16,15 +16,22 @@ export const authOptions = {
   callbacks: {
     async signIn({ account, profile }) {
       const email = (profile?.email || "");
-      const name = profile?.name || "";
+      const rawName = profile?.name || "";
+
+      const [name, position, major] = rawName.split("/");
+      const userData = { studentName: name, studentPosition: position, studentMajor: major };
+
+      // if User Exist, Pass
+      if (await isUserExist(email)){ 
+        updateUserAccess(email, userData); return true; }
       // @snu.ac.kr
       if (!email.endsWith("@snu.ac.kr")) {
         return "/err/login/nosnu"; }
       // Just for snu 'cse' 'student'
-      if (process.env.AUTH_BLOCK_NOCSE === 'T'  &&  (!name.includes("학생") || !name.includes("컴퓨터공학부"))) {
+      if (process.env.AUTH_BLOCK_NOCSE === 'T'  &&  (!rawName.includes("학생") || !rawName.includes("컴퓨터공학부"))) {
         return "/err/login/nocse"; }
-      // Login success
-      await updateUserAccess(email);
+      // Login Accept
+      await updateUserAccess(email, userData);
       return true;
     },
     async session({ session, token }) {

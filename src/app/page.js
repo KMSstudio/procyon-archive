@@ -23,7 +23,7 @@ export default async function HomePage() {
   const { navs = [], links = [], buttons = [] } = navData;
   const { is_user_admin: isAdmin } = userData;
   
-  updateUserAccess(userData.user_email);
+  updateUserAccess(userData.user_email, userData.user_info);
   
   return (
     <div className="main-container">

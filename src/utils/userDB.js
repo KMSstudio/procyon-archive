@@ -28,7 +28,7 @@ export async function fetchUser(email) {
         const { Item } = await dynamoDB.send(new GetCommand({
             TableName: TABLE_NAME,
             Key: { email },
-            ProjectionExpression: "lastAccessDate, lastContributionDate, isAdmin"
+            ProjectionExpression: "lastAccessDate, lastContributionDate, isAdmin, studentName, studentPosition, studentMajor"
         }));
         if (!Item) return null;
         userCache.set(email, JSON.parse(JSON.stringify(Item))), cacheTimestamps.set(email, now);
@@ -67,15 +67,24 @@ export async function saveUser(email, data) {
 }
 
 /**
- * Update last access date
+ * Update last access date & store basic user info if given
  */
-export async function updateUserAccess(email) {
-    console.log(`updateAccessDate ${email}`);
-    if (!email) return;
-    const today = new Date(Date.now() + 9*3600*1000).toISOString().split('T')[0], user = JSON.parse(JSON.stringify(await fetchUser(email)));
-    console.log(`update Access date: ${email} ${today}`)
-    if (!user) await saveUser(email, { lastAccessDate: today, lastContributionDate: '1990-10-13', isAdmin: false });
-    else if (user.lastAccessDate != today) { user.lastAccessDate = today; await saveUser(email, user); }
+export async function updateUserAccess(email, data = {}) {
+    if (!email) { return; }
+    const today = new Date(Date.now() + 9*3600*1000).toISOString().split('T')[0];
+    const user = JSON.parse(JSON.stringify(await fetchUser(email)));
+    
+    console.log(`update Access date: ${email}, DATA: ${JSON.stringify(data)} ${today}`)
+
+    if (!user) {
+        await saveUser(email, { lastAccessDate: today, lastContributionDate: '1990-10-13', isAdmin: false, ...data }); }
+    else {
+        let updated = false;
+        if (user.lastAccessDate !== today) { user.lastAccessDate = today; updated = true; }
+        for (const key of ['studentName', 'studentPosition', 'studentMajor']) {
+            if (data[key] && user[key] !== data[key]) { user[key] = data[key]; updated = true; } }
+        if (updated) await saveUser(email, user);
+    }
 }
 
 /**
@@ -87,7 +96,7 @@ export async function fetchAllUser() {
     try {
         const { Items } = await dynamoDB.send(new ScanCommand({
             TableName: TABLE_NAME,
-            ProjectionExpression: "email, lastAccessDate, lastContributionDate, isAdmin"
+            ProjectionExpression: "email, lastAccessDate, lastContributionDate, isAdmin, studentName, studentPosition, studentMajor"
         }));
         
         if (!Items) return [];

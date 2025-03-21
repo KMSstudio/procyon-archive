@@ -15,7 +15,7 @@ export default async function DriveLayout({ children }) {
   const session = await getServerSession(authOptions);
   const userData = await getUserInfo(session);
   const content = userData.do_user_login ? children : <NoLoginComponent />;
-  updateUserAccess(userData.user_email);
+  updateUserAccess(userData.user_email, userData.user_info);
 
   return (
     <div className="main-container">
