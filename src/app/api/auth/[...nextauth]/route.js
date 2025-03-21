@@ -27,6 +27,9 @@ export const authOptions = {
       // @snu.ac.kr
       if (!email.endsWith("@snu.ac.kr")) {
         return "/err/login/nosnu"; }
+      // Just for snu 'student'
+      if (process.env.AUTH_BLOCK_NOSTD === 'T' && (!rawName.includes("학생"))) {
+        return "/arr/login/nostd"; }
       // Just for snu 'cse' 'student'
       if (process.env.AUTH_BLOCK_NOCSE === 'T'  &&  (!rawName.includes("학생") || !rawName.includes("컴퓨터공학부"))) {
         return "/err/login/nocse"; }
