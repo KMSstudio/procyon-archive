@@ -1,8 +1,14 @@
 /* @/app/style/admin.css */
 
+/* Admin Total Container */
+.admin-container {
+  width: 100vw; height: 100vh;
+}
+
 /* Container for user and book sections */
 .admin-sections {
   display: flex;
+  height: calc(100vh - 66px);
   flex: 1;
 }
 

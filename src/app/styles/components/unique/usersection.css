@@ -5,19 +5,30 @@
 #user-section {
     flex: 1;
     padding: 20px;
-    overflow-y: auto;
+    height: calc(100%-40px);
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
     background: #000;
 }
 
 #user-section h2 {
-    margin: 20px 0;
+    padding: 20px 0;
+    margin: 0;
 }
 
 /* user list */
 #user-section .user-list {
+    flex: 1;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
 }
+
+/* 스크롤바 숨기기 */
+#user-section .user-list::-webkit-scrollbar { display: none; }
+#user-section .user-list { scrollbar-width: none; }
 
 #user-section .user-item {
     display: flex;

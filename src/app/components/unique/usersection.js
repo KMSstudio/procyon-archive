@@ -27,7 +27,7 @@ export default function UserSection({ users }) {
             className="user-icon" 
           />
           <div className="user-info">
-            <p className="user-email">total {filteredUsers.length} users are found</p>
+            <p className="user-email">total <span style={{color: "rgb(247, 143, 30)"}}>{filteredUsers.length}</span> users are found</p>
             <p className="user-last-access">console</p>
           </div>
         </div>
