@@ -8,7 +8,9 @@
     align-items: center;
     flex: 1 1 auto;
     
-    min-width: 384px;
+    overflow-x: scroll;
+    min-width: min(384px, calc(100vw-30px));
+    max-width: calc(100vw-30px);
     
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
