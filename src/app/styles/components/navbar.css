@@ -54,7 +54,7 @@
   display: flex;
   gap: 20px;
   min-width: 0;
-  overflow-x: hidden;
+  overflow-x: scroll;
   flex-wrap: nowrap;
 }
 
