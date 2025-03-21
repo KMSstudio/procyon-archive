@@ -71,7 +71,7 @@ export async function saveUser(email, data) {
  */
 export async function updateUserAccess(email, data = {}) {
     if (!email) { return; }
-    const today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().replace('T', ' ').slice(0, 19);
+    const today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().replace('T', ' ').slice(0, 13);
     const user = JSON.parse(JSON.stringify(await fetchUser(email)));
     
     console.log(`update Access date: ${email}, DATA: ${JSON.stringify(data)} ${today}`)
