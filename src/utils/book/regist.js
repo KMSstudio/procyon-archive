@@ -1,7 +1,7 @@
 /* @/utils/book/regist.js */
 
 import { v4 as uuidv4 } from "uuid";
-import { createDBBook } from "@/utils/bookDB";
+import { createDBBook } from "@/utils/database/bookDB";
 import { moveDriveFile, copyDriveFile, getDriveFileId } from "@/utils/book/driveUtils";
 
 export async function registerBook(bookData) {

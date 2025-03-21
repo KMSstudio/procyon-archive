@@ -13,7 +13,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 // Constants
 import navData from "@/config/navConstant.json";
 import { getUserInfo } from "@/utils/auth";
-import { updateUserAccess } from "@/utils/userDB"
+import { updateUserAccess } from "@/utils/database/userDB"
 
 export default async function HomePage() {
   // Load Static data

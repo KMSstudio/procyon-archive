@@ -1,4 +1,4 @@
-/* @/utils/bookDB.js */
+/* @/utils/database/bookDB.js */
 
 // AWS SDK v3
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";

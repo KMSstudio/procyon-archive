@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { isUserExist, updateUserAccess } from '@/utils/userDB';
+import { isUserExist, updateUserAccess } from '@/utils/database/userDB';
 
 export const authOptions = {
   providers: [

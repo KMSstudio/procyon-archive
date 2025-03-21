@@ -1,3 +1,5 @@
+/* @@/utils/database/userDB.js */
+
 // AWS SDK v3
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, GetCommand, PutCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";

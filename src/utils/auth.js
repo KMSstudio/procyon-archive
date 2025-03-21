@@ -1,4 +1,4 @@
-import { fetchUser } from '@/utils/userDB';
+import { fetchUser } from '@/utils/database/userDB';
 
 export async function getUserInfo(session) {
     if (!session) {

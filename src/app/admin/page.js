@@ -16,7 +16,7 @@ import { redirect } from "next/navigation";
 // Constants
 import navData from "@/config/navConstant.json";
 import { getUserInfo } from "@/utils/auth";
-import { fetchAllUser } from "@/utils/userDB";
+import { fetchAllUser } from "@/utils/database/userDB";
 import { getDriveFiles } from "@/utils/drive/show";
 
 export default async function AdminPage() {

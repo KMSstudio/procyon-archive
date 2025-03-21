@@ -10,7 +10,7 @@ import BookList from "@/app/components/list/BookList";
 import EOBookList from "./EOBookList";
 // Utils
 import { getUserInfo } from "@/utils/auth";
-import { getAllDBBooks } from "@/utils/bookDB";
+import { getAllDBBooks } from "@/utils/database/bookDB";
 // Constants
 import coreTags from "@/config/coreTag.json";
 

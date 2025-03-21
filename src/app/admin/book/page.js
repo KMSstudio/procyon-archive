@@ -16,7 +16,7 @@ import { redirect } from "next/navigation";
 // Utils
 import { getUserInfo } from "@/utils/auth";
 import { getDriveFiles } from "@/utils/drive/show";
-import { getAllDBBooks } from "@/utils/bookDB";
+import { getAllDBBooks } from "@/utils/database/bookDB";
 // Constants
 import navData from "@/config/navConstant.json";
 import coreTags from "@/config/coreTag.json";
