@@ -2,7 +2,7 @@
 
 회원 관리
 서울대학교 TIP 남기는 사이트
-GPT
+GPT Research 구독
 
 ---
 
