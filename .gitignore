@@ -2,7 +2,8 @@
 
 admin.md
 /src/utils/book/photoUtils.js
-y-pythons/*.csv
+y-pythons/*
+!y-pythons/*.py
 
 # service account
 /src/config/service-account.json
