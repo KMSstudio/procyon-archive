@@ -25,8 +25,8 @@ export const authOptions = {
       if (await isUserExist(email)){ 
         updateUserAccess(email, userData); return true; }
       // @snu.ac.kr
-      if (!email.endsWith("@snu.ac.kr")) {
-        return "/err/login/nosnu"; }
+      // if (!email.endsWith("@snu.ac.kr")) {
+      //   return "/err/login/nosnu"; }
       // Just for snu 'student'
       if (process.env.AUTH_BLOCK_NOSTD === 'T' && (!rawName.includes("학생"))) {
         return "/arr/login/nostd"; }
