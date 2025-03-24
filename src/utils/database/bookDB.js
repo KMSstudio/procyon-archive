@@ -17,16 +17,12 @@ const bookCollection = db.collection(process.env.AWS_DB_BOOK_TABLE);
 let bookCache = new Map(), cacheTimestamps = new Map();
 const CACHE_TTL = (process.env.TTL_BOOK_DB).split("*").map(Number).reduce((a, b) => a * b, 1);
 
-/**
- * Normalize specific fields to arrays
- */
-function normalizeTags(book) {
-  return {
-    ...book,
-    mainTags: Array.isArray(book.mainTags) ? book.mainTags : [],
-    tags: Array.isArray(book.tags) ? book.tags : [],
-  };
-}
+const parseList = (v) => Array.isArray(v) ? v : (typeof v === "string" ? (JSON.parse(v.replace(/'/g, '"')) || []) : []);
+const normalizeTags = (book) => ({
+  ...book,
+  mainTags: parseList(book.mainTags),
+  tags: parseList(book.tags),
+});
 
 /**
  * Retrieve a book by ID (with caching)
