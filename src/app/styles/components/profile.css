@@ -21,6 +21,10 @@
   margin-right: 20px;
 }
 
+@media screen and (max-width: 512px) {
+  .profile-image { width: 50px; height: 50px; }
+}
+
 .profile-text {
   text-align: left;
 }
