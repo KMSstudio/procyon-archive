@@ -1,23 +1,25 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
+import os
+
 import csv
 import json
-import os
-from pathlib import Path
 from dotenv import load_dotenv
+from pathlib import Path
 
 # Load .env.local from parent directory
 project_root = Path(__file__).resolve().parents[1]
 load_dotenv(dotenv_path=project_root / ".env.local")
 
-# Initialize Firebase Admin
+# Firebase Admin を初期化
 service_account_info = json.loads(os.environ.get("FIREBASE_SERVICE_ACCOUNT", "{}"))
 if not firebase_admin._apps:
     cred = credentials.Certificate(service_account_info)
     firebase_admin.initialize_app(cred)
 
+# Firestore クライアントを取得
 db = firestore.client()
-collection_name = "Procyon_Book_DB"
+collection_name = os.environ.get("AWS_DB_BOOK_TABLE")
 
 # Get all book documents from Firestore
 def get_all_books():
