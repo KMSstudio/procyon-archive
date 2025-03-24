@@ -7,6 +7,7 @@ import NavBar from "@/app/components/NavBar";
 import Profile from "@/app/components/Profile";
 // Constants
 import profiles from "@/config/profile-list.json";
+import contributors from "@/config/contributor-list.json";
 import navData from "@/config/navConstant.json";
 // Style (CSS)
 import "@/app/styles/thanks.css";
@@ -42,9 +43,29 @@ export default function ThanksPage() {
         </div>
 
         {/* Server Information */}
-        <div className="server-info">
-          <p>procyon 0.5.3</p>
-          <p>모든 정보는 서울대학교 컴퓨터공학과에게 공개됩니다. 컴퓨터공학과 내에서 정보 격차는 존재해서는 안 됩니다.</p>
+        <div id="server-info">
+          <p className="server-version">procyon 0.5.3</p>
+          <p className="server-message">
+            모든 정보는 서울대학교 컴퓨터공학과에게 공개됩니다. 컴퓨터공학과 내에서 정보 격차는 존재해서는 안 됩니다.
+          </p>
+        </div>
+
+        {/* Contributor Section */}
+        <div id="contributor-section">
+          <div className="contributor-grid">
+            {contributors.map((contributor, index) => (
+              <div key={index} className="contributor-item">
+                <img src={contributor.image} alt="Profile" className="contributor-image" />
+                <div className="contributor-text">
+                  <p className="contributor-name">
+                    {contributor.name}
+                    <span className="alias-tag">({contributor.alias})</span>
+                  </p>
+                  <p className="contributor-role">{contributor.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

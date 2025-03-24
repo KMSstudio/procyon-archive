@@ -69,10 +69,90 @@ body { -ms-overflow-style: none; }
  * Server Information
 */
 
-.server-info {
-  /* TopBottom LeftRIght */
+#server-info {
   margin: 30px 50px;
-  font-size: 14px;
-  color: #bbb;
   text-align: center;
-}  
+
+  .server-version {
+    font-size: 18px;
+    color: #ccc;
+    margin-bottom: 10px;
+  }
+
+  .server-message {
+    font-size: 14px;
+    color: #bbb;
+    line-height: 1.6;
+  }
+}
+
+/*
+ * Contributor Information
+*/
+
+#contributor-section {
+  width: 100%;
+  margin-bottom: 180px;
+
+  h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: white;
+    text-align: center;
+  }
+
+  .contributor-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    gap: 0px;
+    width: 100%;
+  }
+
+  .contributor-item {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+  }
+  .contributor-item:hover { background-color: #222; }
+
+  .contributor-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+
+  .contributor-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .contributor-name {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    color: white;
+  }
+
+  .contributor-role {
+    font-size: 14px;
+    color: gray;
+    margin: 0;
+  }
+
+  .alias-tag {
+    font-size: 12px;
+    color: white;
+    margin-left: 5px;
+  }
+
+  @media screen and (max-width: 512px) {
+    .contributor-grid { grid-template-columns: 1fr; }
+    .contributor-image { width: 50px; height: 50px; }
+  }
+}
