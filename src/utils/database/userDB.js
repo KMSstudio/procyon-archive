@@ -11,7 +11,7 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
-const userCollection = db.collection(process.env.AWS_DB_USER_TABLE);
+const userCollection = db.collection(process.env.FIRE_DB_USER_TABLE);
 
 // Caching
 let userCache = new Map(), cacheTimestamps = new Map();

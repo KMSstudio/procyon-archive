@@ -11,7 +11,7 @@ if (!admin.apps.length) {
 }
 
 const db = admin.firestore();
-const bookCollection = db.collection(process.env.AWS_DB_BOOK_TABLE);
+const bookCollection = db.collection(process.env.FIRE_DB_BOOK_TABLE);
 
 // Cache and TTL settings
 let bookCache = new Map(), cacheTimestamps = new Map();

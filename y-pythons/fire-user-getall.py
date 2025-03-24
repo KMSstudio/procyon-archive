@@ -19,7 +19,7 @@ if not firebase_admin._apps:
 
 # Firestore クライアントを取得
 db = firestore.client()
-collection_name = os.environ.get("AWS_DB_USER_TABLE")
+collection_name = os.environ.get("FIRE_DB_USER_TABLE")
 
 # Firestore からすべてのユーザーデータを取得する関数
 def get_all_users():

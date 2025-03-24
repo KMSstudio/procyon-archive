@@ -19,7 +19,7 @@ if not firebase_admin._apps:
 
 # Firestore クライアントを取得
 db = firestore.client()
-collection_name = os.environ.get("AWS_DB_BOOK_TABLE")
+collection_name = os.environ.get("FIRE_DB_BOOK_TABLE")
 
 # Get all book documents from Firestore
 def get_all_books():
