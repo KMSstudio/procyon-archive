@@ -1,60 +1,67 @@
 /* @/utils/database/bookDB.js */
 
-// AWS SDK v3
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, PutCommand, ScanCommand, UpdateCommand, DeleteCommand, GetCommand } from "@aws-sdk/lib-dynamodb";
+import admin from "firebase-admin";
 
-const client = new DynamoDBClient({ 
-    region: process.env.AWS_PRCY_REGION,
-    credentials: {  
-        accessKeyId: process.env.AWS_PRCY_ACCESS_KEY,
-        secretAccessKey: process.env.AWS_PRCY_SECRET_KEY 
-    }
-});
-const docClient = DynamoDBDocumentClient.from(client);
-const BOOK_TABLE_NAME = process.env.AWS_DB_BOOK_TABLE;
+// Initialize Firebase
+if (!admin.apps.length) {
+  const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+}
 
-// Chaching
-const bookCache = new Map();
-const cacheTimestamps = new Map();
-const CACHE_TTL = (process.env.TTL_BOOK_DB).split('*').map(Number).reduce((acc, val) => acc * val, 1);
+const db = admin.firestore();
+const bookCollection = db.collection(process.env.AWS_DB_BOOK_TABLE);
+
+// Cache and TTL settings
+let bookCache = new Map(), cacheTimestamps = new Map();
+const CACHE_TTL = (process.env.TTL_BOOK_DB).split("*").map(Number).reduce((a, b) => a * b, 1);
 
 /**
- * Retrieves book information from DynamoDB with cache.
- * @param {string} bookId - The ID of the book.
- * @returns {Promise<Object>} - The book data.
+ * Retrieve a book by ID (with caching)
+ * @param {string} bookId - ID of the book
+ * @returns {Promise<Object>} - Book data
  */
 export async function getDBBook(bookId) {
   try {
     const now = Date.now();
-    if (bookCache.has(bookId) && now - cacheTimestamps.get(bookId) < CACHE_TTL) { return JSON.parse(bookCache.get(bookId)); }
-    const { Item: book } = await docClient.send(new GetCommand({
-      TableName: BOOK_TABLE_NAME,
-      Key: { id: bookId }
-    }));
-    if (!book) { console.error(`Book with ID ${bookId} not found.`); throw new Error("Book not found"); }
-    // Cache Save
+    if (bookCache.has(bookId) && now - cacheTimestamps.get(bookId) < CACHE_TTL) {
+      return JSON.parse(bookCache.get(bookId));
+    }
+
+    const doc = await bookCollection.doc(bookId).get();
+    if (!doc.exists) {
+      console.error(`Book with ID ${bookId} not found.`);
+      throw new Error("Book not found");
+    }
+
+    const book = doc.data();
     bookCache.set(bookId, JSON.stringify(book));
     cacheTimestamps.set(bookId, now);
     return book;
   } catch (error) {
-    console.error("Failed to retrieve book from DynamoDB:", error);
+    console.error("Failed to retrieve book from Firestore:", error);
     throw error;
   }
 }
 
 /**
- * Retrieves all books from Procyon_Book_DB.
- * @returns {Promise<Array>} - List of all books
+ * Retrieve all books from the collection (with caching)
+ * @returns {Promise<Array>} - List of all book objects
  */
 export async function getAllDBBooks() {
   try {
     const now = Date.now();
-    if (bookCache.has("all_books") && now - cacheTimestamps.get("all_books") < CACHE_TTL) { 
-      return JSON.parse(bookCache.get("all_books")); }
-    const response = await docClient.send(new ScanCommand({ TableName: BOOK_TABLE_NAME }));
-    const books = response.Items || [];
-    // Cache Save
+    if (bookCache.has("all_books") && now - cacheTimestamps.get("all_books") < CACHE_TTL) {
+      return JSON.parse(bookCache.get("all_books"));
+    }
+
+    const snapshot = await bookCollection.get();
+    const books = [];
+    snapshot.forEach(doc => {
+      books.push({ id: doc.id, ...doc.data() });
+    });
+
     bookCache.set("all_books", JSON.stringify(books));
     cacheTimestamps.set("all_books", now);
     return books;
@@ -65,17 +72,13 @@ export async function getAllDBBooks() {
 }
 
 /**
- * Creates a new book entry in Procyon_Book_DB and updates cache.
- * @param {Object} bookData - Book information
- * @returns {Promise<void>}
+ * Create a new book entry in Firestore
+ * @param {Object} bookData - The book object to create (must contain `id`)
  */
 export async function createDBBook(bookData) {
   try {
-    await docClient.send(new PutCommand({
-      TableName: BOOK_TABLE_NAME,
-      Item: bookData,
-    }));
-    // Cache Save
+    if (!bookData.id) throw new Error("bookData.id is required");
+    await bookCollection.doc(bookData.id).set(bookData);
     bookCache.set(bookData.id, JSON.stringify(bookData));
     cacheTimestamps.set(bookData.id, Date.now());
     bookCache.delete("all_books");
@@ -86,95 +89,44 @@ export async function createDBBook(bookData) {
 }
 
 /**
- * Deletes a book from AWS DynamoDB and updates cache.
- * @param {string} bookId - The ID of the book to delete.
- * @returns {Promise<void>}
- */
-export async function deleteDBBook(bookId) {
-  try {
-    await docClient.send(new DeleteCommand({
-      TableName: BOOK_TABLE_NAME,
-      Key: { id: bookId }
-    }));
-
-    console.log(`Deleted book ${bookId} from DynamoDB`);
-    // Cache Save
-    bookCache.delete(bookId);
-    cacheTimestamps.delete(bookId);
-    bookCache.delete("all_books");
-  } catch (error) {
-    console.error(`Failed to delete book ${bookId} from DynamoDB:`, error);
-    throw error;
-  }
-}
-
-/**
- * AWS DynamoDB の本のデータを更新する（cover, content を除く）。
- * @param {string} bookId - 更新する本の ID。
- * @param {Object} updateData - 更新するデータ（cover, content は含めない）。
- * @returns {Promise<void>}
+ * Update book data in Firestore (excluding cover and content fields)
+ * @param {string} bookId - ID of the book to update
+ * @param {Object} updateData - Fields to update
  */
 export async function updateDBBook(bookId, updateData) {
   try {
-    if (!bookId || typeof updateData !== "object") { 
-      throw new Error("Invalid parameters: bookId and updateData must be provided."); }
-    // `cover` と `content` フィールドを削除
+    if (!bookId || typeof updateData !== "object") { throw new Error("Invalid parameters: bookId and updateData must be provided."); }
     const filteredData = { ...updateData };
     delete filteredData.cover;
     delete filteredData.content;
-    if (Object.keys(filteredData).length === 0) { 
-      console.warn(`No valid fields to update for book ${bookId}`); return; }
-    // Create Update Query
-    const updateExpression = Object.keys(filteredData)
-      .map((key, index) => `#${key} = :val${index}`)
-      .join(", ");
+    if (Object.keys(filteredData).length === 0) { console.warn(`No valid fields to update for book ${bookId}`); return; }
 
-    const expressionAttributeNames = Object.keys(filteredData).reduce((acc, key, index) => {
-      acc[`#${key}`] = key; 
-      return acc;
-    }, {});
-
-    const expressionAttributeValues = Object.keys(filteredData).reduce((acc, key, index) => {
-      acc[`:val${index}`] = filteredData[key]; 
-      return acc;
-    }, {});
-
-    // DynamoDB で更新を実行
-    await docClient.send(new UpdateCommand({
-      TableName: BOOK_TABLE_NAME,
-      Key: { id: bookId },
-      UpdateExpression: `SET ${updateExpression}`,
-      ExpressionAttributeNames: expressionAttributeNames,
-      ExpressionAttributeValues: expressionAttributeValues,
-    }));
-
-    console.log(`Updated book ${bookId} in DynamoDB`);
-    // Cache Set
-    bookCache.set(bookId, JSON.stringify({ ...JSON.parse(bookCache.get(bookId) || "{}"), ...filteredData }));
+    await bookCollection.doc(bookId).update(filteredData);
+    const cached = JSON.parse(bookCache.get(bookId) || "{}");
+    bookCache.set(bookId, JSON.stringify({ ...cached, ...filteredData }));
     cacheTimestamps.set(bookId, Date.now());
     bookCache.delete("all_books");
+
+    console.log(`Updated book ${bookId} in Firestore`);
   } catch (error) {
-    console.error(`Failed to update book ${bookId} in DynamoDB:`, error);
+    console.error(`Failed to update book ${bookId} in Firestore:`, error);
     throw error;
   }
 }
 
 /**
- * Deletes a file from AWS S3.
- * @param {string} fileUrl - The AWS S3 file URL.
- * @returns {Promise<void>}
+ * Delete a book from Firestore and clear it from the cache
+ * @param {string} bookId - ID of the book to delete
  */
-export async function deleteS3File(fileUrl) {
+export async function deleteDBBook(bookId) {
   try {
-    const key = fileUrl.split(`${S3_BUCKET_NAME}/`)[1];
-    if (!key) { console.warn(`Invalid S3 URL: ${fileUrl}`); return; }
-
-    await s3Client.send(new DeleteObjectCommand({
-      Bucket: S3_BUCKET_NAME,
-      Key: key,
-    }));
-    console.log(`Deleted S3 file: ${key}`);
+    await bookCollection.doc(bookId).delete();
+    bookCache.delete(bookId);
+    cacheTimestamps.delete(bookId);
+    bookCache.delete("all_books");
+    console.log(`Deleted book ${bookId} from Firestore`);
   } catch (error) {
-    console.error("Failed to delete file from S3:", error);
+    console.error(`Failed to delete book ${bookId} from Firestore:`, error);
+    throw error;
   }
 }
