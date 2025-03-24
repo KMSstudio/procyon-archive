@@ -1,9 +1,9 @@
 #SW
 
-1. Firebase 이전
-2. 도메인 구매
-3. 인기순 정렬
-4. Layout 통일
+1. 도메인 구매
+2. 인기순 정렬
+3. Layout 통일
+4. S3 대안 탐색
 
 서울대학교 TIP 남기는 사이트
 GPT Research 구독

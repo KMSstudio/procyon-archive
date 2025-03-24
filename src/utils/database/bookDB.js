@@ -18,6 +18,17 @@ let bookCache = new Map(), cacheTimestamps = new Map();
 const CACHE_TTL = (process.env.TTL_BOOK_DB).split("*").map(Number).reduce((a, b) => a * b, 1);
 
 /**
+ * Normalize specific fields to arrays
+ */
+function normalizeTags(book) {
+  return {
+    ...book,
+    mainTags: Array.isArray(book.mainTags) ? book.mainTags : [],
+    tags: Array.isArray(book.tags) ? book.tags : [],
+  };
+}
+
+/**
  * Retrieve a book by ID (with caching)
  * @param {string} bookId - ID of the book
  * @returns {Promise<Object>} - Book data
@@ -26,7 +37,7 @@ export async function getDBBook(bookId) {
   try {
     const now = Date.now();
     if (bookCache.has(bookId) && now - cacheTimestamps.get(bookId) < CACHE_TTL) {
-      return JSON.parse(bookCache.get(bookId));
+      return normalizeTags(JSON.parse(bookCache.get(bookId)));
     }
 
     const doc = await bookCollection.doc(bookId).get();
@@ -35,7 +46,7 @@ export async function getDBBook(bookId) {
       throw new Error("Book not found");
     }
 
-    const book = doc.data();
+    const book = normalizeTags(doc.data());
     bookCache.set(bookId, JSON.stringify(book));
     cacheTimestamps.set(bookId, now);
     return book;
@@ -53,13 +64,13 @@ export async function getAllDBBooks() {
   try {
     const now = Date.now();
     if (bookCache.has("all_books") && now - cacheTimestamps.get("all_books") < CACHE_TTL) {
-      return JSON.parse(bookCache.get("all_books"));
+      return JSON.parse(bookCache.get("all_books")).map(normalizeTags);
     }
 
     const snapshot = await bookCollection.get();
     const books = [];
     snapshot.forEach(doc => {
-      books.push({ id: doc.id, ...doc.data() });
+      books.push(normalizeTags({ id: doc.id, ...doc.data() }));
     });
 
     bookCache.set("all_books", JSON.stringify(books));
