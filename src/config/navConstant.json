@@ -6,7 +6,7 @@
     "buttons": [
         { "name": "도서", "href": "/drive/book" },
         { "name": "기출", "href": "/drive/exam" },
-        { "name": "자료기증", "href": "https://forms.gle/d96z8a6vzFxotzds9" }
+        { "name": "자료기증", "href": "/drive/jebo" }
     ],
     "links": [
         { "src": "/image/lnk/snucse.png", "name": "SNU CS&E 홈페이지", "href": "https://cse.snu.ac.kr/" },
