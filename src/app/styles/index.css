@@ -26,7 +26,6 @@ body { -ms-overflow-style: none; }
 .main-content {
     position: relative;
     flex-grow: 1;
-    padding-left: 40px;
 
     display: flex;
     flex-direction: column;

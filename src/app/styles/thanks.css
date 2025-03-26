@@ -74,8 +74,8 @@ body { -ms-overflow-style: none; }
   text-align: center;
 
   .server-version {
-    font-size: 18px;
-    color: #ccc;
+    font-size: 16px;
+    color: #bbb;
     margin-bottom: 10px;
   }
 
