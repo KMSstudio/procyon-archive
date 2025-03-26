@@ -3,10 +3,26 @@
 "use client";
 
 import { useState } from "react";
-// Component
-import FileList from "@/app/components/list/FileList";
 // Style (CSS)
 import "@/app/styles/components/console/jeboconsole.css";
+import "@/app/styles/components/list/filelist.css";
+
+function PendingFileList({ files }) {
+  if (!files || files.length === 0) {
+    return <div className="empty-message">업로드 된 파일이 없습니다.</div>;
+  }
+
+  return (
+    <div className="file-list">
+      {files.map((file) => (
+        <div key={file.id} className="file-item" data-file-name={file.name} data-file-ext={file.ext}>
+          <img src={file.img} alt="File Icon" className="file-icon" />
+          <p className="pending-file-name">{file.name}</p>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function JeboConsole() {
   const [reportName, setReportName] = useState("");
@@ -58,7 +74,6 @@ export default function JeboConsole() {
     img: "/image/ico/file.png",
     isFolder: false,
     ext: file.name.split(".").pop().toLowerCase(),
-    downloadLink: "#",
   }));
 
   return (
@@ -78,7 +93,7 @@ export default function JeboConsole() {
         rows={5}
       />
 
-      <FileList files={fileListObjects} />
+      <PendingFileList files={fileListObjects} />
 
       <div id="jebo-file-select-group">
         <label className="buttons">

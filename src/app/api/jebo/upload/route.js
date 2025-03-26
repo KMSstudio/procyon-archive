@@ -12,10 +12,12 @@ async function parseFormDataFromWebRequest(request) {
     throw new Error("Invalid content type");
   }
 
+  // 10GB per form
   const form = new IncomingForm({
     uploadDir: os.tmpdir(),
     keepExtensions: true,
     multiples: true,
+    maxTotalFileSize: 10 * 1024 * 1024 * 1024,
   });
 
   const body = Buffer.from(await request.arrayBuffer());

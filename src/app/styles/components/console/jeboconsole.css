@@ -3,7 +3,7 @@
 #jebo-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
 }
 
 #jebo-container input[type="text"],
@@ -27,6 +27,18 @@
 
 #jebo-container textarea {
   resize: vertical;
+}
+
+#jebo-container .file-list,
+#jebo-container .empty-message {
+  margin: 10px 0;
+}
+
+#jebo-container .pending-file-name {
+  flex-grow: 1;
+  margin: 0;
+  font-size: 18px;
+  color: #fff;
 }
 
 #jebo-file-select-group {
