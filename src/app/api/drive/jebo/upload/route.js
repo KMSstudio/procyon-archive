@@ -12,12 +12,13 @@ async function parseFormDataFromWebRequest(request) {
     throw new Error("Invalid content type");
   }
 
-  // 10GB per form
+  // 10GB per form, 1GB per file.
   const form = new IncomingForm({
     uploadDir: os.tmpdir(),
     keepExtensions: true,
     multiples: true,
     maxTotalFileSize: 10 * 1024 * 1024 * 1024,
+    maxFileSize: 1024 * 1024 * 1024
   });
 
   const body = Buffer.from(await request.arrayBuffer());
@@ -38,18 +39,16 @@ async function parseFormDataFromWebRequest(request) {
 // POST リクエストのハンドラ
 export async function POST(req) {
   try {
-    const { fields, files } = await parseFormDataFromWebRequest(req);
-
-    const reportName = fields.reportName?.[0] || fields.reportName;
-    const description = fields.description?.[0] || fields.description;
-    const fileArray = Array.isArray(files.files) ? files.files : [files.files];
-
-    if (!reportName || !fileArray || fileArray.length === 0) {
-      return new Response(JSON.stringify({ error: "Invalid input" }), { status: 400 }); }
-    await jeboFile(reportName, description || "", fileArray);
-    return new Response(JSON.stringify({ message: "Upload success" }), { status: 200 });
-  } catch (err) {
-    console.error("Jebo Upload Error:", err);
-    return new Response(JSON.stringify({ error: "Upload failed" }), { status: 500 });
+    parseFormDataFromWebRequest(req)
+    .then(({ fields, files }) => {
+      const reportName = fields.reportName?.[0] || fields.reportName;
+      const description = fields.description?.[0] || fields.description;
+      const fileArray = Array.isArray(files.files) ? files.files : [files.files];
+      if (!reportName || !fileArray || fileArray.length === 0) { console.warn("Invalid jebo input"); return; }
+      jeboFile(reportName, description || "", fileArray).catch((err) => console.error("jeboFile background error:", err));
+    })
+    .catch((err) => { console.error("form parsing error:", err); });
+    return new Response(JSON.stringify({ message: "Upload started" }), { status: 200 });
   }
+  catch (err) { return new Response(JSON.stringify({ error: "Unexpected upload error" }), { status: 500 }); }
 }

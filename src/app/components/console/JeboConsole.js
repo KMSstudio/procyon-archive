@@ -29,6 +29,7 @@ export default function JeboConsole() {
   const [description, setDescription] = useState("");
   const [files, setFiles] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadPercent, setUploadPercent] = useState(null);
 
   const handleFileChange = (e) => {
     const selected = Array.from(e.target.files);
@@ -46,16 +47,38 @@ export default function JeboConsole() {
     formData.append("reportName", reportName);
     formData.append("description", description);
     files.forEach((file) => formData.append("files", file));
-
+  
     setIsSubmitting(true);
-
+    setUploadPercent(0);
+  
     try {
-      const res = await fetch("/api/drive/jebo/upload", {
-        method: "POST",
-        body: formData,
+      await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+  
+        xhr.open("POST", "/api/drive/jebo/upload", true);
+  
+        xhr.upload.onprogress = (event) => {
+          console.log("onprogress fired");
+          if (event.lengthComputable) {
+            const percent = Math.round((event.loaded / event.total) * 100);
+            setUploadPercent(percent);
+          }
+          else { console.log("length not computable"); }
+        };
+  
+        xhr.onload = () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve();
+          } else {
+            reject(new Error(`업로드 실패: ${xhr.statusText}`));
+          }
+        };
+  
+        xhr.onerror = () => reject(new Error("요청 중 네트워크 오류 발생"));
+  
+        xhr.send(formData);
       });
-
-      if (!res.ok) throw new Error("업로드 실패");
+  
       alert("제보가 성공적으로 업로드되었습니다.");
       setReportName("");
       setDescription("");
@@ -65,8 +88,9 @@ export default function JeboConsole() {
       alert("업로드에 실패했습니다.");
     } finally {
       setIsSubmitting(false);
+      setUploadPercent(null);
     }
-  };
+  };  
 
   const fileListObjects = files.map((file, i) => ({
     id: `${i}-${file.name}`,
@@ -102,7 +126,11 @@ export default function JeboConsole() {
         </label>
 
         <button className="buttons" type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "제출 중..." : "제보 제출"}
+          {isSubmitting
+            ? uploadPercent !== null
+              ? `업로드 중... ${uploadPercent}%`
+              : "제출 중..."
+            : "제보 제출"}
         </button>
       </div>
     </form>
