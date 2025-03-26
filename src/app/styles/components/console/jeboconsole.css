@@ -1,4 +1,4 @@
-/* @/app/styles/components/console/jebo.css */
+/* @/app/styles/components/console/jeboconsole.css */
 
 #jebo-container {
   display: flex;
@@ -13,6 +13,7 @@
   border-radius: 4px;
   box-sizing: border-box;
   
+  font-family: Arial, sans-serif;
   font-size: 14px;
   background-color: #181818;
   border: 1px solid rgba(225, 225, 255, 0.2);
