@@ -6,8 +6,8 @@
 import "@/app/styles/admin.css";
 // Components
 import NavBar from "@/app/components/NavBar";
-import BookMdfSection from "@/app/components/unique/BookMdfSection";
-import BookSection from "@/app/components/unique/booksection";
+import BookMdfSection from "@/app/components/admin/BookMdfSection";
+import BookSection from "@/app/components/admin/booksection";
 // Next Auth
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";

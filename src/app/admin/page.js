@@ -6,8 +6,8 @@
 import "@/app/styles/admin.css";
 // Components
 import NavBar from "@/app/components/NavBar";
-import UserSection from "@/app/components/unique/usersection";
-import BookSection from "@/app/components/unique/booksection";
+import UserSection from "@/app/components/admin/usersection";
+import BookSection from "@/app/components/admin/booksection";
 // Next Auth
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
@@ -15,6 +15,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 // Constants
 import navData from "@/config/navConstant.json";
+// Utils
 import { getUserInfo } from "@/utils/auth";
 import { fetchAllUser } from "@/utils/database/userDB";
 import { getDriveFiles } from "@/utils/drive/show";
