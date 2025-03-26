@@ -50,7 +50,7 @@ export default function JeboConsole() {
     setIsSubmitting(true);
 
     try {
-      const res = await fetch("/api/jebo/upload", {
+      const res = await fetch("/api/drive/jebo/upload", {
         method: "POST",
         body: formData,
       });
