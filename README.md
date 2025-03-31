@@ -23,11 +23,11 @@ Procyonは、ソウル大学コンピュータ学科内の情報共有の不均�
 - 学生のノートやスライド、プロジェクト資料なども保存可能。
 
 ### 技術スタック
-- **フレームワーク:** Next.js (App Router)
-- **認証:** Google OAuth (@snu.ac.kr ドメイン限定, Next-Auth, JWTセッション管理)
-- **データベース:** AWS DynamoDB (ユーザー情報・書籍情報管理)
-- **ストレージ:** Google Drive API (コンテンツファイルの保存・提供)
-- **ストレージ:** AWS S3 (書籍の表米画像およびPDF以外の書籍コンテンツの保存)
+- **フレームワーク:** Next.js（App Router）
+- **認証:** Google OAuth（@snu.ac.kr ドメイン限定、Next-Auth、JWT セッション管理）
+- **データベース:** Firebase Firestore（ユーザーおよび書籍情報の管理）
+- **ストレージ:** Google Drive API（書籍コンテンツおよび試験ファイルの保存・提供）
+- **ストレージ:** AWS S3（書籍の表紙画像およびPDF以外の書籍コンテンツの保存）
 
 ---
 
@@ -58,6 +58,6 @@ Additionally, we aspire to build an academic community with strong connections, 
 ### Technology Stack
 - **Framework:** Next.js (App Router)
 - **Authentication:** Google OAuth (Restricted to @snu.ac.kr domain, Next-Auth, JWT-based sessions)
-- **Database:** AWS DynamoDB (For managing user and book information)
-- **Storage:** Google Drive API (For storing and providing content files)
+- **Database:** Firebase Firestore (For managing user and book information)
+- **Storage:** Google Drive API (For storing book content and exam files)
 - **Storage:** AWS S3 (For storing book cover images and non-PDF book content)
