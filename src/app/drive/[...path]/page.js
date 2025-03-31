@@ -5,7 +5,7 @@ import FileList from "@/app/components/list/FileList";
 // Utils (Google Drive)
 import { getDriveFiles } from "@/utils/drive/show";
 // Styles (CSS)
-import "@/app/styles/drive.css";
+import "@/styles/drive.css";
 // Next Tags
 import Link from "next/link";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import "@/app/styles/err/login.css";
+import "@/styles/err/login.css";
 
 export default function NoLoginComponent() {
   return (

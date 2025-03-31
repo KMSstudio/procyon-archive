@@ -5,7 +5,7 @@
 */
 
 import { useState } from "react";
-import "@/app/styles/components/admin/usersection.css";
+import "@/styles/components/admin/usersection.css";
 
 export default function UserSection({ users }) {
   const [searchTerm, setSearchTerm] = useState("");

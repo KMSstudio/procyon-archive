@@ -10,7 +10,7 @@ import profiles from "@/config/profile-list.json";
 import contributors from "@/config/contributor-list.json";
 import navData from "@/config/navConstant.json";
 // Style (CSS)
-import "@/app/styles/thanks.css";
+import "@/styles/thanks.css";
 
 export default function ThanksPage() {
   const { navs = [] } = navData;

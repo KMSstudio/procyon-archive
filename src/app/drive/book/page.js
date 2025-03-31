@@ -1,7 +1,7 @@
 /* @/app/drive/book/page.js */
 
 // Styles (CSS)
-import "@/app/styles/drive.css";
+import "@/styles/drive.css";
 // Next-auth
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";

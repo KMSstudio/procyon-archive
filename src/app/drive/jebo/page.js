@@ -2,7 +2,7 @@
 
 "use client";
 
-import "@/app/styles/drive.css";
+import "@/styles/drive.css";
 import JeboConsole from "@/app/components/console/JeboConsole";
 
 export default function JeboDrivePage() {

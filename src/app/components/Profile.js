@@ -2,7 +2,7 @@
  * @/app/components/Profile.js
  */
 
-import "@/app/styles/components/profile.css";
+import "@/styles/components/profile.css";
 
 export default function Profile({ image, name, email, description }) {
   return (

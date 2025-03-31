@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import BookComponent from "@/app/components/BookComponent";
-import "@/app/styles/components/list/booklist.css";
+import "@/styles/components/list/booklist.css";
 
 // 検索UIとロジックを担当するコンポーネント
 function BookSearchConsole({ books, coreTags, setSearchResult }) {

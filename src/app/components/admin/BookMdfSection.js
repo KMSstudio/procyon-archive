@@ -3,8 +3,8 @@
 // React
 import { useEffect, useState } from "react";
 // Style (CSS)
-import "@/app/styles/components/admin/bookmdfsection.css";
-import "@/app/styles/components/console/bookregister.css";
+import "@/styles/components/admin/bookmdfsection.css";
+import "@/styles/components/console/bookregister.css";
 // Components
 import BookComponent from "@/app/components/BookComponent";
 // Constants

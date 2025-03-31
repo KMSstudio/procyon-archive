@@ -9,7 +9,7 @@ import navData from "@/config/navConstant.json";
 import { getUserInfo } from "@/utils/auth";
 import { updateUserAccess } from "@/utils/database/userDB"
 // Style (CSS)
-import "@/app/styles/drive.css";
+import "@/styles/drive.css";
 
 export default async function DriveLayout({ children }) {
   const session = await getServerSession(authOptions);

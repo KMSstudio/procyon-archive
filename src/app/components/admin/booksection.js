@@ -6,8 +6,8 @@
 
 import { useState } from "react";
 // Style (CSS)
-import "@/app/styles/components/admin/booksection.css";
-import "@/app/styles/components/console/bookregister.css";
+import "@/styles/components/admin/booksection.css";
+import "@/styles/components/console/bookregister.css";
 // Constants
 import coreTags from "@/config/coreTag.json";
 

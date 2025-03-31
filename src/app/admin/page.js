@@ -3,7 +3,7 @@
 */
 
 // Styles (CSS)
-import "@/app/styles/admin.css";
+import "@/styles/admin.css";
 // Components
 import NavBar from "@/app/components/NavBar";
 import UserSection from "@/app/components/admin/usersection";

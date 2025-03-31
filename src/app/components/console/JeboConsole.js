@@ -4,8 +4,8 @@
 
 import { useState } from "react";
 // Style (CSS)
-import "@/app/styles/components/console/jeboconsole.css";
-import "@/app/styles/components/list/filelist.css";
+import "@/styles/components/console/jeboconsole.css";
+import "@/styles/components/list/filelist.css";
 
 function PendingFileList({ files }) {
   if (!files || files.length === 0) {

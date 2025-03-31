@@ -3,7 +3,7 @@
 */
 
 // Styles (CSS)
-import "./styles/index.css";
+import "@/styles/index.css";
 // Components
 import NavBar from "./components/NavBar";
 import Sidebar from "@/app/components/main/Sidebar";

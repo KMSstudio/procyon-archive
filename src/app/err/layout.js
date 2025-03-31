@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 // Component
 import NavBar from "@/app/components/NavBar";
 // Style
-import "@/app/styles/err/login.css";
-import "@/app/styles/err/browser.css"
+import "@/styles/err/login.css";
+import "@/styles/err/browser.css"
 // Navdata
 import navData from "@/config/navConstant.json";
 

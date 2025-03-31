@@ -1,7 +1,7 @@
 /* @/app/components/BookComponent.css */
 
 // Style (CSS)
-import "@/app/styles/components/bookcomponent.css";
+import "@/styles/components/bookcomponent.css";
 
 export default function BookComponent({ book, coreTags }) {
   return (
