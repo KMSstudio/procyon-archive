@@ -1,63 +1,103 @@
-# procyon - SNUCSEアーカイブプロジェクト
+# Procyon - ソウル大学コンピュータ工学科アーカイブプロジェクト
 
 ## 開発目的
-Procyonは、ソウル大学コンピュータ学科内の情報共有の不均衡を解決し、先輩後輩間の近しいネットワークを構築することを目的としています。
 
-学部内では、必須の学習資料でさえ個人単位で断片的に共有されることが多く、この問題を解決するために統合的なプラットフォームが必要だと考えました。
+**Procyon**は、ソウル大学コンピュータ工学科における情報共有の不均衡を解消し、先輩と後輩の間で自然な知識の循環を構築することを目的としています。  
+現在、学部内では重要な学習資料ですら個人ベースで断片的に共有される傾向があり、この問題を解決するためには統合されたプラットフォームが必要とされてきました。
 
-また、他大学のように強い結びつきを持つ学術コミュニティを目指し、先輩が後輩を自然に支援し、後輩もまた次世代のために知識を残せるような循環的な文化を定着させることを願っています。
-すくなくとも、学業や研究に必要な資料の共有は、より活発に行われるべきだと考えています。そのために、このプラットフォームが活性化することを期待しています。
+## 技術スタック
 
-## 機能及び技術スタック
-### 機能
-#### 1. 書籍アーカイブ
-- 教科書や専門書、一般書籍のPDFファイルを提供。
-- 書籍の表米画像およびPDF以外のフォーマット (EPUB, MOBI など) に対応。
+- **フレームワーク**: Next.js 14（App Router）
+- **認証**: Google OAuth（@snu.ac.kr ドメイン限定、NextAuth + JWT）
+- **データベース**: Firebase Firestore（ユーザー情報とメタデータ管理）
+- **ストレージ**:
+  - **Google Drive API**: 書籍・試験・資料の原本ファイル保存と提供
+  - **AWS S3**: 書籍の表紙画像およびPDF資料保存
 
-#### 2. 試験アーカイブ
-- 過去の試験問題を保存し、共有。
-- 科目ごとに整理され、検索機能を提供。
+## 主な機能（Features）
 
-#### 3. 資料アーカイブ
-- 講義ノートや授業関連資料を収集・管理。
-- 学生のノートやスライド、プロジェクト資料なども保存可能。
+### 1. 書籍アーカイブ
 
-### 技術スタック
-- **フレームワーク:** Next.js（App Router）
-- **認証:** Google OAuth（@snu.ac.kr ドメイン限定、Next-Auth、JWT セッション管理）
-- **データベース:** Firebase Firestore（ユーザーおよび書籍情報の管理）
-- **ストレージ:** Google Drive API（書籍コンテンツおよび試験ファイルの保存・提供）
-- **ストレージ:** AWS S3（書籍の表紙画像およびPDF以外の書籍コンテンツの保存）
+- 教科書や教養書のPDFアップロードと閲覧
+- 表紙画像およびEPUB・MOBIなどのフォーマットにも対応
+- タグによるフィルタ検索機能
+- 管理者ページでの表紙・内容ファイルの選択および登録
+
+### 2. 試験アーカイブ
+
+- 学科別の過去試験問題をアップロードおよび閲覧可能
+- Google Driveとの連携によりファイル管理
+- ファイル名に基づいたソートと分類
+
+### 3. 講義資料アーカイブ
+
+- 講義ノート、課題、プロジェクト資料などの保存と共有
+- 学生の個人資料もアップロード可能
+- 種別タグによる分類とフィルタリング
+
+## ページ構成
+
+| パス | 内容 |
+|------|------|
+| `/` | トップページ |
+| `/drive/book` | 書籍一覧と検索機能 |
+| `/drive/exam` | 過去試験問題の閲覧 |
+| `/err/*` | エラーページ（不正なパスへのアクセス） |
+| `/thanks` | 開発者・貢献者紹介ページ |
 
 ---
 
-#  
-# procyon - SNUCSE Archive Project
+このプロジェクトは、**SNUCSEの学術的資産の持続的なアーカイブ**を目的としており、誰でも簡単にアクセス・貢献できるオープンなプラットフォームとしての発展を目指しています。
+
+---
+
+# Procyon - Archive Project of the Department of Computer Science and Engineering, Seoul National University
 
 ## Purpose of Development
-Procyon aims to eliminate the imbalance in information sharing within the Department of Computer Science and Engineering at Seoul National University and establish a closer network among students.
 
-Currently, even essential learning materials are often shared in a fragmented manner on an individual basis, highlighting the need for an integrated platform to address this issue.
+**Procyon** aims to resolve the imbalance in information sharing within the Department of Computer Science and Engineering at Seoul National University (SNUCSE) and to build a natural cycle of knowledge exchange between senior and junior students.  
+Currently, even essential learning materials tend to be shared in a fragmented, personal manner within the department, which calls for an integrated platform to address this issue.
 
-Additionally, we aspire to build an academic community with strong connections, similar to other universities, where senior students naturally support juniors, and juniors, in turn, contribute knowledge for the next generation. At the very least, sharing essential academic and research materials should be more active, and we hope this platform will serve as a catalyst for fostering such a culture.
+## Technology Stack
 
-## Features and Technology Stack
-### Features
-#### 1. Book Archive
-- Provides PDF files of textbooks, specialized books, and general reading materials.
-- Supports book cover images and non-PDF formats (EPUB, MOBI, etc.).
+- **Framework**: Next.js 14 (App Router)
+- **Authentication**: Google OAuth (Restricted to `@snu.ac.kr` domain, using NextAuth + JWT)
+- **Database**: Firebase Firestore (For managing user data and metadata)
+- **Storage**:
+  - **Google Drive API**: Stores and provides original files for books, exams, and lecture materials
+  - **AWS S3**: Stores book cover images and PDF files
 
-#### 2. Exam Archive
-- Stores and shares past exam papers.
-- Organized by course with search functionality.
+## Main Features
 
-#### 3. Material Archive
-- Collects and manages lecture notes and course-related materials.
-- Supports saving student notes, slides, and project materials.
+### 1. Book Archive
 
-### Technology Stack
-- **Framework:** Next.js (App Router)
-- **Authentication:** Google OAuth (Restricted to @snu.ac.kr domain, Next-Auth, JWT-based sessions)
-- **Database:** Firebase Firestore (For managing user and book information)
-- **Storage:** Google Drive API (For storing book content and exam files)
-- **Storage:** AWS S3 (For storing book cover images and non-PDF book content)
+- Upload and view textbooks and general reading materials in PDF format
+- Supports cover images and additional formats like EPUB and MOBI
+- Filter search using tags
+- Admin page for selecting and registering cover/content files
+
+### 2. Exam Archive
+
+- Upload and view past exam papers organized by course
+- Integrated with Google Drive for file management
+- Sorted and structured based on file names
+
+### 3. Lecture Material Archive
+
+- Archive lecture notes, assignments, and project files
+- Contributions from individual students are welcome
+- Materials are categorized and filterable by type tags
+
+## Page Structure
+
+| Path | Description |
+|------|-------------|
+| `/` | Landing page |
+| `/drive/book` | Book list and search |
+| `/drive/exam` | Access to past exam papers |
+| `/err/*` | Error page (invalid route) |
+| `/thanks` | Credits for developers and contributors |
+
+---
+
+This project is dedicated to the **sustainable archiving of academic assets at SNUCSE**, and it aims to grow as an open platform where anyone can easily access and contribute.
