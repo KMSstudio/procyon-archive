@@ -1,3 +1,5 @@
+/* @/app/api/book/delete/route.js */
+
 import { NextResponse } from "next/server";
 import { deleteBook } from "@/utils/book/delete";
 

@@ -1,4 +1,4 @@
-// @/utils/drive/jebo.js
+/* @/utils/drive/jebo.js */
 
 // Google Drive API
 import { google } from "googleapis";

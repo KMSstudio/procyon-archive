@@ -1,3 +1,5 @@
+/* @/utils/auth.js */
+
 import { fetchUser } from '@/utils/database/userDB';
 
 export async function getUserInfo(session) {

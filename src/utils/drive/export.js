@@ -1,6 +1,4 @@
-/*
- * @/utils/drive/export.js
-*/
+/* @/utils/drive/export.js */
 
 import { google } from "googleapis";
 

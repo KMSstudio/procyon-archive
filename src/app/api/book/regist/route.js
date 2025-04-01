@@ -1,6 +1,4 @@
-/*
-*   @/app/api/book/regist/route.js
-*/
+/* @/app/api/book/regist/route.js */
 
 // Utils
 import { registerBook } from "@/utils/book/regist";

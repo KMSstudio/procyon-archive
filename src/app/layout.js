@@ -1,3 +1,5 @@
+/* @/app/layout.js */
+
 import { Inter } from "next/font/google";
 import AuthProvider from "./components/main/SessionProvider";
 import "@/styles/index.css";

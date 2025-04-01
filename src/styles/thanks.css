@@ -1,8 +1,6 @@
+/* @/styles/thanks.css */
 
-/*
- * Remove Scroll Bar
-*/
-
+/* Remove Scroll Bar */
 ::-webkit-scrollbar { display: none; }
 html { scrollbar-width: none; }
 body { -ms-overflow-style: none; }

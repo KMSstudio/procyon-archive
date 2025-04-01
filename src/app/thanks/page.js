@@ -1,6 +1,4 @@
-/*
- * @/app/thanks/page.js
- */
+/* @/app/thanks/page.js */
 
 // Components
 import NavBar from "@/app/components/NavBar";

@@ -1,6 +1,4 @@
-/*
- * @/app/page.js
-*/
+/* @/app/page.js */
 
 // Styles (CSS)
 import "@/styles/index.css";
