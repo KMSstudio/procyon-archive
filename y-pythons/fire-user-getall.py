@@ -36,6 +36,7 @@ def save_to_csv(data, filename="procyon-users.csv"):
     if not data:
         print("保存するデータがありません。")
         return
+    data = sorted(data, key=lambda x: x.get("lastAccessDate") or "", reverse=True)
 
     # このスクリプトと同じディレクトリにファイルを保存
     current_dir = Path(__file__).resolve().parent
