@@ -16,6 +16,7 @@ class Logger {
   write(type, msg) {
     const now = new Date().toISOString();
     this.buffer.push(`[${now}] ${type}: ${msg}`);
+    console.log(`Logger write message ${msg}`);
   }
 
   initFlushTimers() {
