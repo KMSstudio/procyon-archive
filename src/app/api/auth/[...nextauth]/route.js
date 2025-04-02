@@ -3,6 +3,8 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { isUserExist, updateUserAccess } from '@/utils/database/userDB';
+// Utils
+import logger from "@/utils/logger";
 
 export const authOptions = {
   providers: [
@@ -22,13 +24,14 @@ export const authOptions = {
 
       const [name, position, major] = rawName.split("/");
       const userData = { studentName: name, studentPosition: position, studentMajor: major };
+      logger.info(`${rawName} try to sign in...`);
 
       // if User Exist, Pass
       if (await isUserExist(email)){ 
         updateUserAccess(email, userData); return true; }
       // @snu.ac.kr
-      // if (!email.endsWith("@snu.ac.kr")) {
-      //   return "/err/login/nosnu"; }
+      if (!email.endsWith("@snu.ac.kr")) {
+        return "/err/login/nosnu"; }
       // Just for snu 'student'
       if (process.env.AUTH_BLOCK_NOSTD === 'T' && (!rawName.includes("학생"))) {
         return "/arr/login/nostd"; }
@@ -37,6 +40,7 @@ export const authOptions = {
         return "/err/login/nocse"; }
       // Login Accept
       await updateUserAccess(email, userData);
+      logger.info(`${rawName} successfully sign in`);
       return true;
     },
     async session({ session, token }) {

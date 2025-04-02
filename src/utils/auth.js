@@ -75,16 +75,21 @@ export async function getUserv2() {
       lastAccess: null, lastContribute: null,
     };
   }
+  
   // Get user data
   const user = await fetchUser(session.user.email);
+  const name = user?.studentName ?? "";
+  const position = user?.studentPosition ?? "";
+  const major = user?.studentMajor ?? "";
 
   return {
     login: true,
     admin: user?.isAdmin ?? false,
     email: session.user.email,
-    name: user?.studentName ?? null,
-    position: user?.studentPosition ?? null,
-    major: user?.studentMajor ?? null,
+    name,
+    position,
+    major,
+    fullName: `${name}/${position}/${major}`,
     lastAccess: user?.lastAccessDate ?? null,
     lastContribute: user?.lastContributionDate ?? null,
   };

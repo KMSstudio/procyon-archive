@@ -4,6 +4,9 @@
 import FileList from "@/app/components/list/FileList";
 // Utils (Google Drive)
 import { getDriveFiles } from "@/utils/drive/show";
+// Utils (User Logger)
+import { getUserv2 } from "@/utils/auth";
+import logger from "@/utils/logger";
 // Styles (CSS)
 import "@/styles/drive.css";
 // Next Tags
@@ -17,6 +20,9 @@ export default async function ReferencePage({ params }) {
     params.path && params.path.length > 1
       ? `/drive/${params.path.slice(0, -1).join("/")}`
       : null;
+
+  const userData = await getUserv2();
+  logger.info(`${userData.fullName} request to show gdrive ${path}`);
 
   return (
     <div className="container">

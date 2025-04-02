@@ -13,7 +13,7 @@ export async function GET(req, { params }) {
     const fileId = params.fileid;
     const result = await exportDriveFile(fileId);
 
-    logger.info(`${userData.name}/${userData.position}/${userData.major} downloads file ${fileId}`)
+    logger.info(`${userData.fullName} downloads file ${fileId}`)
     if (!result) return NextResponse.json({ error: "File not found." }, { status: 404 });
 
     return new Response(result.stream, { headers: result.headers });

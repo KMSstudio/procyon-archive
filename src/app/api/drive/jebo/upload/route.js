@@ -1,6 +1,11 @@
 /* @/app/api/jebo/upload/route.js */
 
+// Util for jebo
 import { jeboFile } from "@/utils/drive/jebo";
+// Util for logger
+import { getUserv2 } from "@/utils/auth";
+import logger from "@/utils/logger";
+// Form
 import { IncomingForm } from "formidable";
 import { Readable } from "stream";
 import os from "os";
@@ -47,7 +52,8 @@ export async function POST(req) {
       if (!reportName || !fileArray || fileArray.length === 0) { console.warn("Invalid jebo input"); return; }
       jeboFile(reportName, description || "", fileArray).catch((err) => console.error("jeboFile background error:", err));
     })
-    .catch((err) => { console.error("form parsing error:", err); });
+    .catch((err) => { logger.error("form parsing error:", err); });
+    logger.info(`${(await getUserv2()).fullName} queue jebo ${reportName}`);
     return new Response(JSON.stringify({ message: "Upload started" }), { status: 200 });
   }
   catch (err) { return new Response(JSON.stringify({ error: "Unexpected upload error" }), { status: 500 }); }

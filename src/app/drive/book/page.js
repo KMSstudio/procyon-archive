@@ -6,19 +6,20 @@ import "@/styles/drive.css";
 import BookList from "@/app/components/list/BookList";
 import EOBookList from "./EOBookList";
 // Utils
-import { getUser } from "@/utils/auth";
+import { getUserv2 } from "@/utils/auth";
+import logger from "@/utils/logger";
 import { getAllDBBooks } from "@/utils/database/bookDB";
 // Constants
 import coreTags from "@/config/coreTag.json";
 
 export default async function BookPage() {
-  const userData = await getUser();
-
+  const userData = await getUserv2();
   const books = await getAllDBBooks();
-  const visibBooks = userData.is_user_admin 
-  ? books 
-  : books.filter((book) => !book.tags.includes("hidden"));
-
+  const visibBooks = userData.admin 
+    ? books 
+    : books.filter((book) => !book.tags.includes("hidden"));
+  logger.info(`${userData.fullName} request to show all books`);
+  
   return (
     <div>
       <div id="book-head-info">
