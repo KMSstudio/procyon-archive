@@ -58,7 +58,6 @@ export default function JeboConsole() {
         xhr.open("POST", "/api/drive/jebo/upload", true);
   
         xhr.upload.onprogress = (event) => {
-          console.log("onprogress fired");
           if (event.lengthComputable) {
             const percent = Math.round((event.loaded / event.total) * 100);
             setUploadPercent(percent);
@@ -75,7 +74,6 @@ export default function JeboConsole() {
         };
   
         xhr.onerror = () => reject(new Error("요청 중 네트워크 오류 발생"));
-  
         xhr.send(formData);
       });
   
