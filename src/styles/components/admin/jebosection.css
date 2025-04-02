@@ -1,0 +1,83 @@
+/* @/styles/component/admin/jebosection.css */
+
+#jebo-section {
+  flex: 1;
+  padding: 20px;
+  background: #000;
+  overflow-y: auto;
+  h2 { padding: 20px; margin: 0; }
+}
+
+/* jebo list */
+#jebo-section .jebo-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+/* Hide Scroll Bar */
+#jebo-section .jebo-list::-webkit-scrollbar { display: none; }
+#jebo-section .jebo-list { scrollbar-width: none; }
+
+#jebo-section .jebo-item {
+  /* Jebo Section - Total */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  
+  padding: 10px 10px;
+  gap: 10px;
+  
+  border-radius: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background: none;
+  
+  &:first-of-type { border-top: 1px solid rgba(255, 255, 255, 0.2); }
+  
+  /* Jebo Section - Folder */
+  .jebo-folder-item{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    
+    .folder-name {
+      flex-grow: 1;
+      color: white;
+      font-size: 14px;
+      margin: 0;
+      transition: color 0.3s ease;
+      
+      &:hover { color:rgb(247, 143, 30); }
+    }
+    .folder-icon { width: 20px; height: 20px; }
+  }
+  
+  /* Jebo Section - File */
+  .expanded-jebo-list {
+    width: calc(100% - 10px);
+    padding-left: 20px;
+    margin-bottom: -10px;
+    
+    .jebo-file-item {
+      display: flex;
+      align-items: center;
+      width: auto;
+      
+      padding: 10px 10px;
+      gap: 15px;
+      
+      border-radius: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      background: none;
+      
+      .file-icon { width: 20px; height: 20px; }
+      .file-name {
+        flex-grow: 1;
+        font-size: 14px;
+        color: white;
+        margin: 0;
+      }
+    }
+  }
+}

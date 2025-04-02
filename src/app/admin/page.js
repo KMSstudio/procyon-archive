@@ -7,7 +7,7 @@ import "@/styles/admin.css";
 // Components
 import NavBar from "@/app/components/NavBar";
 import UserSection from "@/app/components/admin/usersection";
-import BookSection from "@/app/components/admin/booksection";
+import JeboSection from "@/app/components/admin/jebosection";
 // Redirect
 import { redirect } from "next/navigation";
 // Constants
@@ -23,7 +23,7 @@ export default async function AdminPage() {
   
   if (!userData?.admin) { redirect("/"); }
   const users = await fetchAllUser();
-  const files = await getDriveFiles("book/stage");
+  const jebos = (await getDriveFiles("jebo")).filter((f) => f.isFolder);
 
   return (
     <div className="admin-container">
@@ -31,7 +31,7 @@ export default async function AdminPage() {
       <main className="admin-main">
         <div className="admin-sections">
           <UserSection users={users} />
-          <BookSection files={files} />
+          <JeboSection jebos={jebos}/>
         </div>
       </main>
     </div>

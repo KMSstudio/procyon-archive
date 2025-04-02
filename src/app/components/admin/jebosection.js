@@ -1,51 +1,57 @@
-// // @/app/components/unique/JeboSection.js
+// @/app/components/unique/JeboSection.js
 
-// "use client";
+"use client";
 
-// import { useEffect, useState } from "react";
+import { useState } from "react";
+import "@/styles/components/admin/jebosection.css";
 
-// export default function JeboSection({ jeboFolders }) {
-//   const [expanded, setExpanded] = useState(null);
-//   const [subfiles, setSubfiles] = useState({});
+export default function JeboSection({ jebos }) {
+  const [expanded, setExpanded] = useState(null);
+  const [subfiles, setSubfiles] = useState({});
 
-//   const toggleFolder = async (folderName) => {
-//     if (expanded === folderName) {
-//       setExpanded(null);
-//       return;
-//     }
+  const toggleFolder = async (folderName) => {
+    if (expanded === folderName) {
+      setExpanded(null);
+      return;
+    }
 
-//     if (!subfiles[folderName]) {
-//       const res = await fetch(`/api/drive/list?path=jebo/${folderName}`);
-//       const data = await res.json();
-//       setSubfiles((prev) => ({ ...prev, [folderName]: data }));
-//     }
+    if (!subfiles[folderName]) {
+      const res = await fetch(`/api/drive/show?path=jebo/${folderName}`);
+      const data = await res.json();
+      setSubfiles((prev) => ({ ...prev, [folderName]: data }));
+    }
 
-//     setExpanded(folderName);
-//   };
+    setExpanded(folderName);
+  };
 
-//   return (
-//     <section id="jebo-section">
-//       <h2>제보 리스트</h2>
-//       {jeboFolders.length === 0 && <p>제보가 없습니다.</p>}
-//       <ul>
-//         {jeboFolders.map((folder) => (
-//           <li key={folder.name}>
-//             <button onClick={() => toggleFolder(folder.name)}>
-//               {expanded === folder.name ? "▼" : "▶"} {folder.name}
-//             </button>
+  return (
+    <section id="jebo-section">
+      <h2>Jebo List</h2>
 
-//             {expanded === folder.name && (
-//               <ul style={{ marginLeft: "20px" }}>
-//                 {subfiles[folder.name]?.map((file) => (
-//                   <li key={file.name}>
-//                     📄 {file.name}
-//                   </li>
-//                 ))}
-//               </ul>
-//             )}
-//           </li>
-//         ))}
-//       </ul>
-//     </section>
-//   );
-// }
+      {jebos.length === 0 && <p>제보가 없습니다.</p>}
+      {/* Jebo List */}
+      <div className="jebo-list">
+        {jebos.map((folder) => (
+          // Each Jebo Item
+          <div key={folder.name} className="jebo-item">
+            <div key={`content-of-${folder.name}`} className="jebo-folder-item" onClick={() => toggleFolder(folder.name)}>
+              <img src={expanded === folder.name ? "/image/ext/asm.png" : "/image/ext/ttf.png"} alt="Folder Icon" className="folder-icon"/>
+              <p className="folder-name">{folder.name}</p>
+            </div>
+
+            {expanded === folder.name && (
+              <div className="expanded-jebo-list">
+                {subfiles[folder.name]?.map((file) => (
+                  <div key={file.name} className="jebo-file-item">
+                    <img src={file.img} alt="File Icon" className="file-icon"/>
+                    <p className="file-name">{file.name}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
