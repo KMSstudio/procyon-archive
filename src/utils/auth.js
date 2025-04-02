@@ -83,13 +83,9 @@ export async function getUserv2() {
   const major = user?.studentMajor ?? "";
 
   return {
-    login: true,
-    admin: user?.isAdmin ?? false,
+    login: true, admin: user?.isAdmin ?? false,
     email: session.user.email,
-    name,
-    position,
-    major,
-    fullName: `${name}/${position}/${major}`,
+    name, position, major, fullName: `${name}/${position}/${major}`,
     lastAccess: user?.lastAccessDate ?? null,
     lastContribute: user?.lastContributionDate ?? null,
   };
