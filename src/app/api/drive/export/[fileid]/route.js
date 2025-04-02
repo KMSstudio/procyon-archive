@@ -4,12 +4,16 @@
 import { NextResponse } from "next/server";
 // Utilities
 import { exportDriveFile } from "@/utils/drive/export";
+import { getUserv2 } from "@/utils/auth";
 import logger from "@/utils/logger";
 
 export async function GET(req, { params }) {
   try {
+    const userData = await getUserv2();
     const fileId = params.fileid;
     const result = await exportDriveFile(fileId);
+
+    logger.info(`${userData.name}/${userData.position}/${userData.major} downloads file ${fileId}`)
     if (!result) return NextResponse.json({ error: "File not found." }, { status: 404 });
 
     return new Response(result.stream, { headers: result.headers });

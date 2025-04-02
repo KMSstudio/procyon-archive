@@ -51,25 +51,35 @@ export async function getUser() {
 }
 
 /**
- * getUserv2 returns user info if logged in, otherwise returns undefined.
+ * getUserv2 returns a flat user object with consistent shape.
+ * If not logged in, returns a user object with login: false and all other fields set to null/defaults.
  *
  * Return format:
- * undefined OR {
+ * {
+ *   login: boolean,
  *   admin: boolean,
- *   email: string,
- *   name: string,
- *   position: string,
- *   major: string,
- *   lastAccess: string,
- *   lastContribute: string
+ *   email: string | null,
+ *   name: string | null,
+ *   position: string | null,
+ *   major: string | null,
+ *   lastAccess: string | null,
+ *   lastContribute: string | null
  * }
 **/
 export async function getUserv2() {
+  // Chack Server Session
   const session = await getServerSession(authOptions);
-  if (!session) return undefined;
-
+  if (!session) {
+    return { login: false, admin: false,
+      email: null, name: null, position: null, major: null,
+      lastAccess: null, lastContribute: null,
+    };
+  }
+  // Get user data
   const user = await fetchUser(session.user.email);
+
   return {
+    login: true,
     admin: user?.isAdmin ?? false,
     email: session.user.email,
     name: user?.studentName ?? null,

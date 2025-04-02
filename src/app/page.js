@@ -5,18 +5,15 @@ import "@/styles/index.css";
 // Components
 import NavBar from "./components/NavBar";
 import Sidebar from "@/app/components/main/Sidebar";
-// Next-auth
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 // Constants
 import navData from "@/config/navConstant.json";
-import { getUserInfo } from "@/utils/auth";
+// Utils
+import { getUser } from "@/utils/auth";
 import { updateUserAccess } from "@/utils/database/userDB"
 
 export default async function HomePage() {
   // Load Static data
-  const session = await getServerSession(authOptions);
-  const userData = await getUserInfo(session);
+  const userData = await getUser();
   
   const { navs = [], links = [], buttons = [] } = navData;
   const { is_user_admin: isAdmin } = userData;

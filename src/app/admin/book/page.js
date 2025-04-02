@@ -8,13 +8,10 @@ import "@/styles/admin.css";
 import NavBar from "@/app/components/NavBar";
 import BookMdfSection from "@/app/components/admin/BookMdfSection";
 import BookSection from "@/app/components/admin/booksection";
-// Next Auth
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 // Redirect
 import { redirect } from "next/navigation";
 // Utils
-import { getUserInfo } from "@/utils/auth";
+import { getUser } from "@/utils/auth";
 import { getDriveFiles } from "@/utils/drive/show";
 import { getAllDBBooks } from "@/utils/database/bookDB";
 // Constants
@@ -23,8 +20,7 @@ import coreTags from "@/config/coreTag.json";
 
 export default async function AdminPage() {
   // Load Static data
-  const session = await getServerSession(authOptions);
-  const userData = await getUserInfo(session);
+  const userData = await getUser();
   
   if (!userData?.is_user_admin) { redirect("/"); }
   const files = await getDriveFiles("book/stage");
