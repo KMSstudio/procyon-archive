@@ -50,7 +50,6 @@ export async function isUserExist(email) {
  * Save user to Firestore (cache applied)
  */
 export async function saveUser(email, data) {
-  console.log(`call SaveUser ${email}`);
   if (!email || !data) return;
   function cleanText(str) {
     if (str === undefined || str === null) return "";
@@ -58,8 +57,8 @@ export async function saveUser(email, data) {
   const cleanedData = {};
   for (const key in data) { cleanedData[key] = cleanText(data[key]); }
 
-  console.log(`userCache: ${JSON.stringify(userCache.get(email))}`);
-  console.log(`data: ${JSON.stringify(cleanedData)}`);
+  // console.log(`userCache: ${JSON.stringify(userCache.get(email))}`);
+  // console.log(`data: ${JSON.stringify(cleanedData)}`);
   if (JSON.stringify(userCache.get(email)) === JSON.stringify(cleanedData)) { return; }
 
   try {
@@ -80,8 +79,6 @@ export async function updateUserAccess(email, data = {}) {
 
   const today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().replace('T', ' ').slice(0, 13);
   const user = await fetchUser(email);
-  
-  console.log(`update Access date: ${email}, DATA: ${JSON.stringify(data)} ${today}`);
 
   if (!user) {
     await saveUser(email, { lastAccessDate: today, lastContributionDate: today, isAdmin: false, ...data });

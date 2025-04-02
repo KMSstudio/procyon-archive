@@ -43,7 +43,6 @@ async function createFolder(folderPath) {
       parentId = createRes.data.id;
     }
   }
-  console.log(`create folder: ${parentId}`);
 
   return parentId;
 }
@@ -105,11 +104,7 @@ async function uploadTextAsFile(folderId, filename, content) {
  * @returns {Promise<string>} - 作成されたフォルダのID
  */
 export async function jeboFile(reportName, description, files) {
-  console.log(`repName: ${reportName}`);
-  if (!reportName || !description || !Array.isArray(files)) {
-    throw new Error("Invalid arguments to jeboFile");
-  }
-
+  if (!reportName || !description || !Array.isArray(files)) { throw new Error("Invalid arguments to jeboFile"); }
   const folderPath = `jebo/${reportName}`;
   const folderId = await createFolder(folderPath);
 

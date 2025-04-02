@@ -154,8 +154,6 @@ export async function deleteDriveFile(fileUrl) {
         trashed: true,
       },
     });
-
-    console.log(`Moved file to trash: ${fileId}`);
   } catch (error) {
     console.error("Failed to move file to trash on Google Drive:", error);
   }

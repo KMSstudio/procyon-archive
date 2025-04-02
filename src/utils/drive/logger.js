@@ -57,7 +57,7 @@ export async function initLoggerFolder() {
 export async function uploadLogFile(filename, content) {
   const folderId = await initLoggerFolder();
   
-  console.log(`Try to upload log file ${filename}`);
+  console.log(`Logger try to upload log file ${filename}`);
 
   const fileMetadata = { name: filename, parents: [folderId], };
   const media = { mimeType: "text/plain", body: content, };

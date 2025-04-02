@@ -113,8 +113,6 @@ export async function updateDBBook(bookId, updateData) {
     bookCache.set(bookId, JSON.stringify({ ...cached, ...filteredData }));
     cacheTimestamps.set(bookId, Date.now());
     bookCache.delete("all_books");
-
-    console.log(`Updated book ${bookId} in Firestore`);
   } catch (error) {
     console.error(`Failed to update book ${bookId} in Firestore:`, error);
     throw error;
@@ -131,7 +129,6 @@ export async function deleteDBBook(bookId) {
     bookCache.delete(bookId);
     cacheTimestamps.delete(bookId);
     bookCache.delete("all_books");
-    console.log(`Deleted book ${bookId} from Firestore`);
   } catch (error) {
     console.error(`Failed to delete book ${bookId} from Firestore:`, error);
     throw error;

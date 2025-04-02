@@ -45,8 +45,6 @@ export async function registerBook(bookData) {
 
     // Move cover file in Google Drive
     await moveDriveFile(coverFileId, `/cover/${newId}.${coverExt}`);
-
-    console.log(`return ${newId}`);
     return newId;
   } catch (error) {
     console.error("Error while registering book:", error);

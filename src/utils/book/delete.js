@@ -13,7 +13,6 @@ export async function deleteBook(bookId) {
   try {
     // 本の情報を取得する（DynamoDB から取得）
     const book = await getDBBook(bookId);
-    console.log(`delete if ${bookId}`);
     if (!book) { throw new Error(`Book with ID ${bookId} not found.`); }
     const { cover, content } = book;
     // AWS DynamoDB から本のデータを削除（bookDB.js の deleteDBBook を使用）

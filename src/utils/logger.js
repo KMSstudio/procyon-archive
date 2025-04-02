@@ -16,7 +16,6 @@ class Logger {
   write(type, msg) {
     const now = new Date().toISOString();
     this.buffer.push(`[${now}] ${type}: ${msg}`);
-    console.log(`Logger write message ${msg}`);
   }
 
   initFlushTimers() {
@@ -24,17 +23,26 @@ class Logger {
     this.scheduleDailyFlush();
   }
 
-  scheduleHourlyFlush() {
-    const now = new Date();
-    const nextHour = new Date(now);
-    nextHour.setMinutes(0, 0, 0);
-    nextHour.setHours(Math.ceil(now.getHours() / 2) * 2);
+  scheduleTestFlush() {
+    setInterval(() => {
+      this.flush("hourly");
+    }, 1000 * 60 * 2); // Every 2 minutes
+  }
 
-    const msUntilNextFlush = nextHour - now;
+  scheduleHourlyFlush() {
+    const intervalHour = parseInt(process.env.LOGGER_HOUR_INTERVAL || "2"); // default to 2
+    const now = new Date();
+    const next = new Date(now);
+  
+    next.setMinutes(0, 0, 0);
+    const nextHour = Math.ceil(now.getHours() / intervalHour) * intervalHour;
+    next.setHours(nextHour);
+  
+    const msUntilNext = next - now;
     setTimeout(() => {
       this.flush("hourly");
-      setInterval(() => this.flush("hourly"), 1000 * 60 * 2); // 2-hour(minute) interval
-    }, msUntilNextFlush);
+      setInterval(() => this.flush("hourly"), 1000 * 60 * 60 * intervalHour);
+    }, msUntilNext);
   }
 
   scheduleDailyFlush() {
