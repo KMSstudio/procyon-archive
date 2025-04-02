@@ -45,8 +45,6 @@
 | `/err/*` | エラーページ（不正なパスへのアクセス） |
 | `/thanks` | 開発者・貢献者紹介ページ |
 
----
-
 このプロジェクトは、**SNUCSEの学術的資産の持続的なアーカイブ**を目的としており、誰でも簡単にアクセス・貢献できるオープンなプラットフォームとしての発展を目指しています。
 
 ---
@@ -97,7 +95,5 @@ Currently, even essential learning materials tend to be shared in a fragmented, 
 | `/drive/exam` | Access to past exam papers |
 | `/err/*` | Error page (invalid route) |
 | `/thanks` | Credits for developers and contributors |
-
----
 
 This project is dedicated to the **sustainable archiving of academic assets at SNUCSE**, and it aims to grow as an open platform where anyone can easily access and contribute.
