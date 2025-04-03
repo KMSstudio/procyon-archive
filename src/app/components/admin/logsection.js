@@ -9,7 +9,7 @@ export default async function LogSection() {
   let logs = [];
 
   try {
-    logs = logger.getRawBuffer();
+    logs = await logger.getBuffer();
   } catch (err) {
     console.error("Failed to fetch logs:", err);
   }
