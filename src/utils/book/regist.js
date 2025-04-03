@@ -40,7 +40,7 @@ export async function registerBook(bookData) {
       contentFileName: `${newId}.${contentExt}`,
       tags: bookData.tags,
       mainTags: bookData.mainTags,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date(Date.now() + 9 * 3600 * 1000).toISOString(),
     });
 
     // Move cover file in Google Drive
