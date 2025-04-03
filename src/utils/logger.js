@@ -1,12 +1,12 @@
 // @/utils/logger.js
 
-import { uploadLogFile } from "@/utils/drive/logger";
+// @/utils/logger.js
 
 class Logger {
   constructor() {
     this.buffer = [];
     this.flushInterval = null;
-    this.initFlushTimers();
+    this.#initFlushTimers();
   }
 
   log(msg) { this.write("LOG", msg); }
@@ -18,18 +18,12 @@ class Logger {
     this.buffer.push(`[${now}] ${type}: ${msg}`);
   }
 
-  initFlushTimers() {
-    this.scheduleHourlyFlush();
-    this.scheduleDailyFlush();
+  #initFlushTimers() {
+    this.#scheduleHourlyFlush();
+    this.#scheduleDailyFlush();
   }
 
-  scheduleTestFlush() {
-    setInterval(() => {
-      this.flush("hourly");
-    }, 1000 * 60 * 2); // Every 2 minutes
-  }
-
-  scheduleHourlyFlush() {
+  #scheduleHourlyFlush() {
     const intervalHour = parseInt(process.env.LOGGER_HOUR_INTERVAL || "2"); // default to 2
     const now = new Date();
     const next = new Date(now);
@@ -45,7 +39,7 @@ class Logger {
     }, msUntilNext);
   }
 
-  scheduleDailyFlush() {
+  #scheduleDailyFlush() {
     const now = new Date();
     const nextDay = new Date(now);
     nextDay.setHours(0, 0, 0, 0);
@@ -58,26 +52,16 @@ class Logger {
     }, msUntilMidnight);
   }
 
-  async flush(type) {
-    if (this.buffer.length === 0) return;
-
-    const now = new Date();
-    const dateStr = now.toISOString().split("T")[0];
-    const hourStr = String(now.getHours()).padStart(2, "0");
-
-    const filename = type === "hourly"
-      ? `${dateStr} ${hourStr}.txt`
-      : `${dateStr}.txt`;
+  flush(type = "manual") {
+    if (this.buffer.length === 0) return null;
 
     const content = this.buffer.join("\n") + "\n";
     this.buffer = [];
-
-    try {
-      await uploadLogFile(filename, content);
-    } catch (err) {
-      console.error("Logger flush failed:", err);
-    }
+    return content;
   }
+
+  getBuffer() { return this.buffer.join("\n"); }
+  getRawBBuffer() { return this.buffer; }
 }
 
 const logger = new Logger();
