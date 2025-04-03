@@ -53,7 +53,7 @@ export default function Sidebar({ isAdmin, links }) {
         {/* Profile Buttons */}
         <div className="profile-info">
           {isAdmin && (
-            <button className="profile-button" onClick={() => window.location.href = "/admin/book"}>
+            <button className="profile-button" onClick={() => window.location.href = "/admin"}>
               <img src="/image/ico/admin.png" alt="admin" className="profile-icon" />
               <img src="/image/ico/admin-hover.png" alt="admin hover" className="profile-hover-icon" />
             </button>

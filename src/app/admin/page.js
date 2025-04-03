@@ -7,7 +7,7 @@ import "@/styles/admin.css";
 // Components
 import NavBar from "@/app/components/NavBar";
 import UserSection from "@/app/components/admin/usersection";
-import JeboSection from "@/app/components/admin/jebosection";
+import LogSection from "@/app/components/admin/logsection";
 // Redirect
 import { redirect } from "next/navigation";
 // Constants
@@ -31,7 +31,7 @@ export default async function AdminPage() {
       <main className="admin-main">
         <div className="admin-sections">
           <UserSection users={users} />
-          <JeboSection jebos={jebos}/>
+          <LogSection />
         </div>
       </main>
     </div>
