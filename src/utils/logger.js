@@ -61,7 +61,7 @@ class Logger {
   }
 
   getBuffer() { return this.buffer.join("\n"); }
-  getRawBBuffer() { return this.buffer; }
+  getRawBuffer() { return this.buffer; }
 }
 
 const logger = new Logger();
