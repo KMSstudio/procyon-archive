@@ -15,17 +15,8 @@ import logger from "@/utils/logger";
 export default async function HomePage() {
   // Load Static data
   const userData = await getUserv2();
-  const userDBData = {
-    studentName: userData.name, 
-    studentPosition: userData.position, 
-    studentMajor: userData.major
-  };
-  
   const { navs = [], links = [], buttons = [] } = navData;
-  updateUserAccess(userData.email, userDBData);
-  
-  logger.info(`「${userData.fullName}」가 메인 페이지에 겁속했습니다.`);
-  logger.info(`「${userData.email}」 "${userData.name}/${userData.position}/${userData.major}" 로 DB 정보를 업데이트했습니다.`);
+  if (userData.login) { logger.info(`「${userData.fullName}」가 메인 페이지에 겁속했습니다.`); }
   
   return (
     <div className="main-container">
