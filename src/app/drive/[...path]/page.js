@@ -14,15 +14,16 @@ import Link from "next/link";
 
 export default async function ReferencePage({ params }) {
   const path = params.path ? params.path.join("/") : "";
-  const files = await getDriveFiles(path);
 
+  const userData = await getUserv2();
+  const decodedPath = decodeURIComponent(path);
+  logger.info(`${userData.fullName} request to show gdrive ${decodedPath}`);
+  
+  const files = await getDriveFiles(path);
   const backPath =
     params.path && params.path.length > 1
       ? `/drive/${params.path.slice(0, -1).join("/")}`
       : null;
-
-  const userData = await getUserv2();
-  logger.info(`${userData.fullName} request to show gdrive ${path}`);
 
   return (
     <div className="container">
