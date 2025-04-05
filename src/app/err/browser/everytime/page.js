@@ -4,7 +4,7 @@
 
 export default function KakaoTalkPage() {
   const handleCopyLink = () => {
-    const link = "https://procyon-omega.vercel.app";
+    const link = "https://cse-archive.com";
     navigator.clipboard.writeText(link)
       .then(() => alert("링크가 복사되었습니다!"))
       .catch(() => alert("복사에 실패했습니다."));
