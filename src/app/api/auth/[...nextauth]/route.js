@@ -24,7 +24,7 @@ export const authOptions = {
 
       const [name, position, major] = rawName.split("/");
       const userData = { studentName: name, studentPosition: position, studentMajor: major };
-      logger.info(`${rawName} try to sign in...`);
+      logger.info(`「${rawName}」 가 로그인을 시도합니다.`);
 
       // if User Exist, Pass
       if (await isUserExist(email)){ 
@@ -40,7 +40,7 @@ export const authOptions = {
         return "/err/login/nocse"; }
       // Login Accept
       await updateUserAccess(email, userData);
-      logger.info(`${rawName} successfully sign in`);
+      logger.info(`「${rawName}」 가 회원가입 했습니다.`);
       return true;
     },
     async session({ session, token }) {

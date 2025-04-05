@@ -53,7 +53,7 @@ export async function POST(req) {
       jeboFile(reportName, description || "", fileArray).catch((err) => console.error("jeboFile background error:", err));
     })
     .catch((err) => { logger.error("form parsing error:", err); });
-    logger.info(`${(await getUserv2()).fullName} queue jebo`);
+    logger.info(`「${(await getUserv2()).fullName}」 queue jebo`);
     return new Response(JSON.stringify({ message: "Upload started" }), { status: 200 });
   }
   catch (err) { return new Response(JSON.stringify({ error: "Unexpected upload error" }), { status: 500 }); }
