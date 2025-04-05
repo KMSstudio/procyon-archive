@@ -9,9 +9,15 @@ import contributors from "@/config/contributor-list.json";
 import navData from "@/config/navConstant.json";
 // Style (CSS)
 import "@/styles/thanks.css";
+// Utils
+import { getUserv2 } from "@/utils/auth";
+import logger from "@/utils/logger";
 
-export default function ThanksPage() {
+export default async function ThanksPage() {
   const { navs = [] } = navData;
+  getUserv2().then(userData => {
+    logger.info(`${userData.fullName} 가 개발자 소개 페이지를 열었습니다.`);
+  })
 
   return (
     <div className="main-container">
