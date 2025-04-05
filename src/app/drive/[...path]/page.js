@@ -17,7 +17,7 @@ export default async function ReferencePage({ params }) {
 
   const userData = await getUserv2();
   const decodedPath = decodeURIComponent(path);
-  logger.info(`${userData.fullName} request to show gdrive ${decodedPath}`);
+  logger.info(`${userData.fullName} 가 gdrive 폴더를 조회했습니다: ${decodedPath}`);
   
   const files = await getDriveFiles(path);
   const backPath =
