@@ -1,10 +1,11 @@
-/* @/app/api/auth/[...nextauth]/route.js */
+// @/app/api/auth/[...nextauth]/route.js
 
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { isUserExist, updateUserAccess } from '@/utils/database/userDB';
-// Utils
 import logger from "@/utils/logger";
+
+const JWT_VERSION = parseInt(process.env.AUTH_JWT_VERSION || "1");
 
 export const authOptions = {
   providers: [
@@ -13,7 +14,7 @@ export const authOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.AUTH_SECRET,
   session: {
     strategy: "jwt",
   },
@@ -43,7 +44,18 @@ export const authOptions = {
       logger.info(`「${rawName}」 가 회원가입 했습니다.`);
       return true;
     },
+
+    async jwt({ token, user }) {
+      // JWT manage
+      if (user) {
+        token.email = user.email;
+        token.version = JWT_VERSION;
+      }
+      return token;
+    },
+
     async session({ session, token }) {
+      if (token.version !== JWT_VERSION) { return null; }
       session.user.email = token.email;
       return session;
     },
