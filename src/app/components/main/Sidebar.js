@@ -1,8 +1,6 @@
-"use client";
+/* @/app/components/Sidebar.js */
 
-/*
- * @/app/components/Sidebar.js
-*/
+"use client";
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
@@ -41,7 +39,7 @@ export default function Sidebar({ isAdmin, links }) {
         {/* Profile Image */}
         <div ref={profileImageContainerRef} className="mainpage-profile-circle">
           <Image
-            src="/image/profile/snu-logo.png"
+            src="/profile/main.png"
             alt="프로필 이미지"
             width={150}
             height={150}
