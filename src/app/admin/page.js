@@ -23,7 +23,6 @@ export default async function AdminPage() {
   
   if (!userData?.admin) { redirect("/"); }
   const users = await fetchAllUser();
-  const jebos = (await getDriveFiles("jebo")).filter((f) => f.isFolder);
 
   return (
     <div className="admin-container">
