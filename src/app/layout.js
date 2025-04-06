@@ -9,6 +9,21 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "CSE Archive",
   description: "경성제국대학 전자계산기학과의 아카이브",
+  openGraph: {
+    title: "CSE Archive",
+    description: "경성제국대학 전자계산기학과의 아카이브",
+    url: "https://cse-archive.com",
+    siteName: "CSE Archive",
+    images: [
+      {
+        url: "/image/banner.png",
+        width: 800,
+        height: 600,
+        alt: "CSE Archive 페이지",
+      },
+    ],
+    type: "website",
+  },
   icons: {
 		icon: "/favicon.png",
 	},
