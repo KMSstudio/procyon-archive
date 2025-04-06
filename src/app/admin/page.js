@@ -15,7 +15,6 @@ import navData from "@/config/navConstant.json";
 // Utils
 import { getUserv2 } from "@/utils/auth";
 import { fetchAllUser } from "@/utils/database/userDB";
-import { getDriveFiles } from "@/utils/drive/show";
 
 export default async function AdminPage() {
   // Load Static data
