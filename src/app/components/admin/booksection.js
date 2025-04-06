@@ -165,7 +165,7 @@ export default function AdminBookSection({ files }) {
         <>
           <div className="book-list">
             <div className="book-item">
-              <img src="/image/ico/x-sign.png" alt="No Files Icon" className="book-icon" />
+              <img src="/image/ico/admin-book-section/x-sign.png" alt="No Files Icon" className="book-icon" />
               <p className="book-name">No files found in /book/stage</p>
             </div>
           </div>
