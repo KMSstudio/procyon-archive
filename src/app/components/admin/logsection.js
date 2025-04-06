@@ -1,6 +1,4 @@
-/*
- * @/app/components/unique/logsection.js
- */
+/* @/app/components/unique/logsection.js */
 
 import logger from "@/utils/logger";
 import "@/styles/components/admin/logsection.css";
