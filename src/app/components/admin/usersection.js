@@ -22,7 +22,7 @@ export default function UserSection({ users }) {
         {/* Total Summary Item */}
         <div className="user-item">
           <img 
-            src="/image/ico/user-list/terminal.png" 
+            src="/image/ico/admin-user-section/terminal.png" 
             alt="Admin Icon" 
             className="user-icon" 
           />
@@ -36,7 +36,7 @@ export default function UserSection({ users }) {
         {filteredUsers.map((user) => (
           <div key={user.email} className="user-item">
             <img 
-              src={user.isAdmin ? "/image/ico/user-list/admin.png" : "/image/ico/user-list/user.png"} 
+              src={user.isAdmin ? "/image/ico/admin-user-section/admin.png" : "/image/ico/admin-user-section/user.png"} 
               alt="User Icon" 
               className="user-icon"
             />
