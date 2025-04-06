@@ -6,18 +6,25 @@ import logger from "@/utils/logger";
 import "@/styles/components/admin/logsection.css";
 
 export default async function LogSection() {
-  let logs = [];
-
-  try {
-    logs = await logger.getBuffer();
-  } catch (err) {
-    console.error("Failed to fetch logs:", err);
-  }
+  const logs = await logger.getBuffer();
+  const displayTime = new Date(Date.now() + 9 * 3600 * 1000).toISOString();
 
   return (
     <section id="log-section">
       <h2>Log</h2>
       <div className="log-list">
+        <div className="log-item log-console">
+          [{displayTime}]{" "}
+          <a href="/api/log/download" target="_blank" rel="noopener noreferrer">
+            download
+          </a>{" "}
+          |{" "}
+          <form method="POST" action="/api/log/flush" style={{ display: "inline" }}>
+            <button type="submit" className="flush-button">
+              flush
+            </button>
+          </form>
+        </div>
         {logs?.map((log, index) => (
           <div key={index} className="log-item">
             {log}

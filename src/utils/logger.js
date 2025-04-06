@@ -57,6 +57,22 @@ class Logger {
       return [];
     }
   }
+
+  async flush() {
+    try {
+      const snapshot = await logCollection.get();
+      const batch = db.batch();
+  
+      snapshot.docs.forEach((doc) => {
+        batch.delete(doc.ref);
+      });
+  
+      await batch.commit();
+      console.log("All logs flushed from Firestore.");
+    } catch (error) {
+      console.error("Failed to flush logs from Firestore:", error);
+    }
+  }
 }
 
 const logger = new Logger();

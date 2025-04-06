@@ -18,6 +18,23 @@
   gap: 8px;
 }
 
+.log-console {
+  font-weight: normal;
+}
+
+.log-console a,
+.log-console .flush-button {
+  color: rgb(247, 143, 30);
+  text-decoration: none;
+  font: inherit;
+
+  background: none;
+  border: none;
+
+  cursor: pointer;
+  padding: 0;
+}
+
 .log-item {
   font-family: monospace;
   font-size: 14px;
