@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <meta name="google" content="notranslate" />
-        <link rel="icon" href="/image/opengraph/favicon.ico" />
+        <link rel="icon" href="/image/opengraph/favicon.png" />
       </head>
       <body className={inter.className} style={{ width: "100vw", height: "100vh" }}>
         <AuthProvider>{children}</AuthProvider>
