@@ -25,7 +25,7 @@ export const metadata = {
     type: "website",
   },
   icons: {
-		icon: "/favicon.png",
+		icon: "/image/opengraph/favicon.png",
 	},
 };
 
