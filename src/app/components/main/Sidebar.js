@@ -52,19 +52,19 @@ export default function Sidebar({ isAdmin, links }) {
         <div className="profile-info">
           {isAdmin && (
             <button className="profile-button" onClick={() => window.location.href = "/admin"}>
-              <img src="/image/ico/admin.png" alt="admin" className="profile-icon" />
-              <img src="/image/ico/admin-hover.png" alt="admin hover" className="profile-hover-icon" />
+              <img src="/image/ico/sidebar/admin.png" alt="admin" className="profile-icon" />
+              <img src="/image/ico/sidebar/admin-hover.png" alt="admin hover" className="profile-hover-icon" />
             </button>
           )}
 
           <button className="profile-button" onClick={() => copyToClipboard("tomskang@naver.com")}>
-            <img src="/image/ico/open-mail.png" alt="email" className="profile-icon" />
-            <img src="/image/ico/open-mail-hover.png" alt="email hover" className="profile-hover-icon" />
+            <img src="/image/ico/sidebar/open-mail.png" alt="email" className="profile-icon" />
+            <img src="/image/ico/sidebar/open-mail-hover.png" alt="email hover" className="profile-hover-icon" />
           </button>
 
           <button className="profile-button" onClick={() => window.open("https://github.com/KMSstudio/procyon-archive", "_blank")}>
-            <img src="/image/ico/github.png" alt="github" className="profile-icon" />
-            <img src="/image/ico/github-hover.png" alt="github hover" className="profile-hover-icon" />
+            <img src="/image/ico/sidebar/github.png" alt="github" className="profile-icon" />
+            <img src="/image/ico/sidebar/github-hover.png" alt="github hover" className="profile-hover-icon" />
           </button>
         </div>
       </div>
@@ -75,8 +75,8 @@ export default function Sidebar({ isAdmin, links }) {
             <div key={index} className="link-item">
               {/* Copy Button */}
               <button className="copy-button" onClick={() => copyToClipboard(link.href)}>
-                <img src="/image/ico/copy.png" alt="복사 버튼" className="copy-icon" />
-                <img src="/image/ico/copy-hover.png" alt="복사 버튼 hover" className="copy-hover-icon" />
+                <img src="/image/ico/sidebar/copy.png" alt="복사 버튼" className="copy-icon" />
+                <img src="/image/ico/sidebar/copy-hover.png" alt="복사 버튼 hover" className="copy-hover-icon" />
               </button>
               {/* Link Info */}
               <div className="link-info">
