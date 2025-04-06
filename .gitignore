@@ -2,8 +2,10 @@
 
 admin.md
 /src/utils/book/photoUtils.js
-y-pythons/*
-!y-pythons/*.py
+toolbox/*
+!toolbox/*.py
+!toolbox/*.c
+!toolbox/*.cpp
 
 # service account
 /src/config/service-account.json
