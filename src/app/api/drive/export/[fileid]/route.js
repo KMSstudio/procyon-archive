@@ -16,7 +16,9 @@ export async function GET(req, { params }) {
     const { searchParams } = new URL(req.url);
     const fileName = searchParams.get("name");
 
-    if (fileName) { logger.info(`「${userData.fullName}」가 ${fileName}를 다운로드받았습니다.`); }
+    if (!userData?.login) { return NextResponse.redirect(new URL("/err/login/nodata", req.url)); }
+
+    if (fileName) { logger.info(`「${userData.fullName}」가 ${fileName}:${fileId}를 다운로드받았습니다.`); }
     else { logger.info(`「${userData.fullName}」가 ${fileId}를 다운로드받았습니다.`); }
     if (!result) return NextResponse.json({ error: "File not found." }, { status: 404 });
 
