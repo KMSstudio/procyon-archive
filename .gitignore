@@ -1,14 +1,14 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-admin.md
-/src/utils/book/photoUtils.js
+
+# document
+/document/for-admin/*
+
+# toolbox
 toolbox/*
 !toolbox/*.py
 !toolbox/*.c
 !toolbox/*.cpp
-
-# service account
-/src/config/service-account.json
 
 # dependencies
 /node_modules
