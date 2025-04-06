@@ -24,9 +24,7 @@ export const metadata = {
     ],
     type: "website",
   },
-  icons: {
-		icon: "/image/opengraph/favicon.png",
-	},
+  icons: { icon: "/image/opengraph/favicon.png", },
 };
 
 export default function RootLayout({ children }) {
