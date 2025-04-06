@@ -16,7 +16,7 @@ export const metadata = {
     siteName: "CSE Archive",
     images: [
       {
-        url: "/image/banner.png",
+        url: "/image/opengraph/banner.png",
         width: 800,
         height: 600,
         alt: "CSE Archive 페이지",
