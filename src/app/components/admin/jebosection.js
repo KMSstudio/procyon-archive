@@ -35,7 +35,7 @@ export default function JeboSection({ jebos }) {
           // Each Jebo Item
           <div key={folder.name} className="jebo-item">
             <div key={`content-of-${folder.name}`} className="jebo-folder-item" onClick={() => toggleFolder(folder.name)}>
-              <img src={expanded === folder.name ? "/image/ext/asm.png" : "/image/ext/ttf.png"} alt="Folder Icon" className="folder-icon"/>
+              <img src={expanded === folder.name ? "/image/ico/admin-jebo-section/open.png" : "/image/ico/admin-jebo-section/jebo.png"} alt="Folder Icon" className="folder-icon"/>
               <p className="folder-name">{folder.name}</p>
             </div>
 
