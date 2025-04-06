@@ -21,7 +21,7 @@ export default function FileList({ files }) {
     setDownloadingFiles((prev) => ({ ...prev, [file.id]: true }));
 
     try {
-      const response = await fetch(file.downloadLink);
+      const response = await fetch(`${file.downloadLink}?name=${file.name}`);
       if (!response.ok) throw new Error(`Fail to download file: ${file.name}`);
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
