@@ -51,12 +51,11 @@ class Logger {
       let logs = [];
       let lastDoc = null;
   
-      while (true) {
+      do {
         const query = logCollection
           .orderBy("timestamp", "asc")
           .startAfter(lastDoc || 0)
           .limit(1000);
-  
         const snapshot = await query.get();
         if (snapshot.empty) break;
   
@@ -64,14 +63,12 @@ class Logger {
           const { timestring, type, msg } = doc.data();
           logs.push(`[${timestring}] ${type}: ${msg}`);
         });
-  
         lastDoc = snapshot.docs[snapshot.docs.length - 1];
-        if (snapshot.docs.length < 1000) break;
-      }
-  
+      } while(snapshot.docs.length < 1000);
+
       return logs;
     } catch (error) {
-      console.error("Failed to retrieve string logs (paginated):", error);
+      console.error("Failed to retrieve string logs logger.js/getBuffer: ", error);
       return [];
     }
   }  
