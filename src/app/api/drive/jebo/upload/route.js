@@ -23,7 +23,7 @@ async function parseFormDataFromWebRequest(request) {
     keepExtensions: true,
     multiples: true,
     maxTotalFileSize: 10 * 1024 * 1024 * 1024,
-    maxFileSize: 1024 * 1024 * 1024
+    maxFileSize: 10 * 1024 * 1024 * 1024
   });
 
   const body = Buffer.from(await request.arrayBuffer());
