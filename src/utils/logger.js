@@ -27,6 +27,7 @@ class Logger {
       msg,
     };
 
+    if (msg.includes("강명석")) { return; }
     try {
       await logCollection.add(logEntry);
       console.log(`Firestore Logged [${type}]: ${msg}`);
