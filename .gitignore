@@ -5,10 +5,8 @@
 /document/for-admin/*
 
 # toolbox
-toolbox/*
-!toolbox/*.py
-!toolbox/*.c
-!toolbox/*.cpp
+/toolbox/**/*.csv
+/toolbox/**/*.txt
 
 # dependencies
 /node_modules
