@@ -48,16 +48,33 @@ class Logger {
 
   async getBuffer() {
     try {
-      const snapshot = await logCollection.orderBy("timestamp", "asc").get();
-      return snapshot.docs.map(doc => {
-        const { timestring, type, msg } = doc.data();
-        return `[${timestring}] ${type}: ${msg}`;
-      });
+      let logs = [];
+      let lastDoc = null;
+  
+      while (true) {
+        const query = logCollection
+          .orderBy("timestamp", "asc")
+          .startAfter(lastDoc || 0)
+          .limit(1000);
+  
+        const snapshot = await query.get();
+        if (snapshot.empty) break;
+  
+        snapshot.docs.forEach((doc) => {
+          const { timestring, type, msg } = doc.data();
+          logs.push(`[${timestring}] ${type}: ${msg}`);
+        });
+  
+        lastDoc = snapshot.docs[snapshot.docs.length - 1];
+        if (snapshot.docs.length < 1000) break;
+      }
+  
+      return logs;
     } catch (error) {
-      console.error("Failed to retrieve string logs:", error);
+      console.error("Failed to retrieve string logs (paginated):", error);
       return [];
     }
-  }
+  }  
 
   async flush() {
     try {
