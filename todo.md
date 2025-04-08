@@ -1,5 +1,7 @@
 #SW
 
+- 로그 download, flush 시 admin 확인
+- 게시판 config 파일 만들고 글 작성 페이지 개선
 1. 자료 제보 사이트 (UI 개선)
 2. 인기순 정렬
 3. S3 대안 탐색
