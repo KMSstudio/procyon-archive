@@ -8,6 +8,7 @@ import Sidebar from "@/app/components/main/Sidebar";
 // Constants
 import navData from "@/config/navConstant.json";
 // Utils
+import { updateUserAccessDate } from "@/utils/database/userDB"
 import { getUserv2 } from "@/utils/auth";
 import logger from "@/utils/logger";
 
@@ -15,8 +16,10 @@ export default async function HomePage() {
   // Load Static data
   const userData = await getUserv2();
   const { navs = [], links = [], buttons = [] } = navData;
-  if (userData.login) { logger.info(`「${userData.fullName}」가 메인 페이지에 겁속했습니다.`); }
-  else { logger.info(`「User who does not login」가 메인 페이지에 겁속했습니다.`); }
+  if (userData.login) { 
+    logger.info(`「${userData.fullName}」가 메인 페이지에 겁속했습니다.`);
+    updateUserAccessDate(userData.email);
+  } else { logger.info(`「User who does not login」가 메인 페이지에 겁속했습니다.`); }
   
   return (
     <div className="main-container">
