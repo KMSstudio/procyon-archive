@@ -50,13 +50,14 @@ class Logger {
     try {
       let logs = [];
       let lastDoc = null;
-  
+
+      let snapshot;
       do {
         const query = logCollection
           .orderBy("timestamp", "asc")
           .startAfter(lastDoc || 0)
           .limit(1000);
-        const snapshot = await query.get();
+        snapshot = await query.get();
         if (snapshot.empty) break;
   
         snapshot.docs.forEach((doc) => {
