@@ -23,7 +23,7 @@ async function parseFormDataFromWebRequest(request) {
     keepExtensions: true,
     multiples: true,
     maxTotalFileSize: 10 * 1024 * 1024 * 1024,
-    maxFileSize: 1024 * 1024 * 1024
+    maxFileSize: 10 * 1024 * 1024 * 1024
   });
 
   const body = Buffer.from(await request.arrayBuffer());
@@ -44,16 +44,26 @@ async function parseFormDataFromWebRequest(request) {
 // POST リクエストのハンドラ
 export async function POST(req) {
   try {
+    const userData = await getUserv2();
+
     parseFormDataFromWebRequest(req)
-    .then(({ fields, files }) => {
-      const reportName = fields.reportName?.[0] || fields.reportName;
-      const description = fields.description?.[0] || fields.description;
-      const fileArray = Array.isArray(files.files) ? files.files : [files.files];
-      if (!reportName || !fileArray || fileArray.length === 0) { console.warn("Invalid jebo input"); return; }
-      jeboFile(reportName, description || "", fileArray).catch((err) => console.error("jeboFile background error:", err));
-    })
-    .catch((err) => { logger.error("form parsing error:", err); });
-    logger.info(`「${(await getUserv2()).fullName}」 queue jebo`);
+      .then(async ({ fields, files }) => {
+        const reportName = fields.reportName?.[0] || fields.reportName;
+        const jebo_note = fields.description?.[0] || fields.description;
+        const fileArray = Array.isArray(files.files) ? files.files : [files.files];
+        if (!reportName || !fileArray || fileArray.length === 0) { console.warn("Invalid jebo input"); return; }
+        const descriptionJSON = JSON.stringify({
+          email: userData.email,
+          name: userData.fullName,
+          jebo_note,
+          jebo_time: new Date(Date.now() + 9 * 3600 * 1000).toISOString(),
+        }, null, 2);
+        jeboFile(reportName, descriptionJSON, fileArray).catch((err) => console.error("jeboFile background error:", err));
+      })
+      .catch((err) => {
+        logger.error("form parsing error:", err);
+      });
+    logger.info(`「${userData.fullName}」 queue jebo`);
     return new Response(JSON.stringify({ message: "Upload started" }), { status: 200 });
   }
   catch (err) { return new Response(JSON.stringify({ error: "Unexpected upload error" }), { status: 500 }); }

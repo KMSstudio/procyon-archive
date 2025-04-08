@@ -99,6 +99,19 @@ export async function updateUserAccess(email, data = {}) {
 }
 
 /**
+ * Update last access date
+ */
+export async function updateUserAccessDate(email) {
+  if (!email) return;
+
+  const today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().replace('T', ' ').slice(0, 13);
+  const user = await fetchUser(email);
+
+  if (!user) { await saveUser(email, { lastAccessDate: today, lastContributionDate: today, isAdmin: false, ...data }); }
+  else if (user.lastAccessDate !== today) { user.lastAccessDate = today; await saveUser(email, user); }
+}
+
+/**
  * Fetch all users from Firestore (cache applied)
  */
 export async function fetchAllUser() {
