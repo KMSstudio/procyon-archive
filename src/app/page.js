@@ -8,7 +8,6 @@ import Sidebar from "@/app/components/main/Sidebar";
 // Constants
 import navData from "@/config/navConstant.json";
 // Utils
-import { updateUserAccess } from "@/utils/database/userDB"
 import { getUserv2 } from "@/utils/auth";
 import logger from "@/utils/logger";
 
