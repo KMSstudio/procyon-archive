@@ -1,21 +1,21 @@
 /* @/styles/drive.css */
 
 .main-container {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: Arial, sans-serif;
-    background-color: #000;
-    color: white;
-    display: flex;
-    flex-direction: column;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 .content-container {
-    display: flex;
-    flex-grow: 1;
-    height: auto;
-    position: relative;
+  display: flex;
+  flex-grow: 1;
+  height: auto;
+  position: relative;
 }
 
 .div-100vw { width: 100vw; }
@@ -26,97 +26,39 @@ body { -ms-overflow-style: none; }
 
 /* Header */
 .container {
-    padding: 20px;
-    max-width: 800px;
-    width: 80%;
-    margin: 0 auto;
+  padding: 20px;
+  max-width: 800px;
+  width: 80%;
+  margin: 0 auto;
 }
 
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-h1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  h1 {
     font-size: 24px;
     font-weight: bold;
+  }
 }
 
-/* Infomation Section at drive/book */
-#book-head-info {
-    margin-bottom: -5px;
-    padding: 5px 0px 0px;
-    width: 100vw;
-    
-    text-align: center;
-    overflow-x: scroll;
-    user-select: none;
-}
+/* Button */
+.write-link {
+  display: inline-block;
+  cursor: pointer;
+  
+  padding: 10px 20px;
+  margin: 0;
+  border-radius: 5px;
+  font-size: 14px;
+  
+  color: white;
+  border: 1px solid #bbb;
+  background-color: transparent;
+  
+  transition: background-color 0.3s ease;
+  text-decoration: none;
 
-#book-head-info p {
-    margin: 0;
-    min-width: 100%;
-    font-size: 14px;
-    white-space: nowrap;
-    color: #777;
-}  
-
-/* Button Group */
-.button-group button {
-    padding: 8px 16px 4px 16px;
-    background-color: #fff;
-    color: #fff;
-    border: 0px solid #fff;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.button-group button:hover {
-    background-color: #ccc;
-}
-
-.button-group .icon {
-    width: 24px;
-    height: 24px;
-}
-
-/*
-* Control Links
-*/
-
-.control-links {
-    display: flex;
-    flex-direction: row;
-}
-
-.back-link {
-    display: block;
-    margin-top: 20px;
-    font-size: 18px;
-    text-decoration: none;
-    color: #fff;
-    margin-right: 20px;
-}
-
-.back-link:hover {
-    text-decoration: underline;
-}
-
-/*
-* End of booklist
-*/
-.end-of-booklist {
-    margin: 50px 0px;
-    width: 100vw;
-    
-    display: flex;
-    justify-content: center;
-}
-
-.end-indicator {
-    display: block;
-    font-size: 18px;
-    text-decoration: none;
-    color: gray;
+  &:hover { background-color: #333; }
 }
