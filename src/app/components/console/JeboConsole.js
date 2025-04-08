@@ -9,7 +9,7 @@ import "@/styles/components/list/filelist.css";
 
 function PendingFileList({ files }) {
   if (!files || files.length === 0) {
-    return <div className="empty-message">업로드 된 파일이 없습니다.</div>;
+    return <div className="empty-message">파일 업로드는 최대 10GB까지 가능합니다.</div>;
   }
 
   return (
