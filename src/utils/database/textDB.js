@@ -51,7 +51,7 @@ export async function getRecentDBTexts(board, num = 40, page = 1) {
  */
 export async function getDBText(board, textId) {
   try {
-    const docRef = db.collection(`board/${board}`).doc(textId);
+    const docRef = db.collection(`${board}`).doc(textId);
     const docSnap = await docRef.get();
 
     if (!docSnap.exists) return null;
