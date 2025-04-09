@@ -10,6 +10,7 @@
 #jebo-container textarea {
   padding: 10px;
   border: none;
+  border-radius: 0px;
   box-sizing: border-box;
   
   font-family: Arial, sans-serif;
