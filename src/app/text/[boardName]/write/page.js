@@ -1,7 +1,12 @@
 "use client";
 
+// Next
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+// Component
+import MarkdownView from "../MarkdownView";
+// Style
+import "./boardwrite.css";
 
 export default function BoardWritePage({ params }) {
   const { boardName } = params;
@@ -31,29 +36,40 @@ export default function BoardWritePage({ params }) {
   };
 
   return (
-    <div style={{ maxWidth: "720px", margin: "40px auto" }}>
-      <h1>Write Post to /{boardName}</h1>
-      <form onSubmit={handleSubmit}>
+    <div id="board-write-container">
+      {/* Console Section */}
+      <form className="write-console" onSubmit={handleSubmit}>
+        <h2 className="write-title">/{boardName} 글 작성</h2>
+
         <input
           type="text"
-          placeholder="Title"
+          placeholder="제목을 입력하세요"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          style={{ width: "100%", padding: "8px", fontSize: "16px", marginBottom: "10px" }}
           required
+          className="title-input"
         />
         <textarea
-          placeholder="Markdown content here..."
+          placeholder="마크다운으로 글을 작성하세요..."
           value={markdown}
           onChange={(e) => setMarkdown(e.target.value)}
-          rows={15}
-          style={{ width: "100%", padding: "8px", fontSize: "14px" }}
+          rows={20}
+          className="markdown-input"
           required
         />
-        <button type="submit" disabled={loading} style={{ marginTop: "10px" }}>
-          {loading ? "Uploading..." : "Submit"}
+
+        <button type="submit" disabled={loading} className="submit-button">
+          {loading ? "업로드 중..." : "작성 완료"}
         </button>
       </form>
+
+      {/* Preview Section */}
+      <div className="write-preview">
+        <h2 className="preview-title">Preview</h2>
+        <div className="preview-content">
+          <MarkdownView content={markdown} />
+        </div>
+      </div>
     </div>
   );
 }
