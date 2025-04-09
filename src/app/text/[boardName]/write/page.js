@@ -36,9 +36,9 @@ export default function BoardWritePage({ params }) {
   };
 
   return (
-    <div id="board-write-container">
+    <main id="write-container">
       {/* Console Section */}
-      <form className="write-console" onSubmit={handleSubmit}>
+      <form id="write-console" onSubmit={handleSubmit}>
         <h2 className="write-title">/{boardName} 글 작성</h2>
 
         <input
@@ -65,11 +65,11 @@ export default function BoardWritePage({ params }) {
 
       {/* Preview Section */}
       <div className="write-preview">
-        <h2 className="preview-title">Preview</h2>
+        <h2 className="preview-title">Preview 임마</h2>
         <div className="preview-content">
           <MarkdownView content={markdown} />
         </div>
       </div>
-    </div>
+    </main>
   );
 }
