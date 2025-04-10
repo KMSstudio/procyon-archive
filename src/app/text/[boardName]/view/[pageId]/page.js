@@ -2,7 +2,9 @@
 
 import { getDriveText } from "@/utils/drive/text";
 import { parseMarkdown } from "@/utils/markdown";
+// Style
 import "katex/dist/katex.min.css";
+import "@/styles/text.css";
 
 export default async function NoticeViewPage({ params }) {
   const { pageId } = params;
@@ -12,6 +14,8 @@ export default async function NoticeViewPage({ params }) {
   const html = await parseMarkdown(markdown);
 
   return (
-    <div className="markdown-body" dangerouslySetInnerHTML={{ __html: html }} />
+    <div className="container">
+      <div className="markdown-body" dangerouslySetInnerHTML={{ __html: html }} />
+    </div>
   );
 }
