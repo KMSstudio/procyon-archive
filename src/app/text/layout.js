@@ -8,7 +8,7 @@ import navData from "@/config/navConstant.json";
 import { getUserv2 } from "@/utils/auth";
 import { updateUserAccessDate } from "@/utils/database/userDB"
 // Style (CSS)
-import "@/styles/drive.css";
+import "@/styles/text.css";
 
 export default async function DriveLayout({ children }) {
   const userData = await getUserv2();

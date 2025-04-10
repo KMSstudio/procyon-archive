@@ -26,6 +26,7 @@ function PendingFileList({ files }) {
 
 export default function JeboConsole() {
   const [reportName, setReportName] = useState("");
+  const [nickname, setNickname] = useState("익명");
   const [description, setDescription] = useState("");
   const [files, setFiles] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -45,6 +46,7 @@ export default function JeboConsole() {
 
     const formData = new FormData();
     formData.append("reportName", reportName);
+    formData.append("nickname", nickname);
     formData.append("description", description);
     files.forEach((file) => formData.append("files", file));
   
@@ -100,13 +102,22 @@ export default function JeboConsole() {
 
   return (
     <form onSubmit={handleSubmit} id="jebo-container">
-      <input
-        type="text"
-        placeholder="제보의 제목을 입력하세요"
-        value={reportName}
-        onChange={(e) => setReportName(e.target.value)}
-        required
-      />
+      <div className="jebo-input-row">
+        <input
+          type="text"
+          placeholder="제보의 제목을 입력하세요"
+          value={reportName}
+          onChange={(e) => setReportName(e.target.value)}
+          required
+        />
+
+        <input
+          type="text"
+          placeholder="사용할 닉네임을 입력하세요."
+          value={nickname}
+          onChange={(e) => setNickname(e.target.value)}
+        />
+      </div>
 
       <textarea
         placeholder="자료에 대한 간단한 설명을 작성해주세요"

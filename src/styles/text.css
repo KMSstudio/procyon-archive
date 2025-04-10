@@ -1,0 +1,94 @@
+/* @/styles/drive.css */
+
+.main-container {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-container {
+  display: flex;
+  flex-grow: 1;
+  height: auto;
+  position: relative;
+}
+
+.div-100vw { width: 100vw; }
+/* Remove Scroll Bar */
+::-webkit-scrollbar { display: none; }
+html { scrollbar-width: none; }
+body { -ms-overflow-style: none; }
+
+/* Header */
+.container {
+  padding: 20px;
+  max-width: 800px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+}
+
+/* Button */
+.write-link {
+  display: inline-block;
+  cursor: pointer;
+  
+  padding: 10px 20px;
+  margin-top: 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  
+  color: white;
+  border: 1px solid #bbb;
+  background-color: transparent;
+  
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+
+  &:hover { background-color: #333; }
+}
+
+/* write container */
+#write-container {
+  display: flex;
+  flex-direction: row;
+
+  flex-grow: 1;
+  width: 100%;
+  height: calc(100vh - 66px);
+
+  background-color: #000;
+  color: white;
+}
+
+/* write preview */
+#write-preview {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  h2 { margin: 20px 0; }
+
+  .preview-content {
+    padding: 10px;
+    background-color: transparent;
+    border: 1px solid rgba(225, 225, 255, 0.2);
+    overflow-y: auto;
+    flex: 1;
+  }
+}

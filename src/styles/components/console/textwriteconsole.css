@@ -1,0 +1,43 @@
+/* @/styles/componets/console/textwriteconsole.css */
+
+/* write console */
+#write-console {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  height: calc(100% - 40px);
+  h2 { margin: 20px 0; }
+  
+  .title-input,
+  .markdown-input {
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    
+    background-color: #111;
+    border: 1px solid rgba(225, 225, 255, 0.2);
+    color: white;
+    &:focus {
+      outline: none;
+      border: 1px solid rgba(225, 225, 255, 0.2);
+    }
+  }
+  
+  .markdown-input {
+    min-height: 100px;
+    flex: 1;
+    resize: none;
+  }
+  
+  .submit-button {
+    padding: 10px;
+    background-color: #333;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+    &:hover { background-color: #555; }
+  }
+}
