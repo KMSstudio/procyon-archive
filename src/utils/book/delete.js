@@ -1,8 +1,8 @@
 /* @/utils/book/delete.js */
 
 // Utils
-import { getDBBook, deleteDBBook, deleteS3File } from "@/utils/database/bookDB";
-import { deleteDriveFile } from "@/utils/book/driveUtils";
+import { getDBBook, deleteDBBook } from "@/utils/database/bookDB";
+import { deleteDriveFile, deleteS3File } from "@/utils/book/driveUtils";
 
 /**
  * AWS DynamoDB から本のデータを削除し、関連するファイルを AWS S3 または Google Drive から削除する。

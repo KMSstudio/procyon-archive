@@ -3,7 +3,7 @@
 import fs from "fs";
 import path from "path";
 import { google } from "googleapis";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import mime from "mime-types";
 
 // Google Drive API
@@ -156,5 +156,25 @@ export async function deleteDriveFile(fileUrl) {
     });
   } catch (error) {
     console.error("Failed to move file to trash on Google Drive:", error);
+  }
+}
+
+/**
+ * Deletes a file from AWS S3.
+ * @param {string} fileUrl - The AWS S3 file URL.
+ * @returns {Promise<void>}
+ */
+export async function deleteS3File(fileUrl) {
+  try {
+    const key = fileUrl.split(`${S3_BUCKET_NAME}/`)[1];
+    if (!key) { console.warn(`Invalid S3 URL: ${fileUrl}`); return; }
+
+    await s3Client.send(new DeleteObjectCommand({
+      Bucket: S3_BUCKET_NAME,
+      Key: key,
+    }));
+    console.log(`Deleted S3 file: ${key}`);
+  } catch (error) {
+    console.error("Failed to delete file from S3:", error);
   }
 }
