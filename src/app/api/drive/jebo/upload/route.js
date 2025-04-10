@@ -49,12 +49,14 @@ export async function POST(req) {
     parseFormDataFromWebRequest(req)
       .then(async ({ fields, files }) => {
         const reportName = fields.reportName?.[0] || fields.reportName;
+        const nickname = fields.nickname?.[0] || fields.nickname;
         const jebo_note = fields.description?.[0] || fields.description;
         const fileArray = Array.isArray(files.files) ? files.files : [files.files];
         if (!reportName || !fileArray || fileArray.length === 0) { console.warn("Invalid jebo input"); return; }
         const descriptionJSON = JSON.stringify({
           email: userData.email,
           name: userData.fullName,
+          nickname: nickname,
           jebo_note,
           jebo_time: new Date(Date.now() + 9 * 3600 * 1000).toISOString(),
         }, null, 2);
