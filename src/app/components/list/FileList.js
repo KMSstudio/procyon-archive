@@ -88,6 +88,19 @@ export default function FileList({ files }) {
       {files.length > 0
         ? files.map((file) => <FileComponent key={file.id} file={file} />)
         : <div className="empty-message">No files or folders found.</div>}
+      
+      {/* Jebo Link */}
+      { (files.length > 0) && 
+        <div className="file-item">
+          <img src="/image/ico/file.png" alt="Suggest Icon" className="file-icon" />
+          <a 
+            href="/drive/jebo" 
+            style={{ display: "flex", alignItems: "center", textDecoration: "underline" }}
+          >
+            자료 제보를 해주세요
+          </a>
+        </div>
+      }
     </div>
   );
 }
