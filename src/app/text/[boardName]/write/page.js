@@ -23,7 +23,7 @@ export default function BoardWritePage({ params }) {
 
       {/* Preview Section */}
       <div id="write-preview">
-        <h2 className="preview-title">Preview 임마</h2>
+        <h2 className="preview-title">프리뷰</h2>
         <div className="preview-content">
           <MarkdownView content={markdown} />
         </div>
