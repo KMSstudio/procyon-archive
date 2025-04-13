@@ -92,7 +92,7 @@ export default function FileList({ files }) {
       {/* Jebo Link */}
       { (files.length > 0) && 
         <div className="file-item">
-          <img src="/image/ico/file.png" alt="Suggest Icon" className="file-icon" />
+          <img src="/image/filelist/givemejebo.png" alt="Suggest Icon" className="file-icon" />
           <a 
             href="/drive/jebo" 
             style={{ display: "flex", alignItems: "center", textDecoration: "underline" }}
