@@ -26,7 +26,7 @@ export default async function HomePage() {
   
   return (
     <div className="main-container">
-      <Head> <meta name="description" content="CSE: Archive for Seoul National University - Computer Science and Engineering" /> </Head>
+      <Head> <meta name="description" content="CSE: Archive is archive project for all Seoul National University - Computer Science and Engineering students" /> </Head>
       <NavBar navs={navs} />
       <div className="content-container">
         <Sidebar isAdmin={userData.admin} links={links} />
