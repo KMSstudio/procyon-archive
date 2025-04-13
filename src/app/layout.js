@@ -1,7 +1,6 @@
 /* @/app/layout.js */
 
 import { Inter } from "next/font/google";
-import Head from "next/head";
 import AuthProvider from "./components/main/SessionProvider";
 import "@/styles/index.css";
 
@@ -32,7 +31,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Head> <meta name="google" content="notranslate" /> </Head>
+      <head> <meta name="google" content="notranslate" /> </head>
       <body className={inter.className} style={{ width: "100vw", height: "100vh" }}>
         <AuthProvider>{children}</AuthProvider>
       </body>

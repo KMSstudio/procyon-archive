@@ -1,10 +1,10 @@
 {
     "notice": {
-        "name": "공지 게시판",
+        "displayName": "공지 게시판",
         "write": "admin"
     },
     "tips": {
-        "name": "교양개발",
+        "displayName": "교양개발",
         "write": "login"
     }
 }
