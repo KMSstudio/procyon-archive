@@ -1,7 +1,10 @@
 /* @/app/page.js */
 
+
 // Styles (CSS)
 import "@/styles/index.css";
+// Next
+import Head from "next/head";
 // Components
 import NavBar from "./components/NavBar";
 import Sidebar from "@/app/components/main/Sidebar";
@@ -23,6 +26,7 @@ export default async function HomePage() {
   
   return (
     <div className="main-container">
+      <Head> <meta name="description" content="CSE: Archive for Seoul National University - Computer Science and Engineering" /> </Head>
       <NavBar navs={navs} />
       <div className="content-container">
         <Sidebar isAdmin={userData.admin} links={links} />
