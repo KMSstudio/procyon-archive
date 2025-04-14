@@ -1,4 +1,4 @@
-// @/app/board/notice/view/[pageId]/page.js
+// @/app/text/[boardName]/view/[pageId]/page.js
 
 import { getDriveText } from "@/utils/drive/text";
 import { parseMarkdown } from "@/utils/markdown";

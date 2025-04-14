@@ -1,4 +1,4 @@
-// @/app/board/[boardName]/list/page.js
+// @/app/text/[boardName]/page.js
 
 // Next
 import Link from "next/link";
