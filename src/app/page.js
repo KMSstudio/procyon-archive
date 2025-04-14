@@ -14,7 +14,7 @@ import logger from "@/utils/logger";
 
 export const metadata = {
   title: "CSE Archive",
-  description: "CSE: Archive is archive project for all Seoul National University - Computer Science and Engineering students",
+  description: "CSE: Archive is archive project for all Seoul National University - Computer Science and Engineering students. CSE: Archive는 경성제국대학교 전자계산기 학과 학생을 위한 아카이브 프로젝트입니다.",
 };
 
 export default async function HomePage() {
