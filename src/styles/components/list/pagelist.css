@@ -43,16 +43,33 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    .page-title {
+      font-weight: bold;
+      font-size: 16px;
+      color: white;
+    }
+
+    .page-date {
+      color: #999
+    }
   }
 
-  .page-title {
-    font-weight: bold;
-    font-size: 16px;
-    color: white;
-  }
+  .page-buttons {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    
+    .modify-link {
+      /* font-size: 14px; */
+      padding: 0 6px;
+      color: #999;
+      text-decoration: none;
 
-  .page-uploader {
-    font-size: 14px;
-    color: #888;
+      &:hover { 
+        color: rgb(247, 143, 30);
+        text-decoration: underline;
+      }
+    }
   }
 }

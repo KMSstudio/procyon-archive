@@ -1,15 +1,13 @@
-/*
-* @/app/admin/page.js
-*/
+/* @/app/admin/page.js */
 
 // Styles (CSS)
 import "@/styles/admin.css";
+// Next
+import { redirect } from "next/navigation";
 // Components
 import NavBar from "@/app/components/NavBar";
 import UserSection from "@/app/components/admin/usersection";
 import LogSection from "@/app/components/admin/logsection";
-// Redirect
-import { redirect } from "next/navigation";
 // Constants
 import navData from "@/config/navConstant.json";
 // Utils

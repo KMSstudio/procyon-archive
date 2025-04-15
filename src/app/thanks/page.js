@@ -13,6 +13,11 @@ import "@/styles/thanks.css";
 import { getUserv2 } from "@/utils/auth";
 import logger from "@/utils/logger";
 
+export const metadata = {
+  title: "개발자정보",
+  description: "CSE:Archive의 관리자 신시우는 서버의 최초 구상자이며 모든 권한을 가지고 있습니다. 하지만, 직접적인 관여는 하지 않을 예정입니다. 명왕성은 컨텐츠 생성 및 관리 권한을 갖고 있으며, 소스코드 유지보수를 담당하고 있습니다.",
+};
+
 export default async function ThanksPage() {
   const { navs = [] } = navData;
   getUserv2().then(userData => {
@@ -48,7 +53,7 @@ export default async function ThanksPage() {
 
         {/* Server Information */}
         <div id="server-info">
-          <p className="server-version">procyon 0.7.0</p>
+          <p className="server-version">procyon 0.7.1</p>
           <p className="server-message">
             모든 정보는 서울대학교 컴퓨터공학과에게 공개됩니다. 컴퓨터공학과 내에서 정보 격차는 존재해서는 안 됩니다.
           </p>
