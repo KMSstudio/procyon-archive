@@ -63,7 +63,7 @@ export async function POST(req) {
       jebo_time: new Date(Date.now() + 9 * 3600 * 1000).toISOString(),
     }, null, 2);
     console.log(`[route.js]: before jeboFile call`);
-    jeboFile(reportName, descriptionJSON, fileArray).catch((err) => console.error("jeboFile background error:", err));
+    await jeboFile(reportName, descriptionJSON, fileArray);
     console.log(`[route.js]: after  jeboFile call`);
 
     logger.info(`「${userData.fullName}」 queue jebo`);
