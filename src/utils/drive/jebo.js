@@ -107,14 +107,9 @@ export async function jeboFile(reportName, description, files) {
   if (!reportName || !description || !Array.isArray(files)) { throw new Error("Invalid arguments to jeboFile"); }
   const folderPath = `jebo/${reportName}`;
   const folderId = await createFolder(folderPath);
-
   // 説明ファイル（config.txt）のアップロード
   await uploadTextAsFile(folderId, "config.txt", description);
-
   // 各ファイルのアップロード
-  for (const file of files) {
-    await uploadFileToDrive(folderId, file);
-  }
-
+  for (const file of files) { await uploadFileToDrive(folderId, file); }
   return folderId;
 }
