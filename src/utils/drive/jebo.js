@@ -106,14 +106,19 @@ async function uploadTextAsFile(folderId, filename, content) {
 export async function jeboFile(reportName, description, files) {
   if (!reportName || !description || !Array.isArray(files)) { throw new Error("Invalid arguments to jeboFile"); }
   const folderPath = `jebo/${reportName}`;
+  console.log(`[jeboFile] create gdrive folder at ${folderPath}`);
   const folderId = await createFolder(folderPath);
+  console.log(`[jeboFile] create gdrive folder. id: ${folderId}`);
+
 
   // 説明ファイル（config.txt）のアップロード
   await uploadTextAsFile(folderId, "config.txt", description);
+  console.log(`[jeboFile] upload description: ${description}`);
 
   // 各ファイルのアップロード
   for (const file of files) {
     await uploadFileToDrive(folderId, file);
+    console.log(`[jeboFile] upload a file to folder`);
   }
 
   return folderId;
