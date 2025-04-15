@@ -10,6 +10,8 @@ import { IncomingForm } from "formidable";
 import { Readable } from "stream";
 import os from "os";
 
+export const runtime = "nodejs";
+
 // Next.js 14 App Router に対応する multipart パーサ
 async function parseFormDataFromWebRequest(request) {
   const contentType = request.headers.get("content-type");
