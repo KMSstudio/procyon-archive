@@ -22,7 +22,7 @@ export default function PageList({ boardName, posts, uploader }) {
 
             <div className="page-buttons">
               {uploader?.email === post.uploaderEmail
-              ? (<Link href={`/text/${boardName}/modify/${post.driveId}`} className="modify-link">수정</Link>)
+              ? (<Link href={`/text/${boardName}/modify/${post.id}`} className="modify-link">수정</Link>)
               : (<span className="page-date">{post.createDate.slice(2, 10)}</span>)}
             </div>
           </li>
