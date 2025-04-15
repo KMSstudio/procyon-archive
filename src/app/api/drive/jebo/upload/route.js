@@ -60,7 +60,9 @@ export async function POST(req) {
           jebo_note,
           jebo_time: new Date(Date.now() + 9 * 3600 * 1000).toISOString(),
         }, null, 2);
+        console.log(`[api/route.js]: before request jeboFile`);
         jeboFile(reportName, descriptionJSON, fileArray).catch((err) => console.error("jeboFile background error:", err));
+        console.log(`[api/route.js]: after request jeboFile`);
       })
       .catch((err) => {
         logger.error("form parsing error:", err);
