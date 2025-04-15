@@ -45,9 +45,11 @@ async function parseFormDataFromWebRequest(request) {
 export async function POST(req) {
   try {
     const userData = await getUserv2();
+    console.log(`[route.js] get post data`);
 
     parseFormDataFromWebRequest(req)
       .then(async ({ fields, files }) => {
+        console.log(`[route.js] start route.js`);
         const reportName = fields.reportName?.[0] || fields.reportName;
         const nickname = fields.nickname?.[0] || fields.nickname;
         const jebo_note = fields.description?.[0] || fields.description;
