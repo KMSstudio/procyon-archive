@@ -3,7 +3,7 @@
 import { updateDBText, getDBText } from "@/utils/database/textDB";
 import { google } from "googleapis";
 
-// Google Drive 인증
+// Google Drive
 const auth = new google.auth.GoogleAuth({
   credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT),
   scopes: ["https://www.googleapis.com/auth/drive"],

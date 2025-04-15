@@ -13,7 +13,7 @@ export default function PageList({ boardName, posts, uploader }) {
         {posts.map((post) => (
           <li key={post.id} className="page-item" onClick={() => setSelectedId(post.id)}>
             <img src={"/image/ico/file.png"} alt="File Icon" className="file-icon" />
-            <Link href={`/text/${boardName}/view/${post.driveId}`} className="page-link">
+            <Link href={`/text/${boardName}/view/${post.id}`} className="page-link">
               {selectedId === post.id
                ? (<img src="/image/filelist/interacting.png" alt="interacting..." className="loading-icon" />)
                : (<span className="page-title">{post.title}</span> )}
