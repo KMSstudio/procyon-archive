@@ -25,7 +25,7 @@ export async function POST(req) {
     if (boardConfig[boardName]?.modifyOnlyAuthor && textData.uploaderEmail !== userEmail) { 
       return NextResponse.json({ error: "Forbidden: You are not the author" }, { status: 403 }); }
     // Proceed with update
-    await modifyText(boardName, textId, newTitle, newMarkdown);
+    await modifyText(boardName, textId, newTitle, newMarkdown, user.fullName, user.email);
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Error in /api/text/modify:", err);

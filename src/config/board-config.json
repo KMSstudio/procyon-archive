@@ -8,5 +8,15 @@
         "displayName": "복기",
         "writeOnlyAdmin": false,
         "modifyOnlyAuthor": false
+    },
+    "forum": {
+        "displayName": "자유게시판",
+        "writeOnlyAdmin": false,
+        "modifyOnlyAuthor": true
+    },
+    "inform": {
+        "displayName": "정보게시판",
+        "writeOnlyAdmin": false,
+        "modifyOnlyAuthor": true
     }
 }

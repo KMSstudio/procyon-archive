@@ -1,6 +1,5 @@
 #SW
 
-- 게시판 페이지 수정 기능
 - 게시판 페이지 삭제 기능
 - 위키 기능
   -  If checked, all user can modify it.
