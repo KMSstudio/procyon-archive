@@ -1,10 +1,12 @@
 {
     "notice": {
         "displayName": "공지 게시판",
-        "write": "admin"
+        "writeOnlyAdmin": true,
+        "modifyOnlyAuthor": true
     },
-    "tips": {
-        "displayName": "교양개발",
-        "write": "login"
+    "reduplicate": {
+        "displayName": "복기",
+        "writeOnlyAdmin": false,
+        "modifyOnlyAuthor": false
     }
 }

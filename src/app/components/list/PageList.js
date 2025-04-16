@@ -3,9 +3,11 @@
 import { useState } from "react";
 import Link from "next/link";
 import "@/styles/components/list/pagelist.css";
+import boardConfig from "@/config/board-config.json";
 
 export default function PageList({ boardName, posts, uploader }) {
   const [selectedId, setSelectedId] = useState(null);
+  const boardMeta = boardConfig[boardName];
 
   return (
     <div id="page-list-container">
@@ -21,7 +23,7 @@ export default function PageList({ boardName, posts, uploader }) {
             </Link>
 
             <div className="page-buttons">
-              {uploader?.email === post.uploaderEmail
+              {(uploader?.email === post.uploaderEmail || !boardMeta?.modifyOnlyAuthor)
               ? (<Link href={`/text/${boardName}/modify/${post.id}`} className="modify-link">수정</Link>)
               : (<span className="page-date">{post.createDate.slice(2, 10)}</span>)}
             </div>
