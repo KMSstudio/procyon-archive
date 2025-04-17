@@ -23,6 +23,7 @@ export default async function NoticeViewPage({ params }) {
   return (
     <div className="container">
       <div className="markdown-body" dangerouslySetInnerHTML={{ __html: html }} />
+      
     </div>
   );
 }
