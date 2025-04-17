@@ -57,8 +57,8 @@ body { -ms-overflow-style: none; }
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('/image/background/301.jpg') center/cover no-repeat;
-    filter: brightness(10%);
+    background: url('/image/background/high.png') center/cover no-repeat;
+    filter: brightness(15%);
     z-index: -1;
 }
 
@@ -88,7 +88,7 @@ body { -ms-overflow-style: none; }
 .buttons button {
     padding: 10px 30px;
     font-size: 18px;
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0.5);
     color: white;
     border-radius: 10px;
     cursor: pointer;
