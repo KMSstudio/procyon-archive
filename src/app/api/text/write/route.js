@@ -5,6 +5,7 @@ import { NextResponse } from "next/server";
 // Utils
 import { registerText } from "@/utils/text/regist";
 import { getUserv2 } from "@/utils/auth";
+import logger from "@/utils/logger";
 // Constants
 import boardConfig from "@/config/board-config.json";
 
@@ -12,6 +13,7 @@ export async function POST(req) {
   const userData = await getUserv2();
   const { boardName, title, markdown } = await req.json();
   console.log(boardName);
+  logger.query(userData.fullName, "글 작성", `${title}:${boardName}`)
   if (!userData.login) { return NextResponse.json({ success: false, error: "Not authenticated" }); }
   // Check writeOnlyAdmin
   if (boardConfig[boardName]?.writeOnlyAdmin && !userData.admin) {

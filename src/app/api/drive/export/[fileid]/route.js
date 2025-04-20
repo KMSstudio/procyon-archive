@@ -18,8 +18,8 @@ export async function GET(req, { params }) {
 
     if (!userData?.login) { return NextResponse.redirect(new URL("/err/login/nodata", req.url)); }
 
-    if (fileName) { logger.query(userData.fullName, "다운로드", `${fileName}:${fileId}`) }
-    else { logger.query(userData.fullName, "다운로드", `?:${fileId}`) }
+    if (fileName) { logger.query(userData.fullName, "다운로드", `${fileName}:${fileId}`); }
+    else { logger.query(userData.fullName, "다운로드", `?:${fileId}`); }
     if (!result) return NextResponse.json({ error: "File not found." }, { status: 404 });
 
     return new Response(result.stream, { headers: result.headers });
