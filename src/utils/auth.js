@@ -51,21 +51,25 @@ export async function getUser() {
 }
 
 /**
- * getUserv2 returns a flat user object with consistent shape.
- * If not logged in, returns a user object with login: false and all other fields set to null/defaults.
+ * Returns a flat user object with consistent structure based on authentication status.
  *
- * Return format:
- * {
- *   login: boolean,
- *   admin: boolean,
- *   email: string | null,
- *   name: string | null,
- *   position: string | null,
- *   major: string | null,
- *   lastAccess: string | null,
- *   lastContribute: string | null
- * }
-**/
+ * - If the user is **not logged in**, returns a default object with `login: false` and null/default values.
+ * - If the user **is logged in**, fetches and returns user details from the database.
+ *
+ * @async
+ * @function getUserv2
+ * @returns {Promise<{
+*   login: boolean,
+*   admin: boolean,
+*   email: string | null,
+*   name: string | null,
+*   position: string | null,
+*   major: string | null,
+*   lastAccess: string | null,
+*   lastContribute: string | null,
+*   fullName: string
+* }>} A user object with consistent structure.
+*/
 export async function getUserv2() {
   // Chack Server Session
   const session = await getServerSession(authOptions);
