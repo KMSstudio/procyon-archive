@@ -51,7 +51,7 @@ export default async function ThanksPage() {
 
         {/* Server Information */}
         <div id="server-info">
-          <p className="server-version">procyon 0.7.2</p>
+          <p className="server-version">procyon 0.7.3</p>
           <p className="server-message">
             모든 정보는 서울대학교 컴퓨터공학과에게 공개됩니다. 컴퓨터공학과 내에서 정보 격차는 존재해서는 안 됩니다.
           </p>
