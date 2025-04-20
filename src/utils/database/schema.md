@@ -55,8 +55,8 @@ Procyon의 게시글 텍스트 데이터베이스입니다. 사용자가 업로�
 ### Fields
 | 필드명       | 타입     | 설명 |
 |--------------|----------|------|
-| `timestamp`  | number   | 로그 발생 시간의 UNIX timestamp (ms) |
-| `timestring` | string   | ISO 포맷의 시간 문자열 |
+| `timestamp`  | number   | 로그 발생 시간의 KST UNIX timestamp (ms) |
+| `timestring` | string   | (KST, ISO 8601) 포맷의 시간 문자열 |
 | `type`       | string   | 로그 종류 (예: LOG, INFO, ERROR) |
 | `msg`        | string   | 로그 메시지 내용 |
 

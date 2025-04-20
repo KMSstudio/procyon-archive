@@ -24,7 +24,7 @@ export default async function BoardListPage({ params }) {
       <header>
         <h1>{displayName}</h1>
       </header>
-      <PageList boardName={boardName} posts={posts} uploader={uploader} />
+      <PageList boardName={boardName} posts={posts} />
       {(!boardMeta?.writeOnlyAdmin || uploader?.admin) && (
         <Link href={`/text/${boardName}/write`} className="write-link">
           Write an article
