@@ -8,7 +8,7 @@ import "@/styles/components/console/bookregister.css";
 // Components
 import BookComponent from "@/app/components/BookComponent";
 // Constants
-import coreTags from "@/config/coreTag.json";
+import coreTags from "@/config/view/coreTag.json";
 
 /* 
  * BookRegisterConsole Component 

@@ -9,7 +9,7 @@ import { useState } from "react";
 import "@/styles/components/admin/booksection.css";
 import "@/styles/components/console/bookregister.css";
 // Constants
-import coreTags from "@/config/coreTag.json";
+import coreTags from "@/config/view/coreTag.json";
 
 /**
  * Book Register Console

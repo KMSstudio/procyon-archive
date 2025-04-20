@@ -4,8 +4,8 @@
 import NavBar from "@/app/components/NavBar";
 import Profile from "@/app/components/Profile";
 // Constants
-import profiles from "@/config/developer-list.json";
-import contributors from "@/config/contributor-list.json";
+import profiles from "@/config/people/developer-list.json";
+import contributors from "@/config/people/contributor-list.json";
 import navData from "@/config/navConstant.json";
 // Style (CSS)
 import "@/styles/thanks.css";

@@ -3,7 +3,7 @@
 // Google Drive API
 import { google } from "googleapis";
 // Constant
-import extLists from "@/config/extLists.json";
+import extLists from "@/config/view/extension-list.json";
 
 // サ一ビスアカウント認証
 const auth = new google.auth.GoogleAuth({
