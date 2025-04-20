@@ -24,7 +24,7 @@ export default async function HomePage() {
   if (userData.login) { 
     logger.behavior(userData.fullName, "페이지 접속", "mainpage");
     updateUserAccessDate(userData.email);
-  } else { logger.behavior("「User who does not login」", "페이지 접속", "mainpage"); }
+  } else { logger.behavior("User who does not login", "페이지 접속", "mainpage"); }
   
   return (
     <div className="main-container">
