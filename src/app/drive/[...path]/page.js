@@ -17,7 +17,7 @@ export default async function ReferencePage({ params }) {
 
   const userData = await getUserv2();
   const decodedPath = decodeURIComponent(path);
-  logger.bahavior(userData.fullName, "Google Drive 조회", decodedPath);
+  logger.behavior(userData.fullName, "Google Drive 조회", decodedPath);
   
   const files = await getDriveFiles(path);
   const backPath =

@@ -20,7 +20,7 @@ class Logger {
    * @param {string} behavior - 행동 종류 (예: "click", "submit")
    * @param {string} behaviorObject - 행동 대상 객체
   */
-  bahavior(userName, behavior, behaviorObject="") { 
+  behavior(userName, behavior, behaviorObject="") { 
     this.write("INFO", `「${userName}」;behavior;${behavior};${behaviorObject}`); 
   }
 

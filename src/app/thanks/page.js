@@ -20,8 +20,8 @@ export const metadata = {
 
 export default async function ThanksPage() {
   const { navs = [] } = navData;
-  userData = await getUserv2();
-  logger.behavior(userData.fullName, "페이지 접속", "credits");
+  const userData = await getUserv2();
+  logger.behavior(userData?.fullName, "페이지 접속", "credits");
 
   return (
     <div className="main-container">
