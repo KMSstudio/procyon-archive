@@ -16,6 +16,12 @@ import logger from "@/utils/logger";
 export const metadata = {
   title: "개발자정보",
   description: "CSE:Archive의 관리자 신시우는 서버의 최초 구상자이며 모든 권한을 가지고 있습니다. 하지만, 직접적인 관여는 하지 않을 예정입니다. 명왕성은 컨텐츠 생성 및 관리 권한을 갖고 있으며, 소스코드 유지보수를 담당하고 있습니다.",
+  openGraph: {
+    title: "CSE Archive",
+    description: "CSE: Archive 개발자 페이지",
+    url: "https://cse-archive.com",
+    siteName: "CSE Archive"
+  },
 };
 
 export default async function ThanksPage() {

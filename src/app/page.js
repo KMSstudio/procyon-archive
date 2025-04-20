@@ -28,6 +28,9 @@ export default async function HomePage() {
   
   return (
     <div className="main-container">
+      <head>
+        <link rel="preload" as="image" href="/image/background/301.jpg" />
+      </head>
       <NavBar navs={navs} />
       <div className="content-container">
         <Sidebar isAdmin={userData.admin} links={links} />
