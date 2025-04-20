@@ -80,3 +80,24 @@ export async function putDriveText(path, filename, content) {
     throw err;
   }
 }
+
+/**
+ * Updates the markdown content of an existing file in Google Drive.
+ * @param {string} fileId - The file ID in Google Drive.
+ * @param {string} newContent - The new markdown content.
+ * @returns {Promise<void>}
+ */
+export async function updateDriveText(fileId, newContent) {
+  try {
+    await drive.files.update({
+      fileId,
+      media: {
+        mimeType: "text/markdown",
+        body: Buffer.from(newContent, "utf-8"),
+      },
+    });
+  } catch (err) {
+    console.error("updateDriveText error:", err.message);
+    throw err;
+  }
+}
