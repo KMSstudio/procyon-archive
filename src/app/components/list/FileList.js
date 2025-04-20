@@ -84,7 +84,7 @@ export default function FileList({ files }) {
   }
 
   return (
-    <div className="file-list">
+    <div id="file-list">
       {files.length > 0
         ? files.map((file) => <FileComponent key={file.id} file={file} />)
         : <div className="empty-message">No files or folders found.</div>}

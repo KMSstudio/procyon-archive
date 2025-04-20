@@ -27,10 +27,9 @@ export default async function ThanksPage() {
   return (
     <div className="main-container">
       <NavBar navs={navs} />
-
-      <div className="thanks-content-container">
+      <div id="thanks-container">
         {/* Title Section */}
-        <div className="title-section">
+        <div id="title-section">
           <div className="title-background">
             <img src="/image/logo/full-white.png" alt="Logo" className="title-logo default-logo" />
             <img src="/image/logo/highlight-white.png" className="title-logo hover-logo" />
@@ -39,7 +38,7 @@ export default async function ThanksPage() {
         </div>
 
         {/* Profile Section */}
-        <div className="profile-section">
+        <div id="profile-section">
           {profiles.map((profile, index) => (
             <Profile
               key={index}

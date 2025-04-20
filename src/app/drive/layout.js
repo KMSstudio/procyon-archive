@@ -18,7 +18,7 @@ export default async function DriveLayout({ children }) {
   return (
     <div className="main-container">
       <NavBar navs={navData.navs} />
-      <div className="content-container">{content}</div>
+      {content}
     </div>
   );
 }

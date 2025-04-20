@@ -22,14 +22,14 @@ export default async function AdminPage() {
   const users = await fetchAllUser();
 
   return (
-    <div className="admin-container">
+    <div className="main-container">
       <NavBar navs={navData.navs}/>
-      <main className="admin-main">
+      <div className="content-container">
         <div className="admin-sections">
           <UserSection users={users} />
           <LogSection />
         </div>
-      </main>
+      </div>
     </div>
   );
 }

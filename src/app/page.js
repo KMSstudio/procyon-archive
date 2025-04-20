@@ -31,7 +31,7 @@ export default async function HomePage() {
       <NavBar navs={navs} />
       <div className="content-container">
         <Sidebar isAdmin={userData.admin} links={links} />
-        <main className="main-content">
+        <main id="main-content">
           <div className="main-content-title">
             {/* Procyon!! Procyon!! Procyon!! */}
             <h1>CSE: Archive</h1>

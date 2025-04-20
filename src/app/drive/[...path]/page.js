@@ -34,7 +34,7 @@ export default async function ReferencePage({ params }) {
 
       <FileList files={files} />
 
-      <div className="control-links">
+      <div id="filelist-control-links">
         <Link className="back-link" href="/">
           Home
         </Link>

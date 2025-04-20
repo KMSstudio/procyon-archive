@@ -145,7 +145,7 @@ function BookSearchConsole({ books, coreTags, setSearchResult }) {
 // 検索結果を表示するコンポーネント
 function BookListDisplay({ searchResult, coreTags }) {
   return (
-    <div className="book-list">
+    <div id="booklist">
       {searchResult.map((book) => (
         <BookComponent key={book.id} book={book} coreTags={coreTags} />
       ))}
@@ -158,7 +158,7 @@ export default function BookList({ books, coreTags }) {
   const [searchResult, setSearchResult] = useState(books);
 
   return (
-    <div id="book-list-container">
+    <div id="booklist-content-container">
       <BookSearchConsole
         books={books}
         coreTags={coreTags}
