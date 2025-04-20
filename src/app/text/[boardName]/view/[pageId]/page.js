@@ -5,6 +5,7 @@ import { getDriveText } from "@/utils/drive/text";
 import { parseMarkdown } from "@/utils/markdown";
 import { getDBText } from "@/utils/database/textDB";
 import { getUserv2 } from "@/utils/auth";
+import logger from "@/utils/logger"
 // Constants
 import boardConfig from "@/config/board-config.json";
 // Style
@@ -24,6 +25,8 @@ export default async function NoticeViewPage({ params }) {
   if (!markdown) { return <div className="container">We Cannot Load the Markdown Content.</div>; }
 
   const html = await parseMarkdown(markdown);
+  
+  logger.info(`「${uploader.fullName}」 가 ${title}(${pageId}) 페이지를 확인했습니다.`);
 
   return (
     <div className="container">
