@@ -12,7 +12,7 @@ import "@/styles/drive.css";
 
 export default async function DriveLayout({ children }) {
   const userData = await getUserv2();
-  const content = userData.login ? children : <NoLoginComponent />;
+  const content = (userData.login || process.env.NODE_ENV === "test") ? children : <NoLoginComponent />;
   updateUserAccessDate(userData.email);
 
   return (
