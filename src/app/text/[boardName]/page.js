@@ -20,7 +20,7 @@ export default async function BoardListPage({ params }) {
   const boardMeta = boardConfig[boardName];
   const displayName = boardMeta?.displayName || boardName;
   
-  logger.info(`「${uploader.fullName}」 가 ${displayName}(${boardName}) 에 접속했습니다.`);
+  logger.behavior(uploader.fullName, "게시판 리스트 조회", `${displayName}:${boardName}`)
 
   return (
     <div className="container">

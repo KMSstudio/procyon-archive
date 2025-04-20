@@ -27,25 +27,6 @@ header {
   font-size: 14px;
   white-space: nowrap;
   color: #777;
-}  
-
-/* Button Group */
-.button-group button {
-  padding: 8px 16px 4px 16px;
-  background-color: #fff;
-  color: #fff;
-  border: 0px solid #fff;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.button-group button:hover {
-  background-color: #ccc;
-}
-
-.button-group .icon {
-  width: 24px;
-  height: 24px;
 }
 
 /* FileList Control Links */

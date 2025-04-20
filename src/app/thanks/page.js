@@ -20,9 +20,8 @@ export const metadata = {
 
 export default async function ThanksPage() {
   const { navs = [] } = navData;
-  getUserv2().then(userData => {
-    logger.info(`「${userData.fullName}」 가 개발자 소개 페이지를 열었습니다.`);
-  })
+  userData = await getUserv2();
+  logger.behavior(userData.fullName, "페이지 접속", "credits");
 
   return (
     <div className="main-container">

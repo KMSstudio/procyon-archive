@@ -62,7 +62,7 @@ export async function POST(req) {
     }, null, 2);
     // Call jeboFile: This must be done in await.
     await jeboFile(reportName, descriptionJSON, fileArray);
-    logger.info(`「${userData.fullName}」 queue jebo`);
+    logger.query(userData.fullName, "제보")
     return new Response(JSON.stringify({ message: "Upload started" }), { status: 200 });
   }
   catch (err) { return new Response(JSON.stringify({ error: "Unexpected upload error" }), { status: 500 }); }

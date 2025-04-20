@@ -14,6 +14,26 @@ const db = admin.firestore();
 const logCollection = db.collection(process.env.FIRE_DB_LOG_TABLE);
 
 class Logger {
+  /**
+   * 기록된 사용자 행동을 로깅합니다.
+   * @param {string} userName - 사용자 이름
+   * @param {string} behavior - 행동 종류 (예: "click", "submit")
+   * @param {string} behaviorObject - 행동 대상 객체
+  */
+  bahavior(userName, behavior, behaviorObject="") { 
+    this.write("INFO", `「${userName}」;behavior;${behavior};${behaviorObject}`); 
+  }
+
+  /**
+   * 사용자의 쿼리 요청을 로깅합니다.
+   * @param {string} userName - 사용자 이름
+   * @param {string} query - 질의 내용 (예: "search", "filter")
+   * @param {string} queryObject - 질의 대상 객체
+  */
+  query(userName, query, queryObject="") { 
+    this.write("INFO", `「${userName}」;query;${query};${queryObject}`); 
+  }
+
   log(msg) { this.write("LOG", msg); }
   info(msg) { this.write("INFO", msg); }
   error(msg) { this.write("ERROR", msg); }

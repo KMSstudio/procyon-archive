@@ -22,9 +22,9 @@ export default async function HomePage() {
   const userData = await getUserv2();
   const { navs = [], links = [], buttons = [] } = navData;
   if (userData.login) { 
-    logger.info(`「${userData.fullName}」가 메인 페이지에 겁속했습니다.`);
+    logger.bahavior(userData.fullName, "페이지 접속", "mainpage");
     updateUserAccessDate(userData.email);
-  } else { logger.info(`「User who does not login」가 메인 페이지에 겁속했습니다.`); }
+  } else { logger.bahavior("「User who does not login」", "페이지 접속", "mainpage"); }
   
   return (
     <div className="main-container">

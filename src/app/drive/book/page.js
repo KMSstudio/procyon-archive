@@ -18,7 +18,7 @@ export default async function BookPage() {
   const visibBooks = userData.admin 
     ? books 
     : books.filter((book) => !book.tags.includes("hidden"));
-  logger.info(`「${userData.fullName}」 가 도서 목록을 조회했습니다.`);
+  logger.behavior(userData.fullName, "도서 목록 조회")
   
   return (
     <div className="content-container">

@@ -17,7 +17,7 @@ export default async function ReferencePage({ params }) {
 
   const userData = await getUserv2();
   const decodedPath = decodeURIComponent(path);
-  logger.info(`「${userData.fullName}」 가 gdrive 폴더를 조회했습니다: ${decodedPath}`);
+  logger.bahavior(userData.fullName, "Google Drive 조회", decodedPath);
   
   const files = await getDriveFiles(path);
   const backPath =
@@ -29,7 +29,6 @@ export default async function ReferencePage({ params }) {
     <div className="container">
       <header>
         <h1>Contents of Reference</h1>
-        <div className="button-group"></div>
       </header>
 
       <FileList files={files} />
