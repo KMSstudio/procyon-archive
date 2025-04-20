@@ -31,8 +31,8 @@ export async function modifyText(boardName, textId, newTitle, newMarkdown, lastM
       `Page  ID\t${doc.id}  `,
       `Title Old\t${titleOld}  `,
       `Title New\t${titleNew}  `,
-      `Uploader\t${doc.uploaderName}(${doc.uploaderEmail})  `
-      `Last Modyfier\t${doc.lastModifyerName}(${doc.lastModifyerEmail})  `,
+      `Uploader\t${doc.uploaderName} (${doc.uploaderEmail})  `,
+      `Last Modyfier\t${doc.lastModifyerName} (${doc.lastModifyerEmail})  `,
       `Modifyed by\t${lastModifyerName}(${lastModifyerEmail})  `,
       `Created At\t${doc.createDate}  `,
       `Archived at\t${nowISO}  `,

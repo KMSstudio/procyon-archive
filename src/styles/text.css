@@ -92,3 +92,28 @@ header {
     flex: 1;
   }
 }
+
+#view-page-buttons {
+  font-family: 'D2Coding', monospace;
+  display: flex;
+  margin-top: 20px;
+  justify-content: flex-start;
+  border-top: 1px solid #fff;
+  gap: 20px;
+
+  button {
+    font-family: 'D2Coding', monospace;
+    margin-top: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+
+    background-color: transparent;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid white;
+    transition: background-color 0.3s ease;
+    &:hover { background-color: #333; }
+  }
+}

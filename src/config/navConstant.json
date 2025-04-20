@@ -6,11 +6,11 @@
     "buttons": [
         { "name": "도서", "href": "/drive/book" },
         { "name": "기출", "href": "/drive/exam" },
-        { "name": "게시판", "href": "/text/notice" },
         { "name": "자료기증", "href": "/drive/jebo" }
     ],
     "links": [
         { "src": "/image/lnk/snucse.png", "name": "SNU CS&E 홈페이지", "href": "https://cse.snu.ac.kr/" },
+        { "src": "/image/lnk/snucse.png", "name": "공지 게시판", "href": "/text/notice" },
         { "src": "/image/lnk/unime.png", "name": "유니미", "href": "https://snu.unime.or.kr/main/main.do" },
         { "src": "/image/lnk/etl.png", "name": "SNU eTL", "href": "https://etl.snu.ac.kr/" },
         { "src": "/image/lnk/gpt.png", "name": "GPT", "href": "https://chatgpt.com/" }
