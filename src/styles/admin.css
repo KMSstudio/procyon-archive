@@ -1,26 +1,16 @@
 /* @/app/style/admin.css */
 
-/* Admin Total Container */
-.admin-container {
-  width: 100vw; height: 100vh;
-}
-
-/* Container for user and book sections */
+/* Container for Admin Section */
 .admin-sections {
   display: flex;
   height: calc(100vh - 66px);
   flex: 1;
-}
 
-/* Sections */
-.admin-sections section {
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
-  background: #000;
+  /* Sections */
+  section {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background: #000;
+  }
 }
-
-/* Remove Scroll Bar */
-::-webkit-scrollbar { display: none; }
-html { scrollbar-width: none; }
-body { -ms-overflow-style: none; }

@@ -9,6 +9,7 @@ import boardConfig from "@/config/board-config.json";
 // Utils
 import { getUserv2 } from "@/utils/auth";
 import { getRecentDBTexts } from "@/utils/database/textDB";
+import logger from "@/utils/logger";
 
 export default async function BoardListPage({ params }) {
   const { boardName } = params;
@@ -18,6 +19,8 @@ export default async function BoardListPage({ params }) {
 
   const boardMeta = boardConfig[boardName];
   const displayName = boardMeta?.displayName || boardName;
+  
+  logger.behavior(uploader.fullName, "게시판 리스트 조회", `${displayName}:${boardName}`)
 
   return (
     <div className="container">

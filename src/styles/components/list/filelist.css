@@ -1,106 +1,54 @@
 /* @/styles/component/list/filelist.css */
 
 /* File List */
-.file-list {
-    margin-top: 20px;
-}
-
-.file-item:first-of-type {
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.file-item {
+#file-list {
+  margin-top: 20px;
+  font-family: 'D2Coding', monospace;
+  
+  .file-item {
     display: flex;
-    background-color: #000;
-    border-radius: 0px;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-
+    
+    border-radius: 0px;
+    &:first-of-type { border-top: 1px solid rgba(255, 255, 255, 0.2); }
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    transition: background-color 0.3s ease
-}
 
-.file-item:hover {
-    background-color: #222;
-}
+    background-color: #000;
+    transition: background-color 0.3s ease;
+    &:hover { background-color: #222; }
 
-.file-icon {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-}
-
-.file-item a {
-    flex-grow: 1;
-    text-decoration: none;
-    font-size: 18px;
-    color: #fff;
-}
-
-.file-item .loading-icon {
-    height: 50px;
-    margin: -20px 0 -12px;
-    width: auto;
-    vertical-align: middle;
-}
-
-.file-item p {
-    color: #ccc;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-.file-item a:hover {
-    text-decoration: underline;
-}
-
-.download-zip-each-btn {
-    background-color: #fff;
-    color: #fff;
-    padding: 5px 5px;
-    margin-right: 0px;
-    cursor: pointer;
-    border-radius: 4px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    .file-icon { width: 24px; height: 24px; margin-right: 10px; }
     
-    width: 20px;
-    height: 20px;
-}
+    /* Filename at Drive(Exam) page */
+    a {
+      flex-grow: 1;
+      text-decoration: none;
+      font-size: 18px;
+      color: #fff;
 
-.file-item:hover .download-zip-each-btn {
-    opacity: 1;
-}
+      :hover { text-decoration: underline; }
+      .loading-icon {
+        height: 50px;
+        margin: -20px 0 -12px;
+        width: auto;
+        vertical-align: middle;
+      }
+    }
+    /* Filename at Jebo Console */
+    .jeboconsole-pending-file-name {
+      flex-grow: 1;
+      margin: 0;
+      font-size: 18px;
+      color: #fff;
+    }
+  }
 
-.download-zip-each-btn:hover {
-    background-color: #ccc;
-}
-
-.delete-btn {
-    background-color: #fff;
-    color: #fff;
-    padding: 5px 5px;
-    cursor: pointer;
-    border-radius: 4px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    
-    width: 20px;
-    height: 20px;
-}
-
-.file-item:hover .delete-btn {
-    opacity: 1;
-}
-
-.delete-btn:hover {
-    background-color: #ccc;
-}
-
-.empty-message {
+  .empty-message {
     text-align: center;
     color: #aaa;
     font-size: 16px;
     margin-top: 10px;
+  }
 }

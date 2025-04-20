@@ -4,72 +4,59 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
 
-.jebo-input-row {
-  display: flex;
-  width: 100%;
-  gap: 10px;
-  input { flex-grow: 1; }
-}
+  /* Input Section */
 
-#jebo-container input[type="text"],
-#jebo-container textarea {
-  padding: 10px;
-  border: none;
-  border-radius: 0px;
-  box-sizing: border-box;
-  
-  font-family: 'D2Coding', monospace;
-  font-size: 14px;
-  background-color: #181818;
-  border: 1px solid rgba(225, 225, 255, 0.2);
-  color: #bbb;
-
-  &:focus {
-    outline: none;
-    border: 1px solid rgba(225, 225, 255, 0.2);
+  .jebo-input-row {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    input { flex-grow: 1; }
   }
-}
 
-#jebo-container textarea {
-  resize: vertical;
-}
+  input[type="text"],
+  textarea {
+    padding: 10px;
+    border: none;
+    border-radius: 0px;
+    box-sizing: border-box;
+    
+    font-family: 'D2Coding', monospace;
+    font-size: 14px;
+    background-color: #181818;
+    border: 1px solid rgba(225, 225, 255, 0.2);
+    color: #bbb;
 
-#jebo-container .file-list,
-#jebo-container .empty-message {
-  margin: 10px 0;
-}
+    &:focus {
+      outline: none;
+      border: 1px solid rgba(225, 225, 255, 0.2);
+    }
+  }
+  textarea { resize: vertical; }
 
-#jebo-container .pending-file-name {
-  flex-grow: 1;
-  margin: 0;
-  font-size: 18px;
-  color: #fff;
+  /* Pending Filelist */
+  #file-list, .empty-message { margin: 10px 0; }
 }
 
 #jebo-file-select-group {
   display: flex;
   gap: 10px;
   align-items: center;
-}
 
-#jebo-file-select-group .buttons {
-  display: inline-block;
-  cursor: pointer;
-  
-  padding: 10px 20px;
-  margin: 0;
-  border-radius: 5px;
-  font-size: 14px;
-  
-  color: white;
-  border: 1px solid #bbb;
-  background-color: transparent;
-  
-  transition: background-color 0.3s ease;
-}
-
-#jebo-file-select-group .buttons:hover {
-  background-color: #333;
+  .buttons {
+    display: inline-block;
+    cursor: pointer;
+    
+    padding: 10px 20px;
+    margin: 0;
+    border-radius: 5px;
+    font-size: 14px;
+    
+    color: white;
+    border: 1px solid #bbb;
+    
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+    &:hover { background-color: #333; }
+  }
 }

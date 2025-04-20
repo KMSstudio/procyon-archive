@@ -1,12 +1,5 @@
-import { getDriveText, putDriveText } from "@/utils/drive/text";
+import { getDriveText, putDriveText, updateDriveText } from "@/utils/drive/text";
 import { updateDBText, getDBText } from "@/utils/database/textDB";
-import { google } from "googleapis";
-
-const auth = new google.auth.GoogleAuth({
-  credentials: JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT),
-  scopes: ["https://www.googleapis.com/auth/drive"],
-});
-const drive = google.drive({ version: "v3", auth });
 
 export async function modifyText(boardName, textId, newTitle, newMarkdown, lastModifyerName, lastModifyerEmail, archived = true) {
   if (!boardName || !textId) throw new Error("boardName and textId are required.");
@@ -49,15 +42,7 @@ export async function modifyText(boardName, textId, newTitle, newMarkdown, lastM
   const updateTasks = [];
   // Markdown content update
   if (newMarkdown !== undefined) {
-    updateTasks.push(
-      drive.files.update({
-        fileId: driveId,
-        media: {
-          mimeType: "text/markdown",
-          body: Buffer.from(newMarkdown, "utf-8"),
-        },
-      })
-    );
+    updateTasks.push(updateDriveText(driveId, newMarkdown));
   }
 
   // Metadata update

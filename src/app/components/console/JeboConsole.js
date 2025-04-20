@@ -13,11 +13,11 @@ function PendingFileList({ files }) {
   }
 
   return (
-    <div className="file-list">
+    <div id="file-list">
       {files.map((file) => (
         <div key={file.id} className="file-item" data-file-name={file.name} data-file-ext={file.ext}>
           <img src={file.img} alt="File Icon" className="file-icon" />
-          <p className="pending-file-name">{file.name}</p>
+          <p className="jeboconsole-pending-file-name">{file.name}</p>
         </div>
       ))}
     </div>

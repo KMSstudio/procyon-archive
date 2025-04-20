@@ -18,8 +18,8 @@ export async function GET(req, { params }) {
 
     if (!userData?.login) { return NextResponse.redirect(new URL("/err/login/nodata", req.url)); }
 
-    if (fileName) { logger.info(`「${userData.fullName}」가 ${fileName}:${fileId}를 다운로드받았습니다.`); }
-    else { logger.info(`「${userData.fullName}」가 ${fileId}를 다운로드받았습니다.`); }
+    if (fileName) { logger.query(userData.fullName, "다운로드", `${fileName}:${fileId}`); }
+    else { logger.query(userData.fullName, "다운로드", `?:${fileId}`); }
     if (!result) return NextResponse.json({ error: "File not found." }, { status: 404 });
 
     return new Response(result.stream, { headers: result.headers });

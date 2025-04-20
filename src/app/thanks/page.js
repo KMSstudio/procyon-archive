@@ -20,17 +20,15 @@ export const metadata = {
 
 export default async function ThanksPage() {
   const { navs = [] } = navData;
-  getUserv2().then(userData => {
-    logger.info(`${userData.fullName} 가 개발자 소개 페이지를 열었습니다.`);
-  })
+  userData = await getUserv2();
+  logger.behavior(userData.fullName, "페이지 접속", "credits");
 
   return (
     <div className="main-container">
       <NavBar navs={navs} />
-
-      <div className="thanks-content-container">
+      <div id="thanks-container">
         {/* Title Section */}
-        <div className="title-section">
+        <div id="title-section">
           <div className="title-background">
             <img src="/image/logo/full-white.png" alt="Logo" className="title-logo default-logo" />
             <img src="/image/logo/highlight-white.png" className="title-logo hover-logo" />
@@ -39,7 +37,7 @@ export default async function ThanksPage() {
         </div>
 
         {/* Profile Section */}
-        <div className="profile-section">
+        <div id="profile-section">
           {profiles.map((profile, index) => (
             <Profile
               key={index}
@@ -53,7 +51,7 @@ export default async function ThanksPage() {
 
         {/* Server Information */}
         <div id="server-info">
-          <p className="server-version">procyon 0.7.2</p>
+          <p className="server-version">procyon 0.7.3</p>
           <p className="server-message">
             모든 정보는 서울대학교 컴퓨터공학과에게 공개됩니다. 컴퓨터공학과 내에서 정보 격차는 존재해서는 안 됩니다.
           </p>

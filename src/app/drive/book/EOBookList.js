@@ -4,7 +4,7 @@
 
 export default function EndOfBookList() {
   return (
-    <div className="end-of-booklist">
+    <div id="end-of-booklist">
       <a
         className="end-indicator"
         href="#"
