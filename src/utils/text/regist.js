@@ -34,6 +34,8 @@ export async function registerText(boardName, title, markdown, uploaderEmail, up
     title,
     uploaderEmail,
     uploaderName,
+    lastModifyerEmail: uploaderEmail,
+    lastModifyerEmail: uploaderName,
     driveId,
     createDate: new Date().toISOString(),
   });

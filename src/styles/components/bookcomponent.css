@@ -58,6 +58,7 @@
 }
 
 .book-tags {
+    font-family: Arial, Helvetica, sans-serif;
     display: flex;
     gap: 6px;
     flex-wrap: wrap;

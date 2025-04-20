@@ -65,7 +65,7 @@ class Logger {
           logs.push(`[${timestring}] ${type}: ${msg}`);
         });
         lastDoc = snapshot.docs[snapshot.docs.length - 1];
-      } while(snapshot.docs.length < 1000);
+      } while(snapshot.docs.length === 1000);
 
       return logs;
     } catch (error) {

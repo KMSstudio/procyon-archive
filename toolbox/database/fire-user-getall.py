@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from pathlib import Path
 
 # 上の階層にある .env.local ファイルを読み込む
-project_root = Path(__file__).resolve().parents[1]
+project_root = Path(__file__).resolve().parents[2]
 load_dotenv(dotenv_path=project_root / ".env.local")
 
 # Firebase Admin を初期化

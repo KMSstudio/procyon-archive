@@ -1,10 +1,22 @@
 {
     "notice": {
         "displayName": "공지 게시판",
-        "write": "admin"
+        "writeOnlyAdmin": true,
+        "modifyOnlyAuthor": true
     },
-    "tips": {
-        "displayName": "교양개발",
-        "write": "login"
+    "reduplicate": {
+        "displayName": "복기",
+        "writeOnlyAdmin": false,
+        "modifyOnlyAuthor": false
+    },
+    "forum": {
+        "displayName": "자유게시판",
+        "writeOnlyAdmin": false,
+        "modifyOnlyAuthor": true
+    },
+    "inform": {
+        "displayName": "정보게시판",
+        "writeOnlyAdmin": false,
+        "modifyOnlyAuthor": true
     }
 }

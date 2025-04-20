@@ -36,7 +36,7 @@
 }
 
 .log-item {
-  font-family: monospace;
+  font-family: 'D2Coding', monospace;
   font-size: 14px;
   color: #ccc;
   white-space: pre-wrap;

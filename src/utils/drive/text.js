@@ -24,6 +24,7 @@ export async function getDriveText(fileId) {
       { fileId, alt: "media" },
       { responseType: "text" }
     );
+    console.log(fileId);
     return res.data;
   } catch (err) {
     console.error("Failed to read file from Google Drive:", err.message);

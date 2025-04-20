@@ -25,7 +25,7 @@ export default function TextWriteConsole({ boardName, markdown, setMarkdown }) {
 
     const data = await res.json();
     if (data.success) {
-      router.push(`/text/${boardName}/view/${data.driveId}`);
+      router.push(`/text/${boardName}/view/${data.id}`); 
     } else {
       alert("Upload failed: " + data.error);
       setLoading(false);

@@ -1,9 +1,13 @@
 // @/app/api/text/modify/route.js
 
+// Next
 import { NextResponse } from "next/server";
+// Utils
 import { modifyText } from "@/utils/text/modify";
 import { getUserv2 } from "@/utils/auth";
 import { getDBText } from "@/utils/database/textDB";
+// Constants
+import boardConfig from "@/config/board-config.json";
 
 export async function POST(req) {
   try {
@@ -18,9 +22,10 @@ export async function POST(req) {
     const textData = await getDBText(boardName, textId);
     if (!textData) { return NextResponse.json({ error: "Post not found" }, { status: 404 }); }
     // Authorization check: user must be the uploader
-    if (textData.uploaderEmail !== userEmail) { return NextResponse.json({ error: "Forbidden: You are not the author" }, { status: 403 }); }
+    if (boardConfig[boardName]?.modifyOnlyAuthor && textData.uploaderEmail !== userEmail) { 
+      return NextResponse.json({ error: "Forbidden: You are not the author" }, { status: 403 }); }
     // Proceed with update
-    await modifyText(boardName, textId, newTitle, newMarkdown);
+    await modifyText(boardName, textId, newTitle, newMarkdown, user.fullName, user.email);
     return NextResponse.json({ success: true });
   } catch (err) {
     console.error("Error in /api/text/modify:", err);
