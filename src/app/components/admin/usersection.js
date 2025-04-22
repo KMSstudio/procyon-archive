@@ -36,7 +36,13 @@ export default function UserSection({ users }) {
         {filteredUsers.map((user) => (
           <div key={user.email} className="user-item">
             <img 
-              src={user.isAdmin ? "/image/ico/admin-user-section/admin.png" : "/image/ico/admin-user-section/user.png"} 
+              src={
+                user.isAdmin
+                  ? "/image/ico/admin-user-section/admin.png"
+                  : user.isPrestige
+                  ? "/image/ico/admin-user-section/prestige.png"
+                  : "/image/ico/admin-user-section/user.png"
+              }
               alt="User Icon" 
               className="user-icon"
             />
