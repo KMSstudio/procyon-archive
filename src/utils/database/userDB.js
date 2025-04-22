@@ -81,7 +81,7 @@ export async function updateUserAccess(email, data = {}) {
   const user = await fetchUser(email);
 
   if (!user) {
-    await saveUser(email, { lastAccessDate: today, lastContributionDate: today, isAdmin: false, ...data });
+    await saveUser(email, { lastAccessDate: today, lastContributionDate: today, isAdmin: false, isPrestige:false, ...data });
   } else {
     let updated = false;
     if (user.lastAccessDate !== today) {
