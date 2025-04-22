@@ -9,7 +9,7 @@ import EOBookList from "./EOBookList";
 import { getUserv2 } from "@/utils/auth";
 import { getAllDBBooks } from "@/utils/bookDB";
 // Redirect
-import { NextResponse } from "next/server";
+import { redirect } from "next/navigation";
 // Constants
 import coreTags from "@/config/coreTag.json";
 
@@ -20,7 +20,7 @@ export default async function BookPage() {
     ? books 
     : books.filter((book) => !book.tags.includes("hidden"));
   logger.behavior(userData.fullName, "도서 목록 조회")
-  if (!userData?.admin) { return NextResponse.redirect(new URL("/", req.url)); }
+  if (!userData?.admin) { redirect("/"); }
   
   return (
     <div className="content-container">
