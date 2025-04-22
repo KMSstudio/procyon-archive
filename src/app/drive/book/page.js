@@ -10,7 +10,7 @@ import { getUserv2 } from "@/utils/auth";
 import logger from "@/utils/logger";
 import { getAllDBBooks } from "@/utils/database/bookDB";
 // Constants
-import coreTags from "@/config/coreTag.json";
+import coreTags from "@/config/view/coreTag.json";
 
 export default async function BookPage() {
   const userData = await getUserv2();

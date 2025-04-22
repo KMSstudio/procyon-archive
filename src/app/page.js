@@ -24,10 +24,13 @@ export default async function HomePage() {
   if (userData.login) { 
     logger.behavior(userData.fullName, "페이지 접속", "mainpage");
     updateUserAccessDate(userData.email);
-  } else { logger.behavior("「User who does not login」", "페이지 접속", "mainpage"); }
+  } else { logger.behavior("User who does not login", "페이지 접속", "mainpage"); }
   
   return (
     <div className="main-container">
+      <head>
+        <link rel="preload" as="image" href="/image/background/301.jpg" />
+      </head>
       <NavBar navs={navs} />
       <div className="content-container">
         <Sidebar isAdmin={userData.admin} links={links} />
