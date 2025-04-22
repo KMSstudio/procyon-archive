@@ -1,17 +1,17 @@
 /* @/app/drive/book/page.js */
 
 // Styles (CSS)
-import "@/app/styles/drive.css";
+import "@/styles/drive.css";
 // Components
 import BookList from "@/app/components/list/BookList";
 import EOBookList from "./EOBookList";
 // Utils
 import { getUserv2 } from "@/utils/auth";
-import { getAllDBBooks } from "@/utils/bookDB";
-// Redirect
-import { NextResponse } from "next/server";
+import { getAllDBBooks } from "@/utils/database/bookDB";
 // Constants
-import coreTags from "@/config/coreTag.json";
+import coreTags from "@/config/view/coreTag.json";
+// Logger
+import logger from "@/utils/logger";
 
 export default async function BookPage() {
   const userData = await getUserv2();
@@ -20,7 +20,6 @@ export default async function BookPage() {
     ? books 
     : books.filter((book) => !book.tags.includes("hidden"));
   logger.behavior(userData.fullName, "도서 목록 조회")
-  if (!userData?.admin) { return NextResponse.redirect(new URL("/", req.url)); }
   
   return (
     <div className="content-container">

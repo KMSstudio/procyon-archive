@@ -74,7 +74,7 @@ export async function getUserv2() {
   // Chack Server Session
   const session = await getServerSession(authOptions);
   if (!session) {
-    return { login: false, admin: false,
+    return { login: false, admin: false, isPrestige: false,
       email: null, name: null, position: null, major: null,
       lastAccess: null, lastContribute: null,
     };
@@ -87,7 +87,7 @@ export async function getUserv2() {
   const major = user?.studentMajor ?? "";
 
   return {
-    login: true, admin: user?.isAdmin ?? false,
+    login: true, admin: user?.isAdmin ?? false, prestige: user?.isPrestige ?? false,
     email: session.user.email,
     name, position, major, fullName: `${name}/${position}/${major}`,
     lastAccess: user?.lastAccessDate ?? null,

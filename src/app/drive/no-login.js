@@ -6,6 +6,8 @@ import { signIn } from "next-auth/react";
 import "@/styles/err/login.css";
 
 export default function NoLoginComponent() {
+
+  
   return (
     <div id="login-error-main-page">
       <h1>Login to access Archive.</h1>
