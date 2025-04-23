@@ -1,66 +1,93 @@
-/* @/app/text/page.js */
+// @/app/text/page.js
 
 // Styles (CSS)
 import "@/styles/drive.css";
-
 // Components
+import NavBar from "@/app/components/NavBar";
 import TextList from "@/app/components/list/TextList";
-
 // Utils
 import { getUserv2 } from "@/utils/auth";
+import { getRecentDBTexts } from "@/utils/database/textDB";
 import logger from "@/utils/logger";
+// Constants
+import navData from "@/config/navConstant.json";
+import boardConfig from "@/config/board-config.json";
 
-// 임시 데이터 (예시)
-const dummyBoards = {
-  notice: {
-    displayName: "공지 게시판",
-    writeOnlyAdmin: true,
-    modifyOnlyAuthor: true,
-    recentPosts: [
-      { id: "n1", title: "중요한 일정 공지", lastModifiedDate: "2025-04-20T12:00:00Z" },
-      { id: "n2", title: "서비스 점검 안내", lastModifiedDate: "2025-04-18T08:00:00Z" },
-    ],
-  },
-  forum: {
-    displayName: "자유게시판",
-    writeOnlyAdmin: false,
-    modifyOnlyAuthor: true,
-    recentPosts: [
-      { id: "f1", title: "CSE 학우분들 안녕하세요", lastModifiedDate: "2025-04-21T09:30:00Z" },
-      { id: "f2", title: "시험 끝나고 뭐 하시나요?", lastModifiedDate: "2025-04-19T11:00:00Z" },
-    ],
-  },
-  inform: {
-    displayName: "정보게시판",
-    writeOnlyAdmin: false,
-    modifyOnlyAuthor: true,
-    recentPosts: [
-      { id: "f1", title: "CSE 학우분들 안녕하세요", lastModifiedDate: "2025-04-21T09:30:00Z" },
-      { id: "f2", title: "시험 끝나고 뭐 하시나요?", lastModifiedDate: "2025-04-19T11:00:00Z" },
-    ],
-  },
-  guardian: {
-    displayName: "정보게시판",
-    writeOnlyAdmin: false,
-    modifyOnlyAuthor: true,
-    recentPosts: [
-      { id: "f1", title: "CSE 학우분들 안녕하세요", lastModifiedDate: "2025-04-21T09:30:00Z" },
-      { id: "f2", title: "시험 끝나고 뭐 하시나요?", lastModifiedDate: "2025-04-19T11:00:00Z" },
-    ],
-  },
-};
+/**
+ * 게시판 설정 및 최근 게시글 로딩
+ *
+ * 1. board-config.json의 각 게시판에 대해 utils/database/textDB에서 최근 게시글을 가져온다.
+ * 2. 게시판 설정(config)과 recentPosts를 합쳐 [key, value] 형태로 반환한다.
+ * 3. Promise.all을 통해 병렬로 처리하고, Object.fromEntries로 객체로 변환한다.
+ *
+ * 결과:
+ * boards = {
+ *   notice: {
+ *     displayName: "공지 게시판",
+ *     description: "...",
+ *     recentPosts: [
+ *       { id: "abc123", title: "공지입니다", createDate: "...", uploaderName: "...", ... }
+ *     ]
+ *   },
+ *   forum: {
+ *     displayName: "자유게시판",
+ *     recentPosts: [ ... ]
+ *   },
+ *   ...
+ * }
+**/
+
+/**
+ * Load board configuration and recent posts.
+ *
+ * 1. For each board defined in board-config.json, fetch recent posts from utils/database/textDB.
+ * 2. Combine each board's config with its recentPosts into a [key, value] pair.
+ * 3. Use Promise.all for parallel fetching, then convert the result to an object via Object.fromEntries.
+ *
+ * Result:
+ * boards = {
+ *   notice: {
+ *     displayName: "공지 게시판",
+ *     description: "...",
+ *     recentPosts: [
+ *       { id: "abc123", title: "공지입니다", createDate: "...", uploaderName: "...", ... }
+ *     ]
+ *   },
+ *   forum: {
+ *     displayName: "자유게시판",
+ *     recentPosts: [ ... ]
+ *   },
+ *   ...
+ * }
+**/
 
 export default async function TextPage() {
   const userData = await getUserv2();
   logger.behavior(userData.fullName, "게시판 목록 조회");
 
+  const boardEntries = await Promise.all(
+    Object.entries(boardConfig).map(async ([boardKey, config]) => {
+      try {
+        const recentPosts = await getRecentDBTexts(boardKey, 5, 1);
+        return [boardKey, { ...config, recentPosts }];
+      } catch (err) {
+        console.error(`게시판 ${boardKey} 로딩 실패`, err);
+        return [boardKey, { ...config, recentPosts: [] }];
+      }
+    })
+  );
+  const boards = Object.fromEntries(boardEntries);
+
   return (
-    <div className="content-container">
-      <div>
-        <div id="book-head-info">
-          <p>이 게시판은 임시 데이터로 구성되어 있습니다. 실제 게시글은 곧 연결될 예정입니다.</p>
+    <div className="main-container">
+      <NavBar navs={navData.navs} />
+      <div className="content-container">
+        <div>
+          <div id="book-head-info">
+            <p>게시판 목록입니다. 각 게시판의 최근 글이 표시됩니다.</p>
+          </div>
+          <TextList boards={boards} />
         </div>
-        <TextList boards={dummyBoards} />
       </div>
     </div>
   );
