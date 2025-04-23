@@ -115,7 +115,11 @@
       align-items: center;
       
       transition: background-color 0.3s;
-      &:hover { background-color: #222; }
+      &:hover { 
+        background-color: #222;
+        cursor: pointer;
+        a { color: white; }
+      }
 
       padding: 5px;
       &:first-of-type { border-top: 1px solid rgba(255, 255, 255, 0.2); }
@@ -134,7 +138,7 @@
       text-overflow: ellipsis;
       max-width: 100%;
 
-      &:hover { color: white; }
+      
     }
   }
 }

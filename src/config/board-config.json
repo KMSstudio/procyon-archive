@@ -17,7 +17,7 @@
     },
     "gaurdian": {
         "displayName": "gaurdian",
-        "description": "2025년 컴퓨터공학부 보안동아리 가디언의 수업후기게시판",
+        "description": "컴퓨터공학부 보안동아리 가디언의 수업후기게시판",
         "writeOnlyAdmin": false,
         "modifyOnlyAuthor": true
     }
