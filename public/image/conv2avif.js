@@ -37,6 +37,44 @@
  *   fallback images (e.g., webp, png) for compatibility.
 **/
 
+/**
+ * ==========================================
+ * AVIF変換ツール (conv2avif.js)
+ * ==========================================
+ *
+ * 目的 (Purpose)
+ * - PNG、JPG、JPEG形式の画像をAVIF形式に変換し、
+ *   Webパフォーマンスの最適化を図るためのスクリプトです。
+ * - AVIFは高い圧縮率と優れた画質を提供する次世代の画像フォーマットです。
+ *
+ * 動作概要 (How it works)
+ * - 単一の画像ファイル、または画像を含むディレクトリを受け付けます。
+ * - .png、.jpg、.jpeg拡張子を持つファイルを処理し、.avifに変換します。
+ * - "sharp"ライブラリを使用して画像処理およびフォーマット変換を行います。
+ * - --qualityオプションで画質（1〜100、デフォルト：75）を指定できます。
+ *
+ * 使い方 (Usage)
+ * node conv2avif.js <パス> [--quality=数値]
+ *
+ * 使用例 (Examples)
+ * - 単一画像を変換する場合:
+ *     node conv2avif.js ./logo.png --quality=80
+ *
+ * - ディレクトリ内のすべての画像を変換する場合:
+ *     node conv2avif.js ./images/ --quality=60
+ *
+ * 対応フォーマット (Supported Formats)
+ * - 入力: .png, .jpg, .jpeg
+ * - 出力: .avif
+ *
+ * 依存関係 (Dependencies)
+ * - sharp: https://github.com/lovell/sharp
+ *
+ * 注意事項 (Notes)
+ * - AVIFはすべてのブラウザでサポートされているわけではありません。
+ *   WebPやPNGなどのフォールバック画像を併用することを推奨します。
+**/
+
 const fs = require("fs");
 const path = require("path");
 const sharp = require("sharp");

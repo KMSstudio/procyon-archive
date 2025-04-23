@@ -1,9 +1,69 @@
 """
-This script converts image files (.png, .jpg, .jpeg) to .webp format.
-If a directory is provided, it asks for confirmation before processing all image files in that directory (Y/n).
-If no argument is provided, it asks the user to input the path.
-Output files are saved with the same base name and a .webp extension.
-Emoji is not used in the console output.
+==========================================
+WebP Converter (conv2webp.py)
+==========================================
+
+Purpose
+- A script to convert PNG, JPG, and JPEG images to WebP format
+  to reduce image file size and improve web performance.
+- WebP provides superior lossless and lossy compression for images on the web.
+
+How it works
+- Accepts either a single image file or a directory path.
+- If a directory is given, it asks for user confirmation before converting all supported images inside.
+- Processes only files with .png, .jpg, or .jpeg extensions and saves them with a .webp extension.
+
+Usage
+python conv2webp.py <path>
+
+Examples
+- Convert a single image:
+    python conv2webp.py ./logo.png
+
+- Convert all supported images in a folder:
+    python conv2webp.py ./images/
+
+Supported Formats
+- Input: .png, .jpg, .jpeg
+- Output: .webp
+
+Notes
+- No emojis are used in output messages to ensure console compatibility.
+- WebP is widely supported by modern browsers, but fallback formats may still be necessary in some environments.
+"""
+
+"""
+==========================================
+WebP変換ツール (conv2webp.py)
+==========================================
+
+目的
+- PNG、JPG、JPEG形式の画像をWebP形式に変換し、
+  画像ファイルサイズを削減してWebパフォーマンスを向上させるためのスクリプトです。
+- WebPは、Web向けに優れた可逆圧縮および非可逆圧縮を提供する画像フォーマットです。
+
+動作概要
+- 単一の画像ファイルまたはディレクトリパスを受け付けます。
+- ディレクトリが指定された場合は、対象画像を一括変換する前にユーザーの確認を求めます。
+- .png、.jpg、.jpeg拡張子のファイルのみを処理し、同名で拡張子を .webp に変更して保存します。
+
+使い方
+python conv2webp.py <パス>
+
+使用例
+- 単一画像の変換:
+    python conv2webp.py ./logo.png
+
+- フォルダ内の画像を一括変換:
+    python conv2webp.py ./images/
+
+対応フォーマット
+- 入力: .png, .jpg, .jpeg
+- 出力: .webp
+
+備考
+- 出力メッセージには絵文字を使用しておらず、コンソール互換性を重視しています。
+- WebPは多くのモダンブラウザに対応していますが、古い環境ではフォールバック画像が必要になる場合があります。
 """
 
 import os
