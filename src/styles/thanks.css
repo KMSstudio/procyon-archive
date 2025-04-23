@@ -31,11 +31,20 @@
       background-color: rgba(0, 0, 0, 0.9);
     }
     
-    .title-logo {
+    .title-background picture {
       position: absolute;
       width: auto;
       height: 50%;
-      transition: opacity 0.3s ease-in-out;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .title-logo {
+      height: 100%;
+      width: auto;
+      display: block;
+      margin: 0 auto;
     }
   
     .default-logo { opacity: 1; }

@@ -36,9 +36,21 @@ export default async function ThanksPage() {
         {/* Title Section */}
         <div id="title-section">
           <div className="title-background">
-            <img src="/image/logo/full-white.png" alt="Logo" className="title-logo default-logo" />
-            <img src="/image/logo/highlight-white.png" className="title-logo hover-logo" />
-            <img src="/image/logo/remove-halo-white.png" className="title-logo" />
+            <picture>
+              <source srcSet="/image/logo/full-white.avif" type="image/avif" />
+              <source srcSet="/image/logo/full-white.webp" type="image/webp" />
+              <img src="/image/logo/full-white.png" alt="Logo" className="title-logo default-logo" />
+            </picture>
+            <picture>
+              <source srcSet="/image/logo/highlight-white.avif" type="image/avif" />
+              <source srcSet="/image/logo/highlight-white.webp" type="image/webp" />
+              <img src="/image/logo/highlight-white.png" className="title-logo hover-logo" />
+            </picture>
+            <picture>
+              <source srcSet="/image/logo/remove-halo-white.avif" type="image/avif" />
+              <source srcSet="/image/logo/remove-halo-white.webp" type="image/webp" />
+              <img src="/image/logo/remove-halo-white.png" className="title-logo" />
+            </picture>
           </div>
         </div>
 
