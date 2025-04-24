@@ -95,7 +95,7 @@ export default function FileList({ files }) {
           <img src="/image/filelist/givemejebo.png" alt="Suggest Icon" className="file-icon" />
           <a 
             href="/drive/jebo" 
-            style={{ display: "flex", alignItems: "center", textDecoration: "underline" }}
+            style={{ display: "flex", alignItems: "center" }}
           >
             자료 제보를 해주세요
           </a>
