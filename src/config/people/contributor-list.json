@@ -6,9 +6,15 @@
         "image": "/profile/contributor/devil-goo.jpg"
     },
     {
-        "name": "돌고래",
+        "name": "귤냥이",
         "alias": "가명",
-        "role": "도서 9권 자료기여",
-        "image": "/profile/contributor/gorae.jpg"
+        "role": "2025년 최신 시험 자료 제공",
+        "image": "/profile/contributor/gyul.png"
+    },
+    {
+        "name": "참치",
+        "alias": "가명",
+        "role": "다수 자료 기여",
+        "image": "/profile/contributor/tuna.jpg"
     }
 ]  

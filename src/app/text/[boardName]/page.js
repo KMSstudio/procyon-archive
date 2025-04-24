@@ -33,6 +33,9 @@ export default async function BoardListPage({ params }) {
           Write an article
         </Link>
       )}
+      <Link href={`/text`} className="write-link">
+        Go to Main
+      </Link>
     </div>
   );
 }

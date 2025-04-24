@@ -1,13 +1,9 @@
 {
     "notice": {
         "displayName": "공지 게시판",
+        "description": "CSE: Archive의 버전 업데이트, 서버 점검, 기타 공지 모음",
         "writeOnlyAdmin": true,
         "modifyOnlyAuthor": true
-    },
-    "reduplicate": {
-        "displayName": "복기",
-        "writeOnlyAdmin": false,
-        "modifyOnlyAuthor": false
     },
     "forum": {
         "displayName": "자유게시판",
@@ -16,6 +12,12 @@
     },
     "inform": {
         "displayName": "정보게시판",
+        "writeOnlyAdmin": false,
+        "modifyOnlyAuthor": true
+    },
+    "gaurdian": {
+        "displayName": "gaurdian",
+        "description": "컴퓨터공학부 보안동아리 가디언의 수업후기게시판",
         "writeOnlyAdmin": false,
         "modifyOnlyAuthor": true
     }

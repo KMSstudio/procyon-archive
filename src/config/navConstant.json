@@ -4,6 +4,7 @@
         { "name": "기출", "href": "/drive/exam" }
     ],
     "buttons": [
+        { "name": "게시판", "href": "/drive/book" },
         { "name": "도서", "href": "/drive/book" },
         { "name": "기출", "href": "/drive/exam" },
         { "name": "자료기증", "href": "/drive/jebo" }

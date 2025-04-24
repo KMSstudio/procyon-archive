@@ -25,7 +25,7 @@ export default async function NoticeViewPage({ params }) {
   if (!markdown) { return <div className="container">We Cannot Load the Markdown Content.</div>; }
 
   const html = await parseMarkdown(markdown);
-  logger.behavior(uploader.fullName, "게시판 글 조회", `${title}:${pageId}`)
+  logger.behavior(userData.fullName, "게시판 글 조회", `${title}:${pageId}`)
 
   return (
     <div className="container">

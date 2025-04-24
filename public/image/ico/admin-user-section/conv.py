@@ -17,7 +17,7 @@ def process_png(input_path, output_path):
     img.save(output_path, format="PNG")
     print(f"Saved processed image to {output_path}")
 
-input_file = "terminal.png"
-output_file = "terminal.png"
+input_file = "prestige.png"
+output_file = "prestige.png"
 
 process_png(input_file, output_file)

@@ -36,9 +36,21 @@ export default async function ThanksPage() {
         {/* Title Section */}
         <div id="title-section">
           <div className="title-background">
-            <img src="/image/logo/full-white.png" alt="Logo" className="title-logo default-logo" />
-            <img src="/image/logo/highlight-white.png" className="title-logo hover-logo" />
-            <img src="/image/logo/remove-halo-white.png" className="title-logo" />
+            <picture>
+              <source srcSet="/image/logo/full-white.avif" type="image/avif" />
+              <source srcSet="/image/logo/full-white.webp" type="image/webp" />
+              <img src="/image/logo/full-white.png" alt="Logo" className="title-logo default-logo" />
+            </picture>
+            <picture>
+              <source srcSet="/image/logo/highlight-white.avif" type="image/avif" />
+              <source srcSet="/image/logo/highlight-white.webp" type="image/webp" />
+              <img src="/image/logo/highlight-white.png" className="title-logo hover-logo" />
+            </picture>
+            <picture>
+              <source srcSet="/image/logo/remove-halo-white.avif" type="image/avif" />
+              <source srcSet="/image/logo/remove-halo-white.webp" type="image/webp" />
+              <img src="/image/logo/remove-halo-white.png" className="title-logo" />
+            </picture>
           </div>
         </div>
 
@@ -57,7 +69,7 @@ export default async function ThanksPage() {
 
         {/* Server Information */}
         <div id="server-info">
-          <p className="server-version">procyon 0.7.3</p>
+          <p className="server-version">procyon 0.7.4</p>
           <p className="server-message">
             모든 정보는 서울대학교 컴퓨터공학과에게 공개됩니다. 컴퓨터공학과 내에서 정보 격차는 존재해서는 안 됩니다.
           </p>
