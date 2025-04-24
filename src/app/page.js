@@ -10,7 +10,9 @@ import navData from "@/config/navConstant.json";
 // Utils
 import { updateUserAccessDate } from "@/utils/database/userDB"
 import { getUserv2 } from "@/utils/auth";
+// Loggers
 import logger from "@/utils/logger";
+import TrackClient from "@/app/components/MixPanel";
 
 export const metadata = {
   title: "CSE Archive",
@@ -32,6 +34,10 @@ export default async function HomePage() {
       <div className="content-container">
         <Sidebar isAdmin={userData.admin} links={links} />
         <main id="main-content">
+          <TrackClient user={{
+              email: userData.email,
+              admin: userData.admin
+          }} eventName="Home Page Viewed" />
           <div className="main-content-title">
             {/* Procyon!! Procyon!! Procyon!! */}
             <h1>CSE: Archive</h1>

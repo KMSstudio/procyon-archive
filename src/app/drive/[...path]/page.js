@@ -2,6 +2,7 @@
 
 // Components
 import FileList from "@/app/components/list/FileList";
+import TrackClient from "@/app/components/MixPanel";
 // Utils (Google Drive)
 import { getDriveFiles } from "@/utils/drive/show";
 // Utils (User Logger)
@@ -24,9 +25,15 @@ export default async function ReferencePage({ params }) {
     params.path && params.path.length > 1
       ? `/drive/${params.path.slice(0, -1).join("/")}`
       : null;
+  const eventName = `Drive Page Viewed: /drive/${decodedPath}`;
 
   return (
     <div className="container">
+      <TrackClient
+        user={{ email: userData.email, admin: userData.admin }}
+        eventName={eventName}
+      />
+
       <header>
         <h1>Contents of Reference</h1>
       </header>
