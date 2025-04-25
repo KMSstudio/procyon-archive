@@ -2,14 +2,14 @@
 
 // Utils
 import { getDriveText } from "@/utils/drive/text";
-import { parseMarkdown } from "@/utils/markdown";
 import { getDBText } from "@/utils/database/textDB";
 import { getUserv2 } from "@/utils/auth";
 import logger from "@/utils/logger"
+// Components
+import MarkdownViewServer from "@/app/components/view/MarkdownViewServer";
 // Constants
 import boardConfig from "@/config/board-config.json";
 // Style
-import "katex/dist/katex.min.css";
 import "@/styles/text.css";
 
 export default async function NoticeViewPage({ params }) {
@@ -24,13 +24,12 @@ export default async function NoticeViewPage({ params }) {
   const markdown = await getDriveText(driveId);
   if (!markdown) { return <div className="container">We Cannot Load the Markdown Content.</div>; }
 
-  const html = await parseMarkdown(markdown);
   logger.behavior(userData.fullName, "게시판 글 조회", `${title}:${pageId}`)
 
   return (
     <div className="container">
       {/* Markdown Section */}
-      <div className="markdown-body" dangerouslySetInnerHTML={{ __html: html }} />
+      <MarkdownViewServer content={markdown} />
       {/* Button Section (Under Markdown) */}
       <div id="view-page-buttons">
         <a href={`/text/${boardName}`} className="button-link"><button>Go to pagelist</button></a>

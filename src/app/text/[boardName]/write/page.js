@@ -3,7 +3,7 @@
 // Next
 import { useState } from "react";
 // Component
-import MarkdownView from "../MarkdownView";
+import MarkdownViewClient from "@/app/components/view/MarkdownViewClient";
 import TextWriteConsole from "@/app/components/console/TextWriteConsole";
 // Style
 import "@/styles/text.css";
@@ -25,7 +25,7 @@ export default function BoardWritePage({ params }) {
       <div id="write-preview">
         <h2 className="preview-title">프리뷰</h2>
         <div className="preview-content">
-          <MarkdownView content={markdown} />
+          <MarkdownViewClient content={markdown} />
         </div>
       </div>
     </main>

@@ -12,7 +12,7 @@ export default function NoLoginComponent() {
     <div id="login-error-main-page">
       <h1>Login to access Archive.</h1>
       <button onClick={() => signIn("google")}>
-        <img src="/image/ico/google.png" alt="Google Icon" className="google-icon" />
+        <img src="/image/ico/google.webp" alt="Google Icon" className="google-icon" />
         Login with Google
       </button>
     </div>

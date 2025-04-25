@@ -70,7 +70,7 @@ export async function getDriveFiles(folderPath) {
         downloadLink: isFolder
           ? `/drive/${folderPath}/${file.name}`
           : `/api/drive/export/${file.id}`,
-        img: isFolder ? "/image/ico/folder.png" : extLists[ext] || "/image/ico/file.png",
+        img: isFolder ? "/image/ico/folder.webp" : extLists[ext] || "/image/ico/file.webp",
       };
     });
 

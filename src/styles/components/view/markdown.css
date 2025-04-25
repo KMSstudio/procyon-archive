@@ -1,0 +1,80 @@
+/* @/styles/component/view/markdown.css */
+
+/* Base styles */
+#markdown-body {
+  font-family: Arial, sans-serif;
+  color: white;
+  background-color: transparent;
+}
+
+/* Heading styles */
+#markdown-body h1, 
+#markdown-body h2, 
+#markdown-body h3, 
+#markdown-body h4, 
+#markdown-body h5, 
+#markdown-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: bold;
+}
+
+/* Paragraph styles */
+#markdown-body p {
+  margin: 16px 0;
+  line-height: 1.6;
+}
+
+/* List styles */
+#markdown-body ul, 
+#markdown-body ol {
+  margin: 16px 0;
+  padding-left: 24px;
+}
+
+/* Table styles */
+#markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+}
+
+#markdown-body th,
+#markdown-body td {
+  border: 1px solid #ffffff33;
+  padding: 8px;
+  text-align: left;
+}
+
+/* Inline code styles */
+#markdown-body code {
+  font-family: 'D2Coding', monospace;
+  background: none;
+  padding: 0;
+  border: none;
+  font-size: 95%;
+}
+
+/* Code block styles */
+#markdown-body pre code {
+  font-family: 'D2Coding', monospace;
+  display: block;
+  padding: 16px;
+  background-color: #111;
+  border: 1px solid #fff;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 14px;
+}
+
+/* Pre block margin */
+#markdown-body pre {
+  margin: 24px 0;
+}
+
+/* Horizontal rule (divider) */
+#markdown-body hr {
+  border: 0;
+  border-top: 1px solid #ffffff33;
+  margin: 24px 0;
+}  

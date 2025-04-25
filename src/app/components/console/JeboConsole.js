@@ -95,7 +95,7 @@ export default function JeboConsole() {
   const fileListObjects = files.map((file, i) => ({
     id: `${i}-${file.name}`,
     name: file.name,
-    img: "/image/ico/file.png",
+    img: "/image/ico/file.webp",
     isFolder: false,
     ext: file.name.split(".").pop().toLowerCase(),
   }));

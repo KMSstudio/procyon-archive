@@ -6,8 +6,9 @@
 import { useState, useEffect } from "react";
 // Style for expression
 import "katex/dist/katex.min.css";
+import "@/styles/components/view/markdown.css"
 
-export default function MarkdownView({ content }) {
+export default function MarkdownViewClient({ content }) {
   const [html, setHtml] = useState("");
 
   useEffect(() => {
@@ -29,6 +30,6 @@ export default function MarkdownView({ content }) {
   }, [content]);
 
   return (
-    <div className="markdown-body" dangerouslySetInnerHTML={{ __html: html }} />
+    <div id="markdown-body" dangerouslySetInnerHTML={{ __html: html }} />
   );
 }
