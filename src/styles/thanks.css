@@ -38,6 +38,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      transition: opacity 0.3s ease;
     }
 
     .title-logo {
@@ -45,6 +46,7 @@
       width: auto;
       display: block;
       margin: 0 auto;
+      transition: opacity 0.3s ease;
     }
   
     .default-logo { opacity: 1; }
