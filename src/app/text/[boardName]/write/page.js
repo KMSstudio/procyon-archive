@@ -3,7 +3,7 @@
 // Next
 import { useState } from "react";
 // Component
-import MarkdownView from "../MarkdownView";
+import MarkdownView from "@/app/components/view/MarkdownView";
 import TextWriteConsole from "@/app/components/console/TextWriteConsole";
 // Style
 import "@/styles/text.css";

@@ -8,7 +8,7 @@ import { useState } from "react";
 import "@/styles/text.css";
 // Components
 import TextModifyConsole from "@/app/components/console/TextModifyConsole";
-import MarkdownView from "../../MarkdownView";
+import MarkdownView from "@/app/components/view/MarkdownView";
 
 export default function ModifyCSRPage({ pageId, boardName, title, markdown: initialMarkdown }) {
   const [markdown, setMarkdown] = useState(initialMarkdown);
