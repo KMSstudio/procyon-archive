@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import "katex/dist/katex.min.css";
 import "@/styles/components/view/markdown.css"
 
-export default function MarkdownView({ content }) {
+export default function MarkdownViewClient({ content }) {
   const [html, setHtml] = useState("");
 
   useEffect(() => {

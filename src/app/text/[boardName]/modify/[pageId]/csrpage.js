@@ -8,7 +8,7 @@ import { useState } from "react";
 import "@/styles/text.css";
 // Components
 import TextModifyConsole from "@/app/components/console/TextModifyConsole";
-import MarkdownView from "@/app/components/view/MarkdownView";
+import MarkdownViewClient from "@/app/components/view/MarkdownViewClient";
 
 export default function ModifyCSRPage({ pageId, boardName, title, markdown: initialMarkdown }) {
   const [markdown, setMarkdown] = useState(initialMarkdown);
@@ -28,7 +28,7 @@ export default function ModifyCSRPage({ pageId, boardName, title, markdown: init
       <div id="write-preview">
         <h2 className="preview-title">프리뷰</h2>
         <div className="preview-content">
-          <MarkdownView content={markdown} />
+          <MarkdownViewClient content={markdown} />
         </div>
       </div>
     </main>
