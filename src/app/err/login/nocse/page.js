@@ -8,7 +8,7 @@ export default function NoSnuPage() {
     <main id="login-error-main-page">
       <h1>Only computer science & engineering students allowed.</h1>
       <button onClick={() => signIn("google")}>
-        <img src="/image/ico/google.png" alt="Google Icon" className="google-icon" />
+        <img src="/image/ico/google.webp" alt="Google Icon" className="google-icon" />
         Login with Google
       </button>
     </main>
