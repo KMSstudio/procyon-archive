@@ -2,6 +2,7 @@
 
 /* Base styles */
 #markdown-body {
+  width: 100%;
   font-family: Arial, sans-serif;
   color: white;
   background-color: transparent;

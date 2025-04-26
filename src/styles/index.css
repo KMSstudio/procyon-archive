@@ -40,6 +40,11 @@ body { -ms-overflow-style: none; }
   margin: 0 auto;
 }
 
+.wrapper {
+  width: 100%;
+  height: 100%;
+}
+
 /* Main Content section */
 
 #main-content {
