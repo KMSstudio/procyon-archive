@@ -2,10 +2,11 @@
 
 /* write console */
 #write-console {
-  flex: 1;
+  flex: 1 1 0;
   display: flex;
   flex-direction: column;
   padding: 20px;
+  min-width: 300px;
   height: calc(100% - 40px);
   h2 { margin: 20px 0; }
   

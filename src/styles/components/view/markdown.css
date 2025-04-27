@@ -2,6 +2,7 @@
 
 /* Base styles */
 #markdown-body {
+  width: 100%;
   font-family: Arial, sans-serif;
   color: white;
   background-color: transparent;
@@ -75,6 +76,22 @@
 /* Horizontal rule (divider) */
 #markdown-body hr {
   border: 0;
-  border-top: 1px solid #ffffff33;
+  border-top: 1px solid #ffffff;
   margin: 24px 0;
 }  
+
+/* Link styles */
+#markdown-body a {
+  color: rgb(247, 143, 30);
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}
+
+/* Image styles */
+#markdown-body img {
+  width: 80%;
+  min-width: 80px;
+  max-width: 50vw;
+  display: block;
+  margin: 20px auto;
+}

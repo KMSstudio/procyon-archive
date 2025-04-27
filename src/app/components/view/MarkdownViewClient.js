@@ -30,6 +30,8 @@ export default function MarkdownViewClient({ content }) {
   }, [content]);
 
   return (
-    <div id="markdown-body" dangerouslySetInnerHTML={{ __html: html }} />
+    <div className="wrapper">
+      <div id="markdown-body" dangerouslySetInnerHTML={{ __html: html }} />
+    </div>
   );
 }

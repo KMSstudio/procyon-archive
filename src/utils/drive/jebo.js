@@ -111,6 +111,6 @@ export async function jeboFile(reportName, description, files) {
   // 説明ファイル（config.txt）のアップロード
   await uploadTextAsFile(folderId, "config.txt", description);
   // 各ファイルのアップロード
-  for (const file of files) { await uploadFileToDrive(folderId, file); }
+  await Promise.all(files.map(file => uploadFileToDrive(folderId, file)));
   return folderId;
 }
