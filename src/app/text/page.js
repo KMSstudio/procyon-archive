@@ -5,6 +5,7 @@ import "@/styles/drive.css";
 // Components
 import NavBar from "@/app/components/NavBar";
 import TextList from "@/app/components/list/TextList";
+import TrackClient from "@/app/components/MixPanel";
 // Utils
 import { getUserv2 } from "@/utils/auth";
 import { getRecentDBTexts } from "@/utils/database/textDB";
@@ -80,6 +81,10 @@ export default async function TextPage() {
 
   return (
     <div className="main-container">
+      <TrackClient
+        user={{ email: userData.email, admin: userData.admin }}
+        eventName={`Text Page Viewed`}
+      />
       <NavBar navs={navData.navs} />
       <div className="content-container">
         <div>
