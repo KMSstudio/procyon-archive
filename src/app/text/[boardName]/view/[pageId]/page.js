@@ -31,7 +31,7 @@ export default async function NoticeViewPage({ params }) {
       {/* Markdown Section */}
       <MarkdownViewServer content={markdown} />
       {/* Button Section (Under Markdown) */}
-      <div id="view-page-buttons">
+      <div id="view-page-buttons" className="bordered">
         <a href={`/text/${boardName}`} className="button-link"><button>Go to pagelist</button></a>
         {(userData?.email === textData.uploaderEmail || !boardMeta?.modifyOnlyAuthor)
           && <a href={`/text/${boardName}/modify/${pageId}`} className="button-link"><button>Modify this page</button></a>

@@ -28,14 +28,12 @@ export default async function BoardListPage({ params }) {
         <h1>{displayName}</h1>
       </header>
       <PageList boardName={boardName} posts={posts} />
-      {(!boardMeta?.writeOnlyAdmin || uploader?.admin) && (
-        <Link href={`/text/${boardName}/write`} className="write-link">
-          Write an article
-        </Link>
-      )}
-      <Link href={`/text`} className="write-link">
-        Go to Main
-      </Link>
+      <div id="view-page-buttons">
+        {(!boardMeta?.writeOnlyAdmin || uploader?.admin) && (
+          <a href={`/text/${boardName}/write`} className="write-link"><button>Write an article</button></a>
+        )}
+        <a href={`/text`} className="write-link"><button>Go to Main</button></a>
+      </div>
     </div>
   );
 }
