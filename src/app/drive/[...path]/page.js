@@ -41,13 +41,9 @@ export default async function ReferencePage({ params }) {
       <FileList files={files} />
 
       <div id="filelist-control-links">
-        <Link className="back-link" href="/">
-          Home
-        </Link>
+        <Link className="back-link" href="/">Home</Link>
         {backPath && (
-          <Link className="back-link" href={backPath}>
-            Back
-          </Link>
+          <Link className="back-link" href={backPath}>Back</Link>
         )}
       </div>
     </div>
