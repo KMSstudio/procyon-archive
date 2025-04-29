@@ -1,4 +1,4 @@
-/* @/app/drive/[...path]/page.js */
+/* @/app/drive/exam/[...path]/page.js */
 
 // Components
 import FileList from "@/app/components/list/FileList";
@@ -14,7 +14,7 @@ import "@/styles/drive.css";
 import Link from "next/link";
 
 export default async function ReferencePage({ params }) {
-  const path = params.path ? params.path.join("/") : "";
+  const path = params.path ? `exam/${params.path.join("/")}` : "exam";
 
   const userData = await getUserv2();
   const decodedPath = decodeURIComponent(path);
@@ -23,7 +23,7 @@ export default async function ReferencePage({ params }) {
   const files = await getDriveFiles(path);
   const backPath =
     params.path && params.path.length > 1
-      ? `/drive/${params.path.slice(0, -1).join("/")}`
+      ? `/drive/exam/${params.path.slice(0, -1).join("/")}`
       : null;
   const eventName = `Drive Page Viewed: /drive/${decodedPath}`;
 

@@ -18,6 +18,13 @@
   position: relative;
 }
 
+.content-container-vert {
+  width: 100vw;
+  flex-grow: 1;
+  height: auto;
+  position: relative;
+}
+
 .div-100vw { width: 100vw; }
 /* Remove Scroll Bar */
 ::-webkit-scrollbar { display: none; }

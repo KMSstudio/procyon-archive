@@ -88,9 +88,6 @@ export default async function TextPage() {
       <NavBar navs={navData.navs} />
       <div className="content-container">
         <div>
-          <div id="book-head-info">
-            <p>게시판 목록입니다. 각 게시판의 최근 글이 표시됩니다.</p>
-          </div>
           <TextList boards={boards} />
         </div>
       </div>
