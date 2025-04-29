@@ -23,7 +23,7 @@ export default async function ReferencePage() {
     <div className="content-container-vert">
       <TrackClient
         user={{ email: userData.email, admin: userData.admin }}
-        eventName={`Drive Page Viewed: /drive/exam`}
+        eventName={`Exam Page Viewed: /drive/exam`}
       />
       <div className="container">
         {/* Header Section */}

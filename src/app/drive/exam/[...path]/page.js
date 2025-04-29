@@ -25,7 +25,7 @@ export default async function ReferencePage({ params }) {
     params.path && params.path.length > 1
       ? `/drive/exam/${params.path.slice(0, -1).join("/")}`
       : null;
-  const eventName = `Drive Page Viewed: /drive/${decodedPath}`;
+  const eventName = `Exam Page Viewed: /drive/${decodedPath}`;
 
   return (
     <div className="container">
