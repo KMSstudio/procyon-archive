@@ -73,10 +73,11 @@ export function getHotExams() {
     name,
     count: q.length,
   }));
-  const over30 = examViews.filter(e => e.count >= 30).map(e => e.name);
+  console.log(`[examStats] get hot exam call 1 : ${JSON.stringify(examViews)}`);
+  const over30 = examViews.filter(e => e.count >= 30).map(e => decodeURIComponent(e.name));
   const sorted = [...examViews].sort((a, b) => b.count - a.count);
-  const top2 = sorted.slice(0, 2).filter(e => e.count >= 10).map(e => e.name);
-  console.log(`[examStats] get hot exam call : ${JSON.stringify(Array.from(new Set([...over30, ...top2])))}`);
+  const top2 = sorted.slice(0, 2).filter(e => e.count >= 10).map(e => decodeURIComponent(e.name));
+  console.log(`[examStats] get hot exam call 2 : ${JSON.stringify(Array.from(new Set([...over30, ...top2])))}`);
   return Array.from(new Set([...over30, ...top2]));
 }
 
