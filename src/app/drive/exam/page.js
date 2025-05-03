@@ -1,7 +1,7 @@
 /* @/app/drive/exam/[...path]/page.js */
 
 // Components
-import FileList from "@/app/components/list/FileList";
+import ExamFileList from "@/app/components/list/ExamFileList";
 import TrackClient from "@/app/components/MixPanel";
 // Utils (Google Drive)
 import { getDriveFiles } from "@/utils/drive/show";
@@ -10,8 +10,6 @@ import { getUserv2 } from "@/utils/auth";
 import logger from "@/utils/logger";
 // Styles (CSS)
 import "@/styles/drive.css";
-// Next Tags
-import Link from "next/link";
 
 export default async function ReferencePage() {
   const path = "exam";
@@ -25,16 +23,7 @@ export default async function ReferencePage() {
         user={{ email: userData.email, admin: userData.admin }}
         eventName={`Exam Page Viewed: /drive/exam`}
       />
-      <div className="container">
-        {/* Header Section */}
-        <header><h1>Contents of Reference</h1></header>
-        {/* FileList Section */}
-        <FileList files={files} />
-        {/* Control Links Section */}
-        <div id="filelist-control-links">
-          <Link className="back-link" href="/">Home</Link>
-        </div>
-      </div>
+      <ExamFileList files={files} />
     </div>
   );
 }
