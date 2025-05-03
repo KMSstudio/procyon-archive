@@ -9,7 +9,7 @@ import { getExamFiles } from "@/utils/exam/examShow";
 import { getUserv2 } from "@/utils/auth";
 import logger from "@/utils/logger";
 // Utils
-import { getHotExams } from "@/utils/exam/viewStats";
+import { getHotExams } from "@/utils/exam/examStats";
 // Styles (CSS)
 import "@/styles/drive.css";
 

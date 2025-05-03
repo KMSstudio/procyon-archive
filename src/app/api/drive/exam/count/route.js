@@ -1,7 +1,7 @@
 // @/app/api/drive/exam/count/route.js
 
 // Utils
-import { countView } from "@/utils/exam/viewStats";
+import { countView } from "@/utils/exam/examStats";
 // Next
 import { NextResponse } from "next/server";
 
