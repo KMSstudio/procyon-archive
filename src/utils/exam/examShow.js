@@ -4,7 +4,7 @@ import { getDriveFiles } from "@/utils/drive/show";
 
 const cache = new Map();
 const timestamps = new Map();
-const ttl = (process.env.TTL_EXAM_DB).split("*").map(Number).reduce((a, b) => a * b, 1);
+const CACHE_TTL = (process.env.TTL_EXAM_DB).split("*").map(Number).reduce((a, b) => a * b, 1);
 
 /**
  * Returns the list of files in a given exam folder path.
@@ -17,7 +17,7 @@ export async function getExamFiles(folderPath) {
   if (depth >= 3) return await getDriveFiles(folderPath);
 
   const now = Date.now();
-  if (cache.has(folderPath) && now - timestamps.get(folderPath) < ttl) return cache.get(folderPath);
+  if (cache.has(folderPath) && now - timestamps.get(folderPath) < CACHE_TTL) return cache.get(folderPath);
 
   const files = await getDriveFiles(folderPath);
   cache.set(folderPath, files);
