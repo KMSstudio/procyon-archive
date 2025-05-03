@@ -45,6 +45,7 @@ async function syncViewStats(now) {
  */
 export async function countView(name) {
   const now = nowKST();
+  console.log(`[examStats] ]count view call : ${JSON.stringify(viewStats)}`);
   await syncViewStats(now);
   if (!viewStats[name]) viewStats[name] = [];
   viewStats[name].push(now);
@@ -75,8 +76,8 @@ export function getHotExams() {
   const over30 = examViews.filter(e => e.count >= 30).map(e => e.name);
   const sorted = [...examViews].sort((a, b) => b.count - a.count);
   const top2 = sorted.slice(0, 2).filter(e => e.count >= 10).map(e => e.name);
+  console.log(`[examStats] get hot exam call : ${JSON.stringify(Array.from(new Set([...over30, ...top2])))}`);
   return Array.from(new Set([...over30, ...top2]));
-  // return ["논리설계.이창건", "공학수학.송용수"];
 }
 
 /**
