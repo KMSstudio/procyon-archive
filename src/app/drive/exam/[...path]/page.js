@@ -1,5 +1,3 @@
-/* @/app/drive/exam/[...path]/page.js */
-
 // Components
 import FileList from "@/app/components/list/FileList";
 import TrackClient from "@/app/components/MixPanel";
@@ -8,6 +6,8 @@ import { getExamFiles } from "@/utils/exam/examShow";
 // Utils (User Logger)
 import { getUserv2 } from "@/utils/auth";
 import logger from "@/utils/logger";
+// Utils (Exam Statistics)
+import { countView } from "@/utils/exam/examStats";
 // Styles (CSS)
 import "@/styles/drive.css";
 // Next Tags
@@ -19,8 +19,11 @@ export default async function ReferencePage({ params }) {
   const userData = await getUserv2();
   const decodedPath = decodeURIComponent(path);
   logger.behavior(userData.fullName, "Google Drive 조회", decodedPath);
-  
-  const files = await getExamFiles(path);
+
+  // countView call, getExamFiles
+  const countViewPromise = params.path?.length === 1 ? countView(params.path[0]) : Promise.resolve();
+  const [_, files] = await Promise.all([countViewPromise, getExamFiles(path)]);
+
   const backPath =
     params.path && params.path.length > 1
       ? `/drive/exam/${params.path.slice(0, -1).join("/")}`
