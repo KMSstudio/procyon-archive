@@ -9,7 +9,7 @@ const statsFileName = `server/stats/viewStats.json`
 let statsFileId = null;
 let isUpdated = -1;
 
-const ttl = (process.env.TTL_EXAM_STATUS || "5*60*1000").split("*").map(Number).reduce((a, b) => a * b, 1);
+const ttl = (process.env.TTL_EXAM_STATUS).split("*").map(Number).reduce((a, b) => a * b, 1);
 function nowKST() {
   const kst = new Date(new Date().getTime() + 9*60*60*1000); return kst.getTime(); }
 const DAY_MS = 24 * 60 * 60 * 1000;
