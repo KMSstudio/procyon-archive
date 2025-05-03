@@ -100,11 +100,6 @@ function ExamFileListDisplay({ files, imgIcoSrc }) {
 
   const handleFolderClick = (file, event) => {
     event.preventDefault();
-    fetch("/api/drive/exam/count", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: file.name }),
-    }).catch(() => {}); // fire-and-forget
     setInteractingFolders((prev) => ({ ...prev, [file.id]: true }));
     window.location.href = file.downloadLink;
   };
