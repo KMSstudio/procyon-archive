@@ -4,7 +4,7 @@
 import FileList from "@/app/components/list/FileList";
 import TrackClient from "@/app/components/MixPanel";
 // Utils (Google Drive)
-import { getDriveFiles } from "@/utils/drive/show";
+import { getExamFiles } from "@/utils/exam/examShow";
 // Utils (User Logger)
 import { getUserv2 } from "@/utils/auth";
 import logger from "@/utils/logger";
@@ -20,7 +20,7 @@ export default async function ReferencePage({ params }) {
   const decodedPath = decodeURIComponent(path);
   logger.behavior(userData.fullName, "Google Drive 조회", decodedPath);
   
-  const files = await getDriveFiles(path);
+  const files = await getExamFiles(path);
   const backPath =
     params.path && params.path.length > 1
       ? `/drive/exam/${params.path.slice(0, -1).join("/")}`

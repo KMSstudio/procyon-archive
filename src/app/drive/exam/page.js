@@ -4,7 +4,7 @@
 import ExamFileList from "@/app/components/list/ExamFileList";
 import TrackClient from "@/app/components/MixPanel";
 // Utils (Google Drive)
-import { getDriveFiles } from "@/utils/drive/show";
+import { getExamFiles } from "@/utils/exam/examShow";
 // Utils (User Logger)
 import { getUserv2 } from "@/utils/auth";
 import logger from "@/utils/logger";
@@ -19,7 +19,7 @@ export default async function ReferencePage() {
   logger.behavior(userData.fullName, "Google Drive 조회", path);
   // Get Exam File Contents
   const [files, hotFiles] = await Promise.all([
-    getDriveFiles(path),
+    getExamFiles(path),
     getHotExams()
   ]);
   // Retrun Page

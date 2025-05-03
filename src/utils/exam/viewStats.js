@@ -48,7 +48,6 @@ export async function countView(name) {
   await syncViewStats(now);
   if (!viewStats[name]) viewStats[name] = [];
   viewStats[name].push(now);
-  console.log(JSON.stringify(viewStats));
 }
 
 /**
