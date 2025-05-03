@@ -12,12 +12,13 @@
     },
     "inform": {
         "displayName": "정보게시판",
+        "description": "일단 무언가 많이 써보는 게시판",
         "writeOnlyAdmin": false,
         "modifyOnlyAuthor": true
     },
     "gaurdian": {
         "displayName": "gaurdian",
-        "description": "컴퓨터공학부 보안동아리 가디언의 수업후기게시판",
+        "description": "컴퓨터공학부 보안동아리 가디언의 수업후기 게시판",
         "writeOnlyAdmin": false,
         "modifyOnlyAuthor": true
     }

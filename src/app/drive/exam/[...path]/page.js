@@ -1,10 +1,10 @@
-/* @/app/drive/[...path]/page.js */
+/* @/app/drive/exam/[...path]/page.js */
 
 // Components
 import FileList from "@/app/components/list/FileList";
 import TrackClient from "@/app/components/MixPanel";
 // Utils (Google Drive)
-import { getDriveFiles } from "@/utils/drive/show";
+import { getExamFiles } from "@/utils/exam/examShow";
 // Utils (User Logger)
 import { getUserv2 } from "@/utils/auth";
 import logger from "@/utils/logger";
@@ -14,18 +14,18 @@ import "@/styles/drive.css";
 import Link from "next/link";
 
 export default async function ReferencePage({ params }) {
-  const path = params.path ? params.path.join("/") : "";
+  const path = params.path ? `exam/${params.path.join("/")}` : "exam";
 
   const userData = await getUserv2();
   const decodedPath = decodeURIComponent(path);
   logger.behavior(userData.fullName, "Google Drive 조회", decodedPath);
   
-  const files = await getDriveFiles(path);
+  const files = await getExamFiles(path);
   const backPath =
     params.path && params.path.length > 1
-      ? `/drive/${params.path.slice(0, -1).join("/")}`
+      ? `/drive/exam/${params.path.slice(0, -1).join("/")}`
       : null;
-  const eventName = `Drive Page Viewed: /drive/${decodedPath}`;
+  const eventName = `Exam Page Viewed: /drive/${decodedPath}`;
 
   return (
     <div className="container">
@@ -34,20 +34,12 @@ export default async function ReferencePage({ params }) {
         eventName={eventName}
       />
 
-      <header>
-        <h1>Contents of Reference</h1>
-      </header>
-
+      <div className="filelist-content-title"><h1>Contents of Reference</h1></div>
       <FileList files={files} />
-
       <div id="filelist-control-links">
-        <Link className="back-link" href="/">
-          Home
-        </Link>
+        <Link className="back-link" href="/">Home</Link>
         {backPath && (
-          <Link className="back-link" href={backPath}>
-            Back
-          </Link>
+          <Link className="back-link" href={backPath}>Back</Link>
         )}
       </div>
     </div>

@@ -45,7 +45,6 @@
 #textlist {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -59,7 +58,8 @@
   
   overflow-x: scroll;
   min-width: 384px;
-  max-width: calc(100vw-30px);
+  /* max-width: calc(100vw-30px); */
+  max-width: calc(33% - 30px);
   
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   

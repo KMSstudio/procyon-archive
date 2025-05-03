@@ -7,6 +7,7 @@ import { getUserv2 } from "@/utils/auth";
 import logger from "@/utils/logger"
 // Components
 import MarkdownViewServer from "@/app/components/view/MarkdownViewServer";
+import TrackClient from "@/app/components/MixPanel";
 // Constants
 import boardConfig from "@/config/board-config.json";
 // Style
@@ -28,10 +29,15 @@ export default async function NoticeViewPage({ params }) {
 
   return (
     <div className="container">
+      {/* Track Client Section */}
+      <TrackClient
+        user={{ email: userData.email, admin: userData.admin }}
+        eventName={`Text Page Viewed: /text/${boardName}/${pageId} (${title})`}
+      />
       {/* Markdown Section */}
       <MarkdownViewServer content={markdown} />
       {/* Button Section (Under Markdown) */}
-      <div id="view-page-buttons">
+      <div id="view-page-buttons" className="bordered">
         <a href={`/text/${boardName}`} className="button-link"><button>Go to pagelist</button></a>
         {(userData?.email === textData.uploaderEmail || !boardMeta?.modifyOnlyAuthor)
           && <a href={`/text/${boardName}/modify/${pageId}`} className="button-link"><button>Modify this page</button></a>

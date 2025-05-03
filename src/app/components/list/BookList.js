@@ -1,8 +1,12 @@
 "use client";
 
+// React
 import { useState, useMemo } from "react";
+// Components
 import BookComponent from "@/app/components/BookComponent";
+// Styles (CSS)
 import "@/styles/components/list/booklist.css";
+import "@/styles/components/console/searchconsole.css"
 
 // 検索UIとロジックを担当するコンポーネント
 function BookSearchConsole({ books, coreTags, setSearchResult }) {
