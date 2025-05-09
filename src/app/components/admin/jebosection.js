@@ -1,4 +1,4 @@
-// @/app/components/unique/JeboSection.js
+// @/app/components/admin/JeboSection.js
 
 "use client";
 

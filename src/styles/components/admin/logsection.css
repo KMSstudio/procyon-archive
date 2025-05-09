@@ -23,7 +23,7 @@
 }
 
 .log-console a,
-.log-console .flush-button {
+.log-console .console-button {
   color: rgb(247, 143, 30);
   text-decoration: none;
   font: inherit;

@@ -1,4 +1,4 @@
-/* @/app/components/unique/logsection.js */
+// @/app/components/admin/logsection.js
 
 import logger from "@/utils/logger";
 import "@/styles/components/admin/logsection.css";
@@ -15,10 +15,16 @@ export default async function LogSection() {
           [{displayTime}]{" "}
           <a href="/api/log/download" target="_blank" rel="noopener noreferrer">
             download
-          </a>{" "}
-          |{" "}
+          </a>
+          {" "}|{" "}
+          <form method="POST" action="/api/log/export" style={{ display: "inline" }}>
+            <button type="submit" className="console-button">
+              export
+            </button>
+          </form>
+          {" "}|{" "}
           <form method="POST" action="/api/log/flush" style={{ display: "inline" }}>
-            <button type="submit" className="flush-button">
+            <button type="submit" className="console-button">
               flush
             </button>
           </form>

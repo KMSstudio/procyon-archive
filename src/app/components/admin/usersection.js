@@ -1,8 +1,6 @@
-"use client";
+// @/app/components/admin/AdminUserSection.js
 
-/*
- * @/app/components/unique/AdminUserSection.js
-*/
+"use client";
 
 import { useState } from "react";
 import "@/styles/components/admin/usersection.css";
