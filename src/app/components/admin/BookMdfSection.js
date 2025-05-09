@@ -1,3 +1,5 @@
+// @/app/components/admin/BookMdfSection.js
+
 "use client";
 
 // React

@@ -1,8 +1,6 @@
-"use client";
+// @/app/components/admin/BookSection.js
 
-/*
- * @/app/components/unique/BookSection.js
-*/
+"use client";
 
 import { useState } from "react";
 // Style (CSS)
