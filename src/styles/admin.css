@@ -14,3 +14,9 @@
     background: #000;
   }
 }
+
+.admin-href {
+  color: #fff;
+  text-decoration: none;
+  &:hover{ text-decoration: underline; }
+}
