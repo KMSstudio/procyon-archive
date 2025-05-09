@@ -15,14 +15,14 @@ export default async function LogSection() {
           [{displayTime}]{" "}
           <a href="/api/log/download" target="_blank" rel="noopener noreferrer">
             download
-          </a>{" "}
-          |{" "}
+          </a>
+          {" "}|{" "}
           <form method="POST" action="/api/log/export" style={{ display: "inline" }}>
             <button type="submit" className="console-button">
               export
             </button>
-          </form>{" "}
-          |{" "}
+          </form>
+          {" "}|{" "}
           <form method="POST" action="/api/log/flush" style={{ display: "inline" }}>
             <button type="submit" className="console-button">
               flush
