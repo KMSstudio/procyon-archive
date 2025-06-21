@@ -12,7 +12,6 @@
         { "src": "/image/lnk/snucse.avif", "name": "SNU CS&E 홈페이지", "href": "https://cse.snu.ac.kr/" },
         { "src": "/image/lnk/snucse.avif", "name": "공지 게시판", "href": "/text/notice" },
         { "src": "/image/lnk/unime.avif", "name": "유니미", "href": "https://snu.unime.or.kr/main/main.do" },
-        { "src": "/image/lnk/etl.avif", "name": "SNU eTL", "href": "https://etl.snu.ac.kr/" },
-        { "src": "/image/lnk/gpt.avif", "name": "GPT", "href": "https://chatgpt.com/" }
+        { "src": "/image/lnk/etl.avif", "name": "SNU eTL", "href": "https://etl.snu.ac.kr/" }
     ]
 }
