@@ -75,13 +75,22 @@ body { -ms-overflow-style: none; }
       padding: 0 0;
       margin: 0 0;
     }
+    
+    .main-content-title__under-title {
+      margin: 16px 0;
+
+      .main-content-title__description {
+        margin: 0 0;
+        padding: 0 0;
+      }
+    }
   }
   
   .buttons {
     font-family: 'D2Coding';
     display: flex;
     gap: 20px;
-    margin-top: 30px;
+    margin: 30px 0;
     white-space: nowrap;
     
     button {
@@ -99,6 +108,13 @@ body { -ms-overflow-style: none; }
         color: black;
       }
     }
+  }
+    
+  .main-content__recent-post {
+    margin: 0 0;
+    padding: 0 0;
+    color: #777;
+    font-style: italic;
   }
 }
 
