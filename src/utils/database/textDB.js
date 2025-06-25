@@ -2,7 +2,7 @@
 
 import admin from "firebase-admin";
 
-// INITIALIZE FIREBASE
+// Initialize Firebase
 if (!admin.apps.length) {
   const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
   admin.initializeApp({
@@ -12,7 +12,7 @@ if (!admin.apps.length) {
 
 const db = admin.firestore();
 
-// CACHING
+// Caching
 const CACHE_TTL = (process.env.TTL_TEXT_DB).split("*").map(Number).reduce((a, b) => a * b, 1);
 const textCache = new Map();
 const cacheTimestamps = new Map();
@@ -43,7 +43,7 @@ export async function getRecentDBTexts(board, num = 40, page = 1) {
   const isCacheable = offset + num <= 500;
   const cacheKey = `${board}/_cached/recent500`;
   const now = Date.now();
-  // CACHE IF THE PAGE NO <= 500
+  // Cache if the page no. <= 500
   if (isCacheable) {
     if (textCache.has(cacheKey) && now - cacheTimestamps.get(cacheKey) < CACHE_TTL) {
       const cached = JSON.parse(textCache.get(cacheKey));
@@ -65,7 +65,7 @@ export async function getRecentDBTexts(board, num = 40, page = 1) {
       throw error;
     }
   }
-  // REQUEST OVER 500
+  // Request over 500
   else { 
     try {
       const snapshot = await db
