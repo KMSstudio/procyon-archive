@@ -152,13 +152,13 @@ export default function ExamFileList({ files, hotFiles }) {
       <div className="container">
         {/* Hot File List Display */}
         {(!isFilteringOn && hotFileObjects.length > 0) && (<>
-          <div className="filelist-content-title"><h1>Popular</h1></div>
+          <div className="filelist-content__title"><h1>Popular</h1></div>
           <ExamFileListDisplay files={hotFileObjects} imgIcoSrc={`/image/filelist/hotexam.png`} />
         </>)}
         {/* Normal File List Display */}
-        <div className="filelist-content-title"><h1>Contents of Reference</h1></div>
+        <div className="filelist-content__title"><h1>Contents</h1></div>
         <ExamFileListDisplay files={filteredFiles} />
-        <div id="filelist-control-links">
+        <div id="filelist-control__links">
           <Link className="back-link" href="/">Home</Link>
         </div>
       </div>

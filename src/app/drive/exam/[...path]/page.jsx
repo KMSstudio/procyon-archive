@@ -38,9 +38,9 @@ export default async function ReferencePage({ params }) {
         eventName={eventName}
       />
 
-      <div className="filelist-content-title"><h1>Contents of Reference</h1></div>
+      <div className="filelist-content__title"><h1>Contents</h1></div>
       <FileList files={files} folder={folder} />
-      <div id="filelist-control-links">
+      <div id="filelist-control__links">
         <Link className="back-link" href="/">Home</Link>
         {backPath && (
           <Link className="back-link" href={backPath}>Back</Link>
