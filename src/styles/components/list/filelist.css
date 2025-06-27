@@ -21,20 +21,23 @@
     .file-icon { width: 24px; height: 24px; margin-right: 10px; }
     
     /* Filename at Drive(Exam) page */
-    a {
+    .file-item__title, .jebo-item__title, a {
       flex-grow: 1;
       text-decoration: none;
       font-size: 18px;
       color: #fff;
 
-      :hover { text-decoration: underline; }
       .loading-icon {
         height: 50px;
         margin: -20px 0 -12px;
         width: auto;
         vertical-align: middle;
       }
+
+      &:hover { cursor: pointer; }
     }
+    .jebo-item__title:hover { text-decoration: underline; }
+
     /* Filename at Jebo Console */
     .jeboconsole-pending-file-name {
       flex-grow: 1;

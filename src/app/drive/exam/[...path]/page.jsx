@@ -1,5 +1,5 @@
 // Components
-import FileList from "@/app/components/list/FileList";
+import FileList from "./FileList";
 import TrackClient from "@/app/components/MixPanel";
 // Utils (Google Drive)
 import { getExamFiles } from "@/utils/exam/examShow";
@@ -18,6 +18,7 @@ export default async function ReferencePage({ params }) {
 
   const userData = await getUserv2();
   const decodedPath = decodeURIComponent(path);
+  const folder = decodedPath.slice(5);
   logger.behavior(userData.fullName, "Google Drive 조회", decodedPath);
 
   // countView call, getExamFiles
@@ -38,7 +39,7 @@ export default async function ReferencePage({ params }) {
       />
 
       <div className="filelist-content-title"><h1>Contents of Reference</h1></div>
-      <FileList files={files} />
+      <FileList files={files} folder={folder} />
       <div id="filelist-control-links">
         <Link className="back-link" href="/">Home</Link>
         {backPath && (

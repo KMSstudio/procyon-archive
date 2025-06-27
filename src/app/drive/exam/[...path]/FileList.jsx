@@ -1,20 +1,23 @@
 /*
- * @/app/components/FileList.js
+ * @/app/drive/exam/[...path]/FileList.jsx
 */
 
 "use client";
+// Component
+import JeboFileComponent from "./JeboFileComponent";
 // Style (CSS)
 import "@/styles/components/list/filelist.css";
 // Use State for Download Status Management
 import { useState } from "react";
 
 // Main component managing the file list
-export default function FileList({ files }) {
+export default function FileList({ files, folder }) {
   // File download state
   const [downloadingFiles, setDownloadingFiles] = useState({});
   // Folder interaction state
   const [interactingFolders, setInteractingFolders] = useState({});
 
+  console.log(folder);
   // File download handler
   const handleDownload = async (file, event) => {
     event.preventDefault();
@@ -54,10 +57,9 @@ export default function FileList({ files }) {
       <div key={file.id} className="file-item" data-file-name={file.name} data-file-ext={file.ext}>
         <img src={file.img} alt="File Icon" className="file-icon" />
         {file.isFolder ? (
-          <a 
+          <a className="file-item__title folder-link"
             href={file.downloadLink} 
             onClick={(e) => handleFolderClick(file, e)} 
-            className="folder-link"
             style={{ display: "flex", alignItems: "center" }}
           >
             {interactingFolders[file.id] ? (
@@ -67,7 +69,7 @@ export default function FileList({ files }) {
             )}
           </a>
         ) : (
-          <a 
+          <a className="file-item__title"
             href={file.downloadLink} 
             onClick={(e) => handleDownload(file, e)}
             style={{ pointerEvents: downloadingFiles[file.id] ? "none" : "auto", display: "flex", alignItems: "center" }}
@@ -90,17 +92,7 @@ export default function FileList({ files }) {
         : <div className="empty-message">No files or folders found.</div>}
       
       {/* Jebo Link */}
-      { (files.length > 0) && 
-        <div className="file-item">
-          <img src="/image/filelist/givemejebo.png" alt="Suggest Icon" className="file-icon" />
-          <a 
-            href="/drive/jebo" 
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            자료 제보를 해주세요
-          </a>
-        </div>
-      }
+      {files.length > 0 && <JeboFileComponent folder={folder} />}
     </div>
   );
 }
