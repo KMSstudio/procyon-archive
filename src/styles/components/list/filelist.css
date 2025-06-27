@@ -1,7 +1,7 @@
 /* @/styles/component/list/filelist.css */
 
 /* File List */
-#file-list {
+.file-list {
   font-family: 'D2Coding', monospace;
   
   .file-item {

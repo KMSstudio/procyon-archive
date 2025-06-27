@@ -13,7 +13,7 @@ function PendingFileList({ files }) {
   }
 
   return (
-    <div id="file-list">
+    <div className="file-list">
       {files.map((file) => (
         <div key={file.id} className="file-item" data-file-name={file.name} data-file-ext={file.ext}>
           <img src={file.img} alt="File Icon" className="file-icon" />

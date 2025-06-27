@@ -118,7 +118,7 @@ function ExamFileListDisplay({ files, imgIcoSrc }) {
   }
 
   return (
-    <div id="file-list">
+    <div className="file-list">
       {folders.length > 0
         ? folders.map((file) => <FileComponent key={file.id} file={file} />)
         : <div className="empty-message">No folders found.</div>}
