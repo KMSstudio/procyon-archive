@@ -3,7 +3,7 @@
 */
 
 // Component
-import FileComponent from "./FileComponent";
+import FileComponent from "@/app/components/FileComponent";
 import JeboFileComponent from "./JeboFileComponent";
 // Style (CSS)
 import "@/styles/components/list/filelist.css";

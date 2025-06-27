@@ -1,5 +1,7 @@
 "use client";
 
+// Components
+import FileComponent from "@/app/components/FileComponent";
 // React
 import { useState } from "react";
 // Styles (CSS)
@@ -94,33 +96,12 @@ function FileSearchConsole({ files, setFilteredFiles, setIsFilteringOn }) {
  * - 通常の FileList ではフォルダ・ファイルの両方を表示・操作可能だが、本コンポーネントはフォルダ専用
  * - ファイルタイプ（PDF, ZIP など）はこのコンポーネントで一切レンダリングされない
  */
-function ExamFileListDisplay({ files, imgIcoSrc }) {
+function ExamFileListDisplay({ files, forceIcon }) {
   const folders = files.filter((file) => file.isFolder);
-  const [interactingFolders, setInteractingFolders] = useState({});
-
-  const handleFolderClick = (file, event) => {
-    event.preventDefault();
-    setInteractingFolders((prev) => ({ ...prev, [file.id]: true }));
-    window.location.href = file.downloadLink;
-  };
-
-  function FileComponent({ file }) {
-    return (
-      <div key={file.id} className="file-item" data-file-name={file.name} data-file-ext={file.ext}>
-        <img src={imgIcoSrc || file.img} alt="Folder Icon" className="file-icon" />
-        <a href={file.downloadLink} onClick={(e) => handleFolderClick(file, e)} className="folder-link" style={{ display: "flex", alignItems: "center" }} >
-          {interactingFolders[file.id] ? 
-            (<img src="/image/filelist/interacting.png" alt="Interacting..." className="loading-icon" />) :
-            (file.name)}
-        </a>
-      </div>
-    );
-  }
-
   return (
     <div className="file-list">
       {folders.length > 0
-        ? folders.map((file) => <FileComponent key={file.id} file={file} />)
+        ? folders.map((file) => <FileComponent key={file.id} file={file} option={{ forceIcon: forceIcon }} />)
         : <div className="empty-message">No folders found.</div>}
     </div>
   );
@@ -153,7 +134,7 @@ export default function ExamFileList({ files, hotFiles }) {
         {/* Hot File List Display */}
         {(!isFilteringOn && hotFileObjects.length > 0) && (<>
           <div className="filelist-content__title"><h1>Popular</h1></div>
-          <ExamFileListDisplay files={hotFileObjects} imgIcoSrc={`/image/filelist/hotexam.png`} />
+          <ExamFileListDisplay files={hotFileObjects} forceIcon={`/image/filelist/hotexam.png`} />
         </>)}
         {/* Normal File List Display */}
         <div className="filelist-content__title"><h1>Contents</h1></div>

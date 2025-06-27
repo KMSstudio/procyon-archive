@@ -6,7 +6,7 @@
 import { useState } from "react";
 import "@/styles/components/list/filelist.css";
 
-export default function FileComponent({ file }) {
+export default function FileComponent({ file, option }) {
   const [isInteracting, setIsInteracting] = useState(false);
 
   // File download handler
@@ -42,7 +42,7 @@ export default function FileComponent({ file }) {
 
   return (
     <div className="file-item" data-file-name={file.name} data-file-ext={file.ext}>
-      <img src={file.img} alt="File Icon" className="file-icon" />
+      <img src={option?.forceIcon || file.img} alt="File Icon" className="file-icon" />
       {file.isFolder ? (
         <a className="file-item__title" href={file.downloadLink} onClick={handleFolderClick}>
           {isInteracting
