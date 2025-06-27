@@ -2,7 +2,6 @@
  * @/app/drive/exam/[...path]/FileList.jsx
 */
 
-"use client";
 // Component
 import FileComponent from "./FileComponent";
 import JeboFileComponent from "./JeboFileComponent";
