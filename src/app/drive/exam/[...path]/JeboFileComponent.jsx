@@ -54,15 +54,37 @@ export default function JeboFileComponent({ folder }) {
 
       { showForm ? (
         <div className="jebo-form">
-          <input name="year" placeholder="년도* (2024)" value={form.year} onChange={handleChange} />
-          <input name="semester" placeholder="학기 (1, 2)" value={form.semester} onChange={handleChange} />
-          <input name="type" placeholder="족보 타입* (중간, 기말)" value={form.type} onChange={handleChange} />
-          <input name="comment" placeholder="코멘트" value={form.comment} onChange={handleChange} />
-          <input name="file" type="file" onChange={handleChange} />
-          <button onClick={handleSubmit} disabled={uploading}>
-            {uploading ? "업로드 중..." : "제보 제출"}
-          </button>
-          {done && <p style={{ color: "green" }}>업로드가 완료되었습니다.</p>}
+          {/* Title of Jebo */}
+          <div className="jebo-form__titlebar">
+            <p className="jebo-form__title">즉시 제보 업로드하기</p>
+            <a href="/drive/jebo" className="jebo-form__title-link">제보하기</a>
+          </div>
+          {/* Input Fields */}
+          <div className="jebo-form__grid">
+            <input className="jebo-form__year" name="year" placeholder="년도* (2024)" value={form.year} onChange={handleChange} />
+            <input className="jebo-form__semester" name="semester" placeholder="학기 (1, 2)" value={form.semester} onChange={handleChange} />
+            <input className="jebo-form__type" name="type" placeholder="족보 타입* (중간, 기말)" value={form.type} onChange={handleChange} />
+
+            <input className="jebo-form__comment" name="comment" placeholder="코멘트" value={form.comment} onChange={handleChange} />
+            <div className="jebo-form__file-wrapper">
+              <label className="jebo-form__file-label">
+                {form.file ? form.file.name : "파일 선택하기"}
+                <input
+                  type="file"
+                  name="file"
+                  className="jebo-form__file"
+                  onChange={handleChange}
+                />
+              </label>
+            </div>
+          </div>
+          {/* Submit */}
+          <div className="jebo-form__submit">
+            <button className="jebo-form__button" onClick={handleSubmit} disabled={uploading}>
+              {uploading ? "업로드 중..." : "제보 제출"}
+            </button>
+            {done && <p className="jebo-form__done-msg">업로드가 완료되었습니다.</p>}
+          </div>
         </div>
       ) : (
         <a className="jebo-item__title" onClick={() => setShowForm(!showForm)}>
