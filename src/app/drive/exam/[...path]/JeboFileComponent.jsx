@@ -54,10 +54,10 @@ export default function JeboFileComponent({ folder }) {
 
       { showForm ? (
         <div className="jebo-form">
-          <input name="year" placeholder="년도 (예: 2024)" value={form.year} onChange={handleChange} />
-          <input name="semester" placeholder="학기 (1 or 2)" value={form.semester} onChange={handleChange} />
-          <input name="type" placeholder="족보 타입 (예: 기말)" value={form.type} onChange={handleChange} />
-          <input name="comment" placeholder="코멘트 (선택)" value={form.comment} onChange={handleChange} />
+          <input name="year" placeholder="년도* (2024)" value={form.year} onChange={handleChange} />
+          <input name="semester" placeholder="학기 (1, 2)" value={form.semester} onChange={handleChange} />
+          <input name="type" placeholder="족보 타입* (중간, 기말)" value={form.type} onChange={handleChange} />
+          <input name="comment" placeholder="코멘트" value={form.comment} onChange={handleChange} />
           <input name="file" type="file" onChange={handleChange} />
           <button onClick={handleSubmit} disabled={uploading}>
             {uploading ? "업로드 중..." : "제보 제출"}
