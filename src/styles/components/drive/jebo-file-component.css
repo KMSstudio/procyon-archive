@@ -1,0 +1,121 @@
+/* @/styles/components/drive/jebo-file-component.css */
+
+/* Direct Jebo Form */
+.jebo-form {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .jebo-form__titlebar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+    gap: 10px;
+
+    .jebo-form__title {
+      font-size: 18px;
+      margin: 0;
+      padding: 0;
+      &:hover { text-decoration: underline; }
+    }
+
+    .jebo-form__title-link {
+      font-size: 18px;
+      color: #777;
+      text-decoration: none;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  .jebo-form__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    width: 100%;
+
+    .jebo-form__year,
+    .jebo-form__semester,
+    .jebo-form__type { grid-row: 1; }
+    .jebo-form__year { grid-column: 1; }
+    .jebo-form__semester { grid-column: 2; }
+    .jebo-form__type { grid-column: 3; }
+    .jebo-form__comment {
+      grid-row: 2;
+      grid-column: 1;
+    }
+
+    .jebo-form__file-wrapper {
+      grid-row: 2;
+      grid-column: 2 / span 2;
+      height: 38px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .jebo-form__file { display: none; }
+    .jebo-form__file-name {
+      font-size: 14px;
+      color: #ccc;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    input, .jebo-form__file-label {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 0px;
+      box-sizing: border-box;
+      
+      font-family: 'D2Coding', monospace;
+      font-size: 14px;
+      background-color: #181818;
+      border: 1px solid rgba(225, 225, 255, 0.2);
+      color: #bbb;
+
+      &:focus {
+        outline: none;
+        border: 1px solid rgba(225, 225, 255, 0.2);
+      }
+    } 
+  }
+
+  .jebo-form__submit {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 6px;
+  }
+
+  .jebo-form__button {
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: #333;
+    color: #bbb;
+    border: 1px solid rgba(225, 225, 255, 0.2);
+    border-radius: 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    &:hover { background-color: rgb(247, 143, 30); color: #333; }
+  }
+
+  .jebo-form__button:disabled {
+    background-color: #888;
+    cursor: not-allowed;
+    &:hover { color: #bbb; }
+  }
+
+  .jebo-form__done-msg,
+  .jebo-form__filename-msg {
+    font-size: 14px;
+    margin: 0 0;
+  }
+
+  .jebo-form__done-msg { color: green; }
+  .jebo-form__filename-msg { color: #777; }
+}
