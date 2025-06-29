@@ -1,6 +1,6 @@
 {
   "name": "procyon",
-  "version": "0.7.7",
+  "version": "0.7.7-B",
   "private": true,
   "scripts": {
     "dev": "next dev",
