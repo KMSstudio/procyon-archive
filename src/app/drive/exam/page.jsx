@@ -1,7 +1,7 @@
 /* @/app/drive/exam/page.js */
 
 // Components
-import ExamFileList from "@/app/components/list/ExamFileList";
+import ExamFileList from "./ExamFileList";
 import TrackClient from "@/app/components/MixPanel";
 // Utils (Google Drive)
 import { getExamFiles } from "@/utils/exam/examShow";

@@ -114,3 +114,19 @@ export async function jeboFile(reportName, description, files) {
   await Promise.all(files.map(file => uploadFileToDrive(folderId, file)));
   return folderId;
 }
+
+/**
+ * 指定されたGoogle Driveパスに単一ファイルを指定名でアップロードする関数
+ * @param {string} folderPath - アップロード先のパス（例: "jebo/test"）
+ * @param {string} fileTitle - アップロードするファイルの名前（例: "report.pdf"）
+ * @param {Object} file - アップロード対象のファイルオブジェクト（formidable または multer形式）
+ * @returns {Promise<string>} - アップロードされたファイルのDrive ID
+ */
+export async function jeboFileDirectly(folderPath, fileTitle, file) {
+  if (!folderPath || !fileTitle || !file) { throw new Error("jeboFileDirectly に無効な引数が渡されました"); }
+  const folderId = await createFolder(folderPath);
+  const fileMeta = { name: fileTitle, parents: [folderId] };
+  const media = { mimeType: file.mimetype, body: fs.createReadStream(file.filepath || file.path) };
+  const res = await drive.files.create({ requestBody: fileMeta, media, fields: "id" });
+  return res.data.id;
+}

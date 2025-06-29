@@ -45,7 +45,7 @@ async function syncViewStats(now) {
  */
 export async function countView(name) {
   const now = nowKST();
-  console.log(`[examStats] ]count view call : ${JSON.stringify(viewStats)}`);
+  console.log(`[examStats] count view call : ${JSON.stringify(viewStats)}`);
   await syncViewStats(now);
   if (!viewStats[name]) viewStats[name] = [];
   viewStats[name].push(now);

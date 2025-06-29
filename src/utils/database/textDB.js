@@ -18,14 +18,25 @@ const textCache = new Map();
 const cacheTimestamps = new Map();
 
 /**
+ * @typedef {Object} TextPost
+ * @property {string} id - Unique identifier of the post
+ * @property {string} title - Post title
+ * @property {string} uploaderEmail - Email of the uploader
+ * @property {string} uploaderName - Name and info of the uploader
+ * @property {string} lastModifyerEmail - Last person who modified the post
+ * @property {string} driveId - Google Drive file ID
+ * @property {string} createDate - ISO timestamp string
+**/
+
+/**
  * Fetch recent posts from a board, ordered by createDate in descending order.
- * Supports pagination using num (page size) and page (page number, 1-based).
+ * Uses caching if within the first 500 items.
  *
- * @param {string} board - Board name (used as Firestore collection)
- * @param {number} num - Number of posts per page (default: 40)
- * @param {number} page - Page number (1-based, default: 1)
- * @returns {Promise<Array>} - List of post objects
- */
+ * @param {string} board - Firestore collection name
+ * @param {number} [num=40] - Number of posts per page
+ * @param {number} [page=1] - Page number (1-based, default=1)
+ * @returns {Promise<TextPost[]>} List of recent posts
+**/
 export async function getRecentDBTexts(board, num = 40, page = 1) {
   const offset = (page - 1) * num;
 
@@ -43,36 +54,27 @@ export async function getRecentDBTexts(board, num = 40, page = 1) {
       const snapshot = await db
         .collection(board)
         .orderBy("createDate", "desc")
-        .limit(500)
-        .get();
-
+        .limit(500).get();
       const allTexts = [];
-      snapshot.forEach(doc => { allTexts.push({ id: doc.id, ...doc.data() }); });
-      
+      snapshot.forEach(doc => { allTexts.push({ id: doc.id, ...doc.data() }); });      
       textCache.set(cacheKey, JSON.stringify(allTexts));
       cacheTimestamps.set(cacheKey, now);
-
       return allTexts.slice(offset, offset + num);
     } catch (error) {
       console.error(`Failed to fetch recent texts from board '${board}' (cached):`, error);
       throw error;
     }
   }
-  // request over 500
+  // Request over 500
   else { 
     try {
       const snapshot = await db
         .collection(board)
         .orderBy("createDate", "desc")
         .offset(offset)
-        .limit(num)
-        .get();
-
+        .limit(num).get();
       const texts = [];
-      snapshot.forEach(doc => {
-        texts.push({ id: doc.id, ...doc.data() });
-      });
-
+      snapshot.forEach(doc => { texts.push({ id: doc.id, ...doc.data() }); });
       return texts;
     }
     catch (error) { throw error; }

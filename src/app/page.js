@@ -9,10 +9,13 @@ import Sidebar from "@/app/components/main/Sidebar";
 import navData from "@/config/navConstant.json";
 // Utils
 import { updateUserAccessDate } from "@/utils/database/userDB"
+import { getRecentDBTexts } from "@/utils/database/textDB";
 import { getUserv2 } from "@/utils/auth";
 // Loggers
 import logger from "@/utils/logger";
 import TrackClient from "@/app/components/MixPanel";
+// Next
+import Link from 'next/link'
 
 export const metadata = {
   title: "CSE Archive",
@@ -27,6 +30,7 @@ export default async function HomePage() {
     logger.behavior(userData.fullName, "페이지 접속", "mainpage");
     updateUserAccessDate(userData.email);
   } else { logger.behavior("User who does not login", "페이지 접속", "mainpage"); }
+  const post = (await getRecentDBTexts('notice', 1, 1))[0];
   
   return (
     <div className="main-container">
@@ -41,7 +45,10 @@ export default async function HomePage() {
           <div className="main-content-title">
             {/* Procyon!! Procyon!! Procyon!! */}
             <h1>CSE: Archive</h1>
-            <p>Seoul National University - Computer Science and Engineering Archive</p>
+            <div className="main-content-title__under-title">
+              <p className="main-content-title__description">Seoul National University - Computer Science and Engineering Archive</p>
+              {/* <Link href={`/text/notice/view/${post.id}`} className="main-content-title__recent-post">{post.title}</Link> */}
+            </div>
           </div>
           <div className="buttons">
             {buttons.map((button, index) => (
@@ -50,6 +57,7 @@ export default async function HomePage() {
               </form>
             ))}
           </div>
+          <Link href={`/text/notice/view/${post.id}`} className="main-content__recent-post">{post.title}</Link>
         </main>
       </div>
     </div>

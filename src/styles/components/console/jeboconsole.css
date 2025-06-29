@@ -35,7 +35,7 @@
   textarea { resize: vertical; }
 
   /* Pending Filelist */
-  #file-list, .empty-message { margin: 10px 0; }
+  .file-list, .empty-message { margin: 10px 0; }
   .empty-message {
     width: 100%;
     text-align: center;

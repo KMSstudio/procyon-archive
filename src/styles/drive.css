@@ -1,12 +1,29 @@
 /* @/styles/drive.css */
 
-.filelist-content-title {
+/* FILELIST */
+
+.filelist-content__title {
   display: flex;
   justify-content: space-between;
   align-items: center;
   h1 {
     font-size: 24px;
     font-weight: normal;
+  }
+}
+
+#filelist-control__links {
+  display: flex;
+  flex-direction: row;
+
+  .back-link {
+    display: block;
+    margin-top: 20px;
+    font-size: 18px;
+    text-decoration: none;
+    color: #fff;
+    margin-right: 20px;
+    &:hover {text-decoration: underline;}
   }
 }
 
@@ -27,22 +44,6 @@
   font-size: 14px;
   white-space: nowrap;
   color: #777;
-}
-
-/* FileList Control Links */
-#filelist-control-links {
-  display: flex;
-  flex-direction: row;
-
-  .back-link {
-    display: block;
-    margin-top: 20px;
-    font-size: 18px;
-    text-decoration: none;
-    color: #fff;
-    margin-right: 20px;
-    &:hover {text-decoration: underline;}
-  }
 }
 
 #exam-filelist {
