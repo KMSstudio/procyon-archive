@@ -1,7 +1,7 @@
 /* @/app/api/jebo/upload-direct/route.js */
 
 // Google Driveユーティリティ
-import { jeboFileDirectly } from "@/utils/drive/jebo";
+import { jeboFile, jeboFileDirectly } from "@/utils/drive/jebo";
 // ユーザー認証とロガー
 import { getUserv2 } from "@/utils/auth";
 import logger from "@/utils/logger";
@@ -62,6 +62,15 @@ export async function POST(req) {
       path: tempFilePath,
     };
 
+    const descriptionJSON = JSON.stringify({
+      email: userData.email,
+      name: userData.fullName,
+      nickname: "",
+      jebo_note: `${folder} 에서 이루어진 direct 제보`,
+      jebo_time: new Date(Date.now() + 9 * 3600 * 1000).toISOString(),
+    }, null, 2);
+
+    await jeboFile(`direct/${folder}`, descriptionJSON, [fileObj]);
     const fileId = await jeboFileDirectly(`exam/${folder}`, fileTitle, fileObj);
     logger.query(userData.fullName, "제보(direct)");
     return new Response(JSON.stringify({ success: true, fileId }), { status: 200 });
