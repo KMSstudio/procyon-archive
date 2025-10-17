@@ -6,11 +6,11 @@ import NoAdminComponent from "@/app/drive/no-admin";
 import { getUserv2 } from "@/utils/auth";
 
 export default async function BookLayout({ children }) {
-  const userData = await getUserv2();
+  // const userData = await getUserv2();
   
-  if (
-    (process.env.BOOKPAGE_PUBLIC !== "TRUE") && 
-    (!userData?.admin && !userData?.prestige)
-  ) { return <NoAdminComponent />; }
+  // if (
+  //   (process.env.BOOKPAGE_PUBLIC !== "TRUE") && 
+  //   (!userData?.admin && !userData?.prestige)
+  // ) { return <NoAdminComponent />; }
   return <>{children}</>;
 }

@@ -21,12 +21,8 @@ export default async function BookPage() {
   const getFlag = (book, key) => Boolean(book[key]);
   const visibBooks = books.filter((book) => {
     if (userData?.admin) {
-      return (
-        getFlag(book, "allow_admin") ||
-        getFlag(book, "allow_prestige") ||
-        getFlag(book, "allow_public")
-      );
-    } else if (userData?.prestige) {
+      return true;
+    } else if (userData?.isPrestige) {
       return (
         !book?.tags?.includes("hidden") && (
         getFlag(book, "allow_prestige") ||
