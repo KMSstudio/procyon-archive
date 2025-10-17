@@ -25,11 +25,11 @@ export default async function BookPage() {
     } else if (userData?.isPrestige) {
       return (
         !book?.tags?.includes("hidden") && (
-        getFlag(book, "allow_prestige") ||
-        getFlag(book, "allow_public"))
+        getFlag(book, "allowPrestige") ||
+        getFlag(book, "allowPublic"))
       );
     } else {
-      return !book?.tags?.includes("hidden") && getFlag(book, "allow_public");
+      return !book?.tags?.includes("hidden") && getFlag(book, "allowPublic");
     }
   });
 
