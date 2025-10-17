@@ -17,11 +17,24 @@ import TrackClient from "@/app/components/MixPanel";
 export default async function BookPage() {
   const userData = await getUserv2();
   const books = await getAllDBBooks();
-  const visibBooks = userData.admin 
-    ? books 
-    : books.filter((book) => !book.tags.includes("hidden"));
-  logger.behavior(userData.fullName, "도서 목록 조회")
-  
+
+  const getFlag = (book, key) => Boolean(book[key]);
+  const visibBooks = books.filter((book) => {
+    if (userData?.admin) {
+      return true;
+    } else if (userData?.isPrestige) {
+      return (
+        !book?.tags?.includes("hidden") && (
+        getFlag(book, "allowPrestige") ||
+        getFlag(book, "allowPublic"))
+      );
+    } else {
+      return !book?.tags?.includes("hidden") && getFlag(book, "allowPublic");
+    }
+  });
+
+  logger.behavior(userData.fullName, "도서 목록 조회");
+
   return (
     <div className="content-container">
       <TrackClient
@@ -30,7 +43,10 @@ export default async function BookPage() {
       />  
       <div>
         <div id="book-head-info">
-          <p>CSE: Archive에 등록된 도서는 인터넷과 여러분의 제보를 통해 구해집니다. 문제될 시 tomskang@naver.com으로 문의주시면 내리겠습니다.</p>
+          <p>
+            CSE: Archive에 등록된 도서는 인터넷과 여러분의 제보를 통해 구해집니다. 
+            문제될 시 tomskang@naver.com으로 문의주시면 내리겠습니다.
+          </p>
         </div>
         <BookList books={visibBooks} coreTags={coreTags} />
         <EOBookList />

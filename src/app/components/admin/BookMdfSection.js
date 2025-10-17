@@ -17,6 +17,7 @@ import coreTags from "@/config/view/coreTag.json";
  * - Provides a form for modifying and deleting book details 
  */
 function BookRegisterConsole({ initialData }) {
+  // Book info - about this book
   const [title, setTitle] = useState(initialData?.title || "");
   const [edition, setEdition] = useState(initialData?.edition || "");
   const [author, setAuthor] = useState(initialData?.author || "");
@@ -24,6 +25,10 @@ function BookRegisterConsole({ initialData }) {
   const [tags, setTags] = useState(initialData?.tags || []);
   const [tagInput, setTagInput] = useState("");
   const [selectedTag, setSelectedTag] = useState("");
+  // Book info - access prestige
+  const [allowPrestige, setAllowPrestige] = useState(initialData?.allowPrestige || false);
+  const [allowPublic, setAllowPublic] = useState(initialData?.allowPublic || false);
+  // Fetch state
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -34,6 +39,8 @@ function BookRegisterConsole({ initialData }) {
     setAuthor(initialData?.author || "");
     setTags(initialData?.tags || []);
     setSelectedTag("");
+    setAllowPublic(initialData?.allowPublic || false)
+    setAllowPrestige(initialData?.allowPrestige || false)
 
     if (initialData?.mainTags) {
       const resolvedMainTags = initialData.mainTags
@@ -88,6 +95,18 @@ function BookRegisterConsole({ initialData }) {
     );
   }
 
+  // Change allow permissions
+  const changeAllowPrestige = (e) => {
+    const v = e.target.checked;
+    if (allowPublic) { setAllowPrestige(true); return; }
+    setAllowPrestige(v);
+  };
+  const changeAllowPublic = (e) => {
+    const v = e.target.checked;
+    setAllowPublic(v);
+    if (v) setAllowPrestige(true);
+  };
+
   // Submit book modification request
   const handleSubmit = async () => {
     const updatedData = {
@@ -95,7 +114,9 @@ function BookRegisterConsole({ initialData }) {
       edition,
       author,
       mainTags: mainTags.map(tag => tag.name),
-      tags
+      tags,
+      allowPrestige,
+      allowPublic
     };
 
     setIsSubmitting(true);
@@ -187,6 +208,27 @@ function BookRegisterConsole({ initialData }) {
           onChange={(e) => setTagInput(e.target.value)}
         />
         <button onClick={addTag}>+</button>
+      </div>
+
+      {/* permission modifiers */}
+      <div className="permission-input-group">
+        <label style={{ display:"flex", alignItems:"center", gap:6 }}>
+          <input
+            type="checkbox"
+            checked={allowPrestige}
+            onChange={changeAllowPrestige}
+            disabled={allowPublic}
+          />
+          allowPrestige
+        </label>
+        <label style={{ display:"flex", alignItems:"center", gap:6 }}>
+          <input
+            type="checkbox"
+            checked={allowPublic}
+            onChange={changeAllowPublic}
+          />
+          allowPublic
+        </label>
       </div>
 
       {/* Button group for modifying and deleting books */}
