@@ -4,7 +4,6 @@
 import { google } from "googleapis";
 // ファイルストリーム
 import { Readable } from "stream";
-import path from "path";
 import fs from "fs";
 
 const auth = new google.auth.GoogleAuth({
@@ -75,7 +74,7 @@ async function uploadFileToDrive(folderId, file) {
 /**
  * 文字列からファイルを作成し、Google Driveにアップロードする
  * @param {string} folderId - アップロード先のフォルダID
- * @param {string} filename - ファイル名（例: config.txt）
+ * @param {string} filename - ファイル名（例: config.txt)
  * @param {string} content - アップロードするテキスト内容
  */
 async function uploadTextAsFile(folderId, filename, content) {
@@ -98,9 +97,9 @@ async function uploadTextAsFile(folderId, filename, content) {
 
 /**
  * 一括的な通報アップロード処理関数
- * @param {string} reportName - 通報名（例: "山田の通報"）
- * @param {string} description - 通報の説明（config.txtに保存される）
- * @param {Array} files - アップロードするファイル配列（formidable形式）
+ * @param {string} reportName - 通報名（例: "山田の通報")
+ * @param {string} description - 通報の説明(config.txtに保存される)
+ * @param {Array} files - アップロードするファイル配列(formidable形式)
  * @returns {Promise<string>} - 作成されたフォルダのID
  */
 export async function jeboFile(reportName, description, files) {
@@ -108,7 +107,7 @@ export async function jeboFile(reportName, description, files) {
   const folderPath = `jebo/${reportName}`;
   console.log(`[jeboFile] create gdrive folder at ${folderPath}`);
   const folderId = await createFolder(folderPath);
-  // 説明ファイル（config.txt）のアップロード
+  // 説明ファイル (config.txt)のアップロード
   await uploadTextAsFile(folderId, "config.txt", description);
   // 各ファイルのアップロード
   await Promise.all(files.map(file => uploadFileToDrive(folderId, file)));
@@ -117,9 +116,9 @@ export async function jeboFile(reportName, description, files) {
 
 /**
  * 指定されたGoogle Driveパスに単一ファイルを指定名でアップロードする関数
- * @param {string} folderPath - アップロード先のパス（例: "jebo/test"）
- * @param {string} fileTitle - アップロードするファイルの名前（例: "report.pdf"）
- * @param {Object} file - アップロード対象のファイルオブジェクト（formidable または multer形式）
+ * @param {string} folderPath - アップロード先のパス（例: "jebo/test")
+ * @param {string} fileTitle - アップロードするファイルの名前（例: "report.pdf")
+ * @param {Object} file - アップロード対象のファイルオブジェクト(formidable または multer形式)
  * @returns {Promise<string>} - アップロードされたファイルのDrive ID
  */
 export async function jeboFileDirectly(folderPath, fileTitle, file) {
