@@ -22,7 +22,7 @@ export async function GET(request, { params }) {
 
     return Response.json({ ok: true, data: { roomId: id, messages, cursor: { oldest, latest } } });
   } catch (error) {
-    console.error("GET /api/chat/rooms/[roomId]/msg error:", error);
+    console.error("GET /api/chat/rooms/[id]/msg error:", error);
     return Response.json({ ok: false, error: "Failed to fetch messages" }, { status: 500 });
   }
 }
@@ -47,7 +47,7 @@ export async function POST(request, { params }) {
 
     return Response.json({ ok: true, data: { roomId: id, message } });
   } catch (error) {
-    console.error("POST /api/chat/rooms/[roomId]/msg error:", error);
+    console.error("POST /api/chat/rooms/[id]/msg error:", error);
     return Response.json({ ok: false, error: "Failed to send message" }, { status: 500 });
   }
 }
