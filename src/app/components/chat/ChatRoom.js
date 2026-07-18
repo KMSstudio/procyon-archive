@@ -55,7 +55,7 @@ export default function ChatRoom({ roomId, roomName = roomId, userData }) {
       try {
         const after = latestRef.current;
         const query = after ? `?after=${encodeURIComponent(after)}` : "";
-        const res = await fetch(`/api/chat/rooms/${encodeURIComponent(roomId)}/poll${query}`, { cache: "no-store" });
+        const res = await fetch(`/api/chat/rooms/${encodeURIComponent(roomId)}/pool${query}`, { cache: "no-store" });
         const json = await res.json();
         if (!json.ok) throw new Error(json.error || "Failed to poll messages");
 
