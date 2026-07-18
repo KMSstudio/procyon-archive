@@ -2,12 +2,12 @@
 
 import { redirect } from "next/navigation";
 import { getUserv2 } from "@/utils/auth";
-import ChatPageClient from "@/app/components/chat/ChatPageClient";
+import ChatPage from "@/app/components/chat/ChatPage";
 
 export default async function ChatPage() {
   const userData = await getUserv2();
 
   if (!userData.login) redirect("/");
 
-  return <ChatPageClient userData={userData} defaultRoomId="general" />;
+  return <ChatPage userData={userData} defaultRoomId="general" />;
 }

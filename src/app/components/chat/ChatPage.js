@@ -1,10 +1,10 @@
-/* app/components/chat/ChatPageClient.js */
+/* app/components/chat/ChatPage.js */
 
 "use client";
 
 import { useEffect, useRef, useState } from "react";
 
-export default function ChatPageClient({ userData, defaultRoomId = "general" }) {
+export default function ChatPage({ userData, defaultRoomId = "general" }) {
   const [roomInput, setRoomInput] = useState(defaultRoomId);
   const [roomId, setRoomId] = useState(defaultRoomId);
   const [messages, setMessages] = useState([]);
