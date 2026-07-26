@@ -13,6 +13,10 @@ const roomCollection = db.collection(process.env.FIRE_DB_CHAT_TABLE || "chatRoom
 const RECENT_LIMIT = Number(process.env.CHAT_RECENT_LIMIT || 50);
 const CACHE_TTL = Number(process.env.CHAT_CACHE_TTL || 60);
 
+export function isValidRoomId(id) {
+  return typeof id === "string" && /^[a-zA-Z0-9_-]{1,50}$/.test(id);
+}
+
 function cleanText(value) {
   if (value === undefined || value === null) return "";
   return typeof value === "string" ? value.replace(/[\u200B-\u200D\uFEFF\u00A0]/g, "").trim() : value;
@@ -104,21 +108,73 @@ export async function fetchAllRooms() {
   }
 }
 
-/** Fetch recent messages in a room */
-export async function fetchMessages(roomId, limit = RECENT_LIMIT) {
+/**
+ * Fetch messages relative to timestamp cursors.
+ *
+ * - before: Fetch messages older than the cursor.
+ * - after: Fetch messages newer than the cursor.
+ * - neither: Fetch the most recent messages.
+ *
+ * Messages are always returned from oldest to newest.
+ */
+export async function fetchMessagesByTime(roomId, options = {}) {
   if (!roomId) return [];
-  const key = recentKey(roomId);
+
+  const before = cleanText(options.before) || null;
+  const after = cleanText(options.after) || null;
+  const limit = Math.min(Math.max(Number(options.limit) || RECENT_LIMIT, 1), 100);
+
+  if (before && after) { throw new Error("before and after cannot be used together"); }
 
   try {
-    const cached = await redis.lrange(key, 0, limit - 1);
-    if (cached.length > 0) return cached.reverse();
+    if (after) {
+      const latest = await redis.get(latestKey(roomId));
+      if (latest && after >= latest) { return []; }
 
-    const snapshot = await messageCollection(roomId).orderBy("createdAt", "desc").limit(limit).get();
+      const cached = await redis.lrange(recentKey(roomId), 0, RECENT_LIMIT - 1);
+      if (cached.length) {
+        const messages = cached.reverse().filter(message => message.createdAt > after).slice(0, limit);
+        if (messages.length) { return messages; }
+        if (latest) { return []; }
+      }
+
+      const snapshot = await messageCollection(roomId)
+        .where("createdAt", ">", after)
+        .orderBy("createdAt", "asc")
+        .limit(limit)
+        .get();
+
+      const messages = [];
+      snapshot.forEach(doc => messages.push({ id: doc.id, ...doc.data() }));
+      return JSON.parse(JSON.stringify(messages));
+    }
+
+    if (before) {
+      const snapshot = await messageCollection(roomId)
+        .where("createdAt", "<", before)
+        .orderBy("createdAt", "desc")
+        .limit(limit)
+        .get();
+
+      const messages = [];
+      snapshot.forEach(doc => messages.push({ id: doc.id, ...doc.data() }));
+      return JSON.parse(JSON.stringify(messages)).reverse();
+    }
+
+    const key = recentKey(roomId);
+    const cached = await redis.lrange(key, 0, limit - 1);
+    if (cached.length) { return cached.reverse(); }
+
+    const snapshot = await messageCollection(roomId)
+      .orderBy("createdAt", "desc")
+      .limit(limit)
+      .get();
+
     const messages = [];
     snapshot.forEach(doc => messages.push({ id: doc.id, ...doc.data() }));
 
     const safeMessages = JSON.parse(JSON.stringify(messages));
-    if (safeMessages.length > 0) {
+    if (safeMessages.length) {
       await redis.del(key);
       await redis.lpush(key, ...safeMessages);
       await redis.expire(key, CACHE_TTL);
@@ -132,41 +188,9 @@ export async function fetchMessages(roomId, limit = RECENT_LIMIT) {
   }
 }
 
-/** Fetch newer messages after createdAt */
-export async function fetchNewMessages(roomId, after, limit = 100) {
-  if (!roomId) return [];
-
-  try {
-    const latest = await redis.get(latestKey(roomId));
-    if (after && latest && after >= latest) return [];
-
-    const cached = await redis.lrange(recentKey(roomId), 0, RECENT_LIMIT - 1);
-    if (cached.length > 0) {
-      const messages = cached.reverse().filter(message => !after || message.createdAt > after);
-      if (messages.length > 0) return messages.slice(0, limit);
-      if (after && latest) return [];
-    }
-
-    let query = messageCollection(roomId).orderBy("createdAt", "asc").limit(limit);
-    if (after) query = messageCollection(roomId).where("createdAt", ">", after).orderBy("createdAt", "asc").limit(limit);
-
-    const snapshot = await query.get();
-    const messages = [];
-    snapshot.forEach(doc => messages.push({ id: doc.id, ...doc.data() }));
-
-    const safeMessages = JSON.parse(JSON.stringify(messages));
-    if (safeMessages.length > 0) {
-      await redis.lpush(recentKey(roomId), ...safeMessages.slice().reverse());
-      await redis.ltrim(recentKey(roomId), 0, RECENT_LIMIT - 1);
-      await redis.expire(recentKey(roomId), CACHE_TTL);
-      await redis.set(latestKey(roomId), safeMessages[safeMessages.length - 1].createdAt, { ex: CACHE_TTL });
-    }
-
-    return safeMessages;
-  } catch (error) {
-    console.error(`Error fetching new messages from room ${roomId}:`, error);
-    throw error;
-  }
+/** Fetch recent messages in a room */
+export async function fetchMessages(roomId, limit = RECENT_LIMIT) {
+  return fetchMessagesByTime(roomId, { limit });
 }
 
 /** Send message */
