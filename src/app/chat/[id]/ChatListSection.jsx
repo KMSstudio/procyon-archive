@@ -4,6 +4,10 @@
 
 import { useEffect, useMemo, useRef } from "react";
 
+/**
+ * @typedef {import("@/app/chat/types").ChatMessage} ChatMessage
+ */
+
 function groupMessages(messages) {
   return messages.reduce((groups, message) => {
     const sender = message.sender || {};
@@ -42,6 +46,14 @@ function ChatMessageGroup({group, email}) {
   );
 }
 
+/**
+ * チャットメッセージ一覧を表示し、メッセージ更新時のスクロールを管理します。
+ *
+ * @param {{
+ *   messages: ChatMessage[],
+ *   email: string
+ * }} props
+ */
 export default function ChatListSection({ messages, email }) {
   const containerRef = useRef(null);
 

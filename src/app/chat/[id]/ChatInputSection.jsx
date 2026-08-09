@@ -4,11 +4,17 @@
 
 import { useRef, useState } from "react";
 
-export default function ChatInputSection({
-  userData,
-  disabled,
-  onSend,
-}) {
+/**
+ * チャットメッセージ入力欄を表示するコンポーネントです。
+ * 入力されたメッセージを管理し、送信処理を実行します。
+ *
+ * @param {{
+ *   userData: Object,
+ *   disabled: boolean,
+ *   onSend: (text: string) => Promise<boolean>
+ * }} props
+ */
+export default function ChatInputSection({ userData, disabled, onSend }) {
   const [text, setText] = useState("");
   const inputRef = useRef(null);
 

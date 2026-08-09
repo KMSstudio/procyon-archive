@@ -2,21 +2,19 @@
 
 "use client";
 
+// React
 import { useCallback, useEffect, useRef, useState } from "react";
+// Component
 import ChatListSection from "./ChatListSection";
 import ChatInputSection from "./ChatInputSection";
+// Styles
 import "@/styles/chat.css";
 
-const CHAT_POLL_INTERVAL = 500;
-
 /**
- * @typedef {Object} ChatMessage
- * @property {string} version
- * @property {string} id
- * @property {string} text
- * @property {string} createdAt
- * @property {{ email: string, name: string, major: string }} sender
+ * @typedef {import("@/app/chat/types").ChatMessage} ChatMessage
  */
+
+const CHAT_POLL_INTERVAL = 500;
 
 /**
  * Merges incoming messages into the current message list.
