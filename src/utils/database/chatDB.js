@@ -15,7 +15,7 @@ export function isValidRoomId(id) {
 
 function cleanText(value) {
   if (value === undefined || value === null) return "";
-  return typeof value === "string" ? value.replace(/[\u200B-\u200D\uFEFF\u00A0]/g, "").trim() : value;
+  return typeof value === "string" ? value.replace(/[\u200B-\u200D\uFEFF\u00A0]/g, "") : value;
 }
 
 function nowKST() {

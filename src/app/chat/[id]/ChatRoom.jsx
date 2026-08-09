@@ -28,8 +28,8 @@ function mergeMessages(current, incoming) {
   incoming.forEach((msg) => { if (msg?.id) {msgMap.set(msg.id, msg);} });
 
   return [...msgMap.values()].sort((a, b) => {
-    const createdAtCompare = String(a.createdAt).localeCompare(String(b.createdAt));
-    return createdAtCompare || String(a.id).localeCompare(String(b.id));
+    const cmp = String(a.createdAt).localeCompare(String(b.createdAt));
+    return cmp || String(a.id).localeCompare(String(b.id));
   });
 }
 

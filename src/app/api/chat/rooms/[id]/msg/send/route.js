@@ -23,7 +23,7 @@ export async function POST(request, { params }) {
     if (!userData.login) {
       return Response.json({ ok: false, error: "Login required" }, { status: 401 }); }
     const body = await request.json();
-    const text = typeof body.text === "string" ? body.text.trim() : "";
+    const text = typeof body.text === "string" ? body.text : "";
     if (!text) {
       return Response.json({ ok: false, error: "Text not found" }, { status: 400 }); }
     if (text.length > MAX_MESSAGE_LENGTH) {

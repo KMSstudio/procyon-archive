@@ -13,31 +13,16 @@ export default function ChatInputSection({
   const inputRef = useRef(null);
 
   const submit = async () => {
-    const trimmedText = text.trim();
-
-    if (!trimmedText || disabled) {
-      return;
-    }
-
-    setText("");
-
-    const success = await onSend(trimmedText);
-
-    if (!success) {
-      setText(trimmedText);
-      inputRef.current?.focus();
-    }
+    if (text.length === 0 || disabled) return;
+    const m = text; setText("");
+    const success = await onSend(m);
+    if (!success) { setText(m); inputRef.current?.focus(); }
   };
 
   const handleKeyDown = (event) => {
     if (event.key !== "Enter") return;
-
-    if (event.shiftKey || event.altKey) {
-      return;
-    }
-
+    if (event.shiftKey || event.altKey) { return; }
     event.preventDefault();
-
     submit();
   };
 

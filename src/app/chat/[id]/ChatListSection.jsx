@@ -18,41 +18,21 @@ function groupMessages(messages) {
 function ChatMessageGroup({group, email}) {
   const isMine = group.sender.email === email;
   return (
-    <article
-      className={`chat-group ${
-        isMine ? "chat-group--mine" : ""
-      }`}
-    >
-      <div
-        className="chat-avatar"
-        aria-hidden="true"
-      >
-        {group.sender.name?.slice(0, 1) || "?"}
+    <article className={`chat-group ${isMine ? "chat-group--mine" : ""}`}>
+      <div className="chat-avatar" aria-hidden="true">
+        {group.sender.name?.slice(0, 3) || "?"}
       </div>
 
       <div className="chat-group__body">
         <header className="chat-sender">
-          <span>
-            {group.sender.name || "Unknown"}
-          </span>
-
-          {group.sender.major && (
-            <>
-              <span className="chat-sender__divider">
-                /
-              </span>
-
-              <span>{group.sender.major}</span>
-            </>
-          )}
+          <span>{group.sender.name || "Unknown"}</span>
+          <span className="chat-sender__divider">|</span>
+          <span>{group.sender.major || "??"}</span>
         </header>
 
         <div className="chat-messages">
           {group.messages.map((message) => (
-            <div
-              key={message.id}
-              className="chat-message"
-            >
+            <div key={message.id} className="chat-message">
               <p>{message.text}</p>
             </div>
           ))}
@@ -75,7 +55,7 @@ export default function ChatListSection({ messages, email }) {
 
     if (!container) return;
 
-    const distanceFromBottom =
+    const distanceFromBottom =  
       container.scrollHeight -
       container.scrollTop -
       container.clientHeight;
@@ -89,10 +69,7 @@ export default function ChatListSection({ messages, email }) {
   }, [messages]);
 
   return (
-    <section
-      ref={containerRef}
-      className="chat-list-section"
-    >
+    <section ref={containerRef} className="chat-list-section">
       <div className="chat-list">
         {groupedMessages.map((group) => (
           <ChatMessageGroup
@@ -103,9 +80,7 @@ export default function ChatListSection({ messages, email }) {
         ))}
 
         {groupedMessages.length === 0 && (
-          <div className="chat-empty">
-            No messages yet.
-          </div>
+          <div className="chat-empty">No messages yet.</div>
         )}
       </div>
     </section>
