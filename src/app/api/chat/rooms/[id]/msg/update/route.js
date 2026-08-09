@@ -41,7 +41,7 @@ function isValidCursor(value) {
  */
 export async function GET(request, { params }) {
   try {
-    const roomId = params.id;
+    const roomId = (await params).id;
     if (!isValidRoomId(roomId)) {
       return Response.json({ ok: false, error: "Invalid roomId" }, { status: 400 });
     }

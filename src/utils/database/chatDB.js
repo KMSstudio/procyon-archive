@@ -1,14 +1,8 @@
 /* @/utils/database/chatDB.js */
 
-import admin from "firebase-admin";
+import { db } from "@/utils/firebase";
 import { redis } from "@/utils/redis";
 
-if (!admin.apps.length) {
-  const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-  admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
-}
-
-const db = admin.firestore();
 const roomCollection = db.collection(process.env.FIRE_DB_CHAT_TABLE || "chatRooms");
 const RECENT_LIMIT = Number(process.env.CHAT_RECENT_LIMIT || 50);
 const CACHE_TTL = Number(process.env.CHAT_CACHE_TTL || 60);

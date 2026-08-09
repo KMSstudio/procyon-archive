@@ -124,7 +124,7 @@ export default function ChatRoom({ userData, room, msg, cursor }) {
   }, [applyMessages, encodedRoomId, room.id, room.roomName, sending]);
 
   return (
-    <main className="chat-room">
+    <main className="content-container">
       <ChatListSection
         messages={messages}
         currentUserEmail={userData.email}
