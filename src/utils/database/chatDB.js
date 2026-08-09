@@ -3,9 +3,9 @@
 import { db } from "@/utils/firebase";
 import { redis } from "@/utils/redis";
 
-const roomCollection = db.collection(process.env.FIRE_DB_CHAT_TABLE || "chatRooms");
+const roomCollection = db.collection(process.env.FIRE_DB_CHAT_TABLE);
 const RECENT_LIMIT = Number(process.env.CHAT_RECENT_LIMIT || 50);
-const CACHE_TTL = Number(process.env.CHAT_CACHE_TTL || 60);
+const CACHE_TTL = Number(process.env.TTL_CHAT_CACHE || 60);
 const MESSAGE_VERSION = "v1";
 const MAX_MESSAGE_LIMIT = 100;
 
@@ -19,7 +19,7 @@ function cleanText(value) {
 }
 
 function nowKST() {
-  return new Date(Date.now() + 9 * 3600 * 1000).toISOString().replace("T", " ").slice(0, 19);
+  return new Date(Date.now() + 9 * 3600 * 1000).toISOString().replace("T", " ").slice(0, 23);
 }
 
 function messageCollection(roomId) {
@@ -134,11 +134,12 @@ export async function fetchRoom(roomId) {
 /** Check whether a room exists */
 export async function isRoomExist(roomId) {
   if (!roomId) return false;
+  if (!isValidRoomId(roomId)) return false;
   return (await fetchRoom(roomId)) !== null;
 }
 
 /** Create or update room */
-export async function saveRoom(roomId, data = {}) {
+export async function upsertRoom(roomId, data = {}) {
   if (!roomId) return null;
 
   const now = nowKST();
@@ -268,7 +269,6 @@ export async function fetchMessages(roomId, limit = RECENT_LIMIT) {
  * Expected data:
  * {
  *   text,
- *   roomName,
  *   sender: {
  *     email,
  *     name,
@@ -281,17 +281,16 @@ export async function saveMessage(roomId, data) {
 
   const now = nowKST();
   const messageRef = messageCollection(roomId).doc();
+
   const message = normalizeMessage(messageRef.id, {
     version: MESSAGE_VERSION,
     text: data.text,
     createdAt: now,
     sender: data.sender,
   });
-
   const messageData = serializeMessage(message);
+
   const roomPatch = {
-    roomName: cleanText(data.roomName || roomId),
-    createdAt: data.roomCreatedAt || now,
     updatedAt: now,
     lastMessage: message.text,
     lastMessageSenderName: message.sender.name,
@@ -309,13 +308,20 @@ export async function saveMessage(roomId, data) {
     await redis.lpush(recentKey(roomId), message);
     await redis.ltrim(recentKey(roomId), 0, RECENT_LIMIT - 1);
     await redis.expire(recentKey(roomId), CACHE_TTL);
-    await redis.set(latestKey(roomId), now, { ex: CACHE_TTL });
-    await redis.set(roomKey(roomId), { id: roomId, ...roomPatch }, { ex: CACHE_TTL });
-    await redis.del("chat:rooms");
+
+    await redis.set(
+      latestKey(roomId),
+      now,
+      { ex: CACHE_TTL }
+    );
 
     return message;
   } catch (error) {
-    console.error(`Error saving message to room ${roomId}:`, error);
+    console.error(
+      `Error saving message to room ${roomId}:`,
+      error
+    );
+
     throw error;
   }
 }

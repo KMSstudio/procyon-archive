@@ -6,17 +6,24 @@ import { useEffect, useMemo, useRef } from "react";
 
 function groupMessages(messages) {
   return messages.reduce((groups, message) => {
-    const previous = groups[groups.length - 1];
-    const senderKey = message.sender?.email || message.sender?.name || "unknown";
+    const sender = message.sender || {};
 
-    if (previous?.senderKey === senderKey) {
-      previous.messages.push(message);
+    const senderKey =
+      sender.email ||
+      sender.name ||
+      "unknown";
+
+    const previousGroup =
+      groups[groups.length - 1];
+
+    if (previousGroup?.senderKey === senderKey) {
+      previousGroup.messages.push(message);
       return groups;
     }
 
     groups.push({
       senderKey,
-      sender: message.sender || {},
+      sender,
       messages: [message],
     });
 
@@ -24,32 +31,50 @@ function groupMessages(messages) {
   }, []);
 }
 
-function ChatMessageGroup({ group, currentUserEmail }) {
-  const isMine = group.sender.email === currentUserEmail;
+function ChatMessageGroup({
+  group,
+  currentUserEmail,
+}) {
+  const isMine =
+    group.sender.email === currentUserEmail;
 
   return (
-    <article className={`chat-group ${isMine ? "chat-group--mine" : ""}`}>
-      <div className="chat-avatar" aria-hidden="true">
+    <article
+      className={`chat-group ${
+        isMine ? "chat-group--mine" : ""
+      }`}
+    >
+      <div
+        className="chat-avatar"
+        aria-hidden="true"
+      >
         {group.sender.name?.slice(0, 1) || "?"}
       </div>
 
-      <div className="chat-group__content">
+      <div className="chat-group__body">
         <header className="chat-sender">
-          <span>{group.sender.name || "Unknown"}</span>
+          <span>
+            {group.sender.name || "Unknown"}
+          </span>
 
           {group.sender.major && (
             <>
-              <span className="chat-sender__divider">/</span>
+              <span className="chat-sender__divider">
+                /
+              </span>
+
               <span>{group.sender.major}</span>
             </>
           )}
         </header>
 
         <div className="chat-messages">
-          {group.messages.map(message => (
-            <div key={message.id} className="chat-message">
+          {group.messages.map((message) => (
+            <div
+              key={message.id}
+              className="chat-message"
+            >
               <p>{message.text}</p>
-              <time dateTime={message.createdAt}>{message.createdAt}</time>
             </div>
           ))}
         </div>
@@ -58,12 +83,20 @@ function ChatMessageGroup({ group, currentUserEmail }) {
   );
 }
 
-export default function ChatListSection({ messages, currentUserEmail }) {
+export default function ChatListSection({
+  messages,
+  currentUserEmail,
+}) {
   const containerRef = useRef(null);
-  const groupedMessages = useMemo(() => groupMessages(messages), [messages]);
+
+  const groupedMessages = useMemo(
+    () => groupMessages(messages),
+    [messages]
+  );
 
   useEffect(() => {
     const container = containerRef.current;
+
     if (!container) return;
 
     const distanceFromBottom =
@@ -71,7 +104,7 @@ export default function ChatListSection({ messages, currentUserEmail }) {
       container.scrollTop -
       container.clientHeight;
 
-    if (distanceFromBottom < 300) {
+    if (distanceFromBottom < 200) {
       container.scrollTo({
         top: container.scrollHeight,
         behavior: "smooth",
@@ -80,9 +113,12 @@ export default function ChatListSection({ messages, currentUserEmail }) {
   }, [messages]);
 
   return (
-    <section ref={containerRef} className="chat-list-section">
+    <section
+      ref={containerRef}
+      className="chat-list-section"
+    >
       <div className="chat-list">
-        {groupedMessages.map(group => (
+        {groupedMessages.map((group) => (
           <ChatMessageGroup
             key={`${group.senderKey}-${group.messages[0]?.id}`}
             group={group}
@@ -90,8 +126,10 @@ export default function ChatListSection({ messages, currentUserEmail }) {
           />
         ))}
 
-        {!groupedMessages.length && (
-          <div className="chat-empty">No messages yet.</div>
+        {groupedMessages.length === 0 && (
+          <div className="chat-empty">
+            No messages yet.
+          </div>
         )}
       </div>
     </section>

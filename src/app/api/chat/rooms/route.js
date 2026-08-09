@@ -1,6 +1,6 @@
 /* app/api/chat/rooms/route.js */
 
-import { fetchAllRooms, saveRoom } from "@/utils/database/chatDB";
+import { fetchAllRooms, upsertRoom } from "@/utils/database/chatDB";
 
 export const runtime = "nodejs";
 
@@ -26,7 +26,7 @@ export async function POST(request) {
 
     if (!isValidRoomId(roomId)) return Response.json({ ok: false, error: "Invalid roomId" }, { status: 400 });
 
-    const room = await saveRoom(roomId, { roomName });
+    const room = await upsertRoom(roomId, { roomName });
     return Response.json({ ok: true, data: { room } });
   } catch (error) {
     console.error("POST /api/chat/rooms error:", error);
