@@ -7,37 +7,16 @@ import { useEffect, useMemo, useRef } from "react";
 function groupMessages(messages) {
   return messages.reduce((groups, message) => {
     const sender = message.sender || {};
-
-    const senderKey =
-      sender.email ||
-      sender.name ||
-      "unknown";
-
-    const previousGroup =
-      groups[groups.length - 1];
-
-    if (previousGroup?.senderKey === senderKey) {
-      previousGroup.messages.push(message);
-      return groups;
-    }
-
-    groups.push({
-      senderKey,
-      sender,
-      messages: [message],
-    });
-
+    const prevG = groups[groups.length - 1];
+    if (sender.email && prevG?.sender.email === sender.email) { 
+      prevG.messages.push(message); }
+    else { groups.push({ sender, messages: [message]}); }
     return groups;
   }, []);
 }
 
-function ChatMessageGroup({
-  group,
-  currentUserEmail,
-}) {
-  const isMine =
-    group.sender.email === currentUserEmail;
-
+function ChatMessageGroup({group, email}) {
+  const isMine = group.sender.email === email;
   return (
     <article
       className={`chat-group ${
@@ -83,10 +62,7 @@ function ChatMessageGroup({
   );
 }
 
-export default function ChatListSection({
-  messages,
-  currentUserEmail,
-}) {
+export default function ChatListSection({ messages, email }) {
   const containerRef = useRef(null);
 
   const groupedMessages = useMemo(
@@ -122,7 +98,7 @@ export default function ChatListSection({
           <ChatMessageGroup
             key={`${group.senderKey}-${group.messages[0]?.id}`}
             group={group}
-            currentUserEmail={currentUserEmail}
+            email={email}
           />
         ))}
 

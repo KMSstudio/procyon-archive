@@ -137,7 +137,7 @@ export default function ChatRoom({ userData, room, msg, cursor }) {
     <main className="chat-room">
       <ChatListSection
         messages={messages}
-        currentUserEmail={userData.email}
+        email={userData.email}
       />
 
       <ChatInputSection

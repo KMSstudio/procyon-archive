@@ -14,6 +14,7 @@ import "@/styles/drive.css";
 import Link from "next/link";
 
 export default async function ReferencePage({ params }) {
+  params = await params;
   const path = params.path ? `exam/${params.path.join("/")}` : "exam";
 
   const userData = await getUserv2();

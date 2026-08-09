@@ -7,7 +7,7 @@ export const runtime = "nodejs";
 
 const DEFAULT_LIMIT = 50;
 const MAX_LIMIT = 100;
-const CURSOR_PATTERN = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
+const CURSOR_PATTERN = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d{3})?$/;
 
 function parseLimit(value) {
   if (value === null) return DEFAULT_LIMIT;
