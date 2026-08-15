@@ -1,6 +1,7 @@
 /* app/api/chat/rooms/[id]/msg/update/route.js */
 
 import { isValidRoomId, fetchMessagesByTime } from "@/utils/database/chatDB";
+import { anonymizeChat } from "@/utils/chat/anonymize";
 import { getUserv2 } from "@/utils/auth";
 
 export const runtime = "nodejs";
@@ -11,33 +12,29 @@ const CURSOR_PATTERN = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}(?:\.\d{3})?$/;
 
 function parseLimit(value) {
   if (value === null) return DEFAULT_LIMIT;
-
   const parsed = Number(value);
   if (!Number.isInteger(parsed) || parsed <= 0) return DEFAULT_LIMIT;
-
   return Math.min(parsed, MAX_LIMIT);
 }
-
 function isValidCursor(value) {
   return value === null || CURSOR_PATTERN.test(value);
 }
 
 /**
- * Retrieves chat messages relative to a timestamp cursor.
+ * Retrieves anonymized chat messages relative to a timestamp cursor.
  *
  * Query parameters:
  * - before: Returns messages created before this timestamp.
  * - after: Returns messages created after this timestamp.
  * - limit: Maximum number of messages to return. Defaults to 50, max 100.
  *
- * `before` and `after` cannot be used together. Timestamps must use the
- * `YYYY-MM-DD HH:mm:ss` format.
+ * `before` and `after` cannot be used together.
+ * Timestamps must use `YYYY-MM-DD HH:mm:ss`
+ * or `YYYY-MM-DD HH:mm:ss.SSS`.
  *
- * @param {Request} request - The incoming HTTP request.
- * @param {Object} context - The Next.js route context.
- * @param {Object} context.params - Dynamic route parameters.
- * @param {string} context.params.id - The chat room ID.
- * @returns {Promise<Response>} The requested messages and updated cursors.
+ * @param {Request} request
+ * @param {{ params: Promise<{ id: string }> }} context
+ * @returns {Promise<Response>}
  */
 export async function GET(request, { params }) {
   try {
@@ -71,6 +68,7 @@ export async function GET(request, { params }) {
     }
 
     const messages = await fetchMessagesByTime(roomId, { before, after, limit });
+    const annMessages = messages.map(anonymizeChat);
     const oldest = messages.length ? messages[0].createdAt : before || after || null;
     const latest = messages.length ? messages[messages.length - 1].createdAt : after || before || null;
     const direction = before ? "before" : after ? "after" : "recent";
@@ -79,7 +77,7 @@ export async function GET(request, { params }) {
       ok: true,
       data: {
         roomId,
-        messages,
+        messages: annMessages,
         direction,
         cursor: { oldest, latest },
         hasMessages: messages.length > 0,

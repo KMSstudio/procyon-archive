@@ -17,10 +17,14 @@ import "@/styles/chat.css";
 const CHAT_POLL_INTERVAL = 500;
 
 /**
- * Merges incoming messages into the current message list.
- * Removes duplicates by message ID and sorts messages chronologically.
+ * メッセージを既存の一覧に統合し、
+ * IDによる重複除去と時系列順の整列を行います。
+ *
+ * @param {AnnChatMsg[]} current
+ * @param {AnnChatMsg[]} incoming
+ * @returns {AnnChatMsg[]}
  */
-function mergeMessages(current, incoming) {
+function mergeMsg(current, incoming) {
   if (!Array.isArray(incoming) || incoming.length === 0) { return current; }
   const msgMap = new Map(current.map((message) => [message.id, message]));
   incoming.forEach((msg) => { if (msg?.id) {msgMap.set(msg.id, msg);} });
@@ -34,13 +38,14 @@ function mergeMessages(current, incoming) {
 /**
  * @param {{
  *   userData: Object,
+ *   userHash: string,
  *   room: Object,
  *   msg: ChatMessage[],
  *   cursor: {latest?: string, oldest?: string}
  * }} props
  */
-export default function ChatRoom({ userData, room, msg, cursor }) {
-  const im = Array.isArray(msg) ? msg : [];
+export default function ChatRoom({ userData, userHash, room, annMsg, cursor }) {
+  const im = Array.isArray(annMsg) ? annMsg : [];
   const [messages, setMessages] = useState(im);
   const [sending, setSending] = useState(false);
 
@@ -60,7 +65,7 @@ export default function ChatRoom({ userData, room, msg, cursor }) {
     if (!Array.isArray(incoming) || incoming.length === 0) {
       return;
     }
-    setMessages((current) => mergeMessages(current, incoming));
+    setMessages((current) => mergeMsg(current, incoming));
 
     const oldest = incoming.at(0);
     const newest = incoming.at(-1);

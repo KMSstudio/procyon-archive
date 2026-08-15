@@ -1,3 +1,7 @@
+"use server"
+
+// @/utils/chat/anonymize.js
+
 import crypto from "crypto";
 
 /**
