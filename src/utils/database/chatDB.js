@@ -3,6 +3,11 @@
 import { db } from "@/utils/firebase";
 import { redis } from "@/utils/redis";
 
+/**
+ * @typedef {import("@/utils/chat/types").Sender} Sender
+ * @typedef {import("@/utils/chat/types").ChatMsg} ChatMsg
+ */
+
 const roomCollection = db.collection(process.env.FIRE_DB_CHAT_TABLE);
 const RECENT_LIMIT = Number(process.env.CHAT_RECENT_LIMIT || 50);
 const CACHE_TTL = Number(process.env.TTL_CHAT_CACHE || 60);
@@ -45,56 +50,38 @@ function parseLimit(value, defaultValue = RECENT_LIMIT) {
 }
 
 /**
- * Converts stored message data into the current message format.
+ * 保存済みメッセージを現在のチャットメッセージ形式に変換します。
+ * 旧形式のメッセージにも対応します。
  *
- * Supports:
- * - v1 nested sender format
- * - legacy flat senderEmail/senderName/senderMajor format
+ * @param {string|null} id
+ * @param {Object} data
+ * @returns {ChatMsg}
  */
-function normalizeMessage(id, data = {}) {
-  if (data.version === "v1") {
-    return {
-      version: "v1",
-      id: id || data.id || null,
-      text: cleanText(data.text),
-      createdAt: data.createdAt || null,
-      sender: {
-        email: cleanText(data.sender?.email),
-        name: cleanText(data.sender?.name),
-        major: cleanText(data.sender?.major),
-      },
-    };
-  }
+function normMsg(id, data = {}) {
+  const sender = data.version === MESSAGE_VERSION
+    ? data.sender
+    : {
+        email: data.senderEmail,
+        name: data.senderName,
+        major: data.senderMajor || data.major,
+      };
 
   return {
-    version: "v1",
+    version: MESSAGE_VERSION,
     id: id || data.id || null,
     text: cleanText(data.text),
     createdAt: data.createdAt || null,
     sender: {
-      email: cleanText(data.senderEmail),
-      name: cleanText(data.senderName),
-      major: cleanText(data.senderMajor || data.major),
-    },
-  };
-}
-
-function serializeMessage(message) {
-  return {
-    version: MESSAGE_VERSION,
-    text: cleanText(message.text),
-    createdAt: message.createdAt,
-    sender: {
-      email: cleanText(message.sender?.email),
-      name: cleanText(message.sender?.name),
-      major: cleanText(message.sender?.major),
+      email: cleanText(sender?.email),
+      name: cleanText(sender?.name),
+      major: cleanText(sender?.major),
     },
   };
 }
 
 function serializeFirestoreDocs(snapshot) {
   const messages = [];
-  snapshot.forEach(doc => messages.push(normalizeMessage(doc.id, doc.data())));
+  snapshot.forEach(doc => messages.push(normMsg(doc.id, doc.data())));
   return JSON.parse(JSON.stringify(messages));
 }
 
@@ -209,7 +196,7 @@ export async function fetchMessagesByTime(roomId, options = {}) {
       const cached = await redis.lrange(recentKey(roomId), 0, RECENT_LIMIT - 1);
       if (cached.length) {
         const messages = cached
-          .map(message => normalizeMessage(message.id, message))
+          .map(message => normMsg(message.id, message))
           .reverse()
           .filter(message => message.createdAt > after)
           .slice(0, limit);
@@ -241,7 +228,7 @@ export async function fetchMessagesByTime(roomId, options = {}) {
 
     const cached = await redis.lrange(recentKey(roomId), 0, limit - 1);
     if (cached.length >= Math.min(limit, RECENT_LIMIT)) {
-      return cached.map(message => normalizeMessage(message.id, message)).reverse();
+      return cached.map(message => normMsg(message.id, message)).reverse();
     }
 
     const snapshot = await messageCollection(roomId)
@@ -264,17 +251,14 @@ export async function fetchMessages(roomId, limit = RECENT_LIMIT) {
 }
 
 /**
- * Save a new v1 message.
+ * 新しいチャットメッセージを保存します。
  *
- * Expected data:
- * {
- *   text,
- *   sender: {
- *     email,
- *     name,
- *     major
- *   }
- * }
+ * @param {string} roomId
+ * @param {{
+ *   text: string,
+ *   sender: Sender
+ * }} data
+ * @returns {Promise<ChatMsg|null>}
  */
 export async function saveMessage(roomId, data) {
   if (!roomId || !data) return null;
@@ -282,13 +266,12 @@ export async function saveMessage(roomId, data) {
   const now = nowKST();
   const messageRef = messageCollection(roomId).doc();
 
-  const message = normalizeMessage(messageRef.id, {
+  const message = normMsg(messageRef.id, {
     version: MESSAGE_VERSION,
     text: data.text,
     createdAt: now,
     sender: data.sender,
   });
-  const messageData = serializeMessage(message);
 
   const roomPatch = {
     updatedAt: now,
