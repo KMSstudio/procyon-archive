@@ -7,6 +7,7 @@ import {
 } from "@/utils/database/chatDB";
 
 import { getUserv2 } from "@/utils/auth";
+import { anonymizeChat } from "@/utils/chat/anonymize";
 
 export const runtime = "nodejs";
 
@@ -31,9 +32,10 @@ export async function POST(request, { params }) {
 
     const message = await saveMessage(roomId, {
       text, sender: { email: userData.email, name: userData.name, major: userData.major } });
+    const annMessage = anonymizeChat(message);
 
     return Response.json(
-      { ok: true, data: { roomId, message } }, { status: 201 } );
+      { ok: true, data: { roomId, message: annMessage } }, { status: 201 } );
   } catch (error) {
     console.error("POST /api/chat/rooms/[id]/msg/send error:", error);
     return Response.json( { ok: false, error: "Failed to send message", }, { status: 500 });

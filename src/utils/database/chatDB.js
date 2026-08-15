@@ -272,6 +272,7 @@ export async function saveMessage(roomId, data) {
     createdAt: now,
     sender: data.sender,
   });
+  const { id: _, ...messageData } = message;
 
   const roomPatch = {
     updatedAt: now,
@@ -291,20 +292,11 @@ export async function saveMessage(roomId, data) {
     await redis.lpush(recentKey(roomId), message);
     await redis.ltrim(recentKey(roomId), 0, RECENT_LIMIT - 1);
     await redis.expire(recentKey(roomId), CACHE_TTL);
-
-    await redis.set(
-      latestKey(roomId),
-      now,
-      { ex: CACHE_TTL }
-    );
+    await redis.set(latestKey(roomId), now, { ex: CACHE_TTL });
 
     return message;
   } catch (error) {
-    console.error(
-      `Error saving message to room ${roomId}:`,
-      error
-    );
-
+    console.error(`Error saving message to room ${roomId}:`, error);
     throw error;
   }
 }
@@ -333,4 +325,47 @@ export async function deleteRoom(roomId) {
     console.error(`Error deleting chat room ${roomId}:`, error);
     throw error;
   }
+}
+
+/**
+ * 既存のすべてのチャットメッセージを削除します。
+ * 一回限りのマイグレーション用です。
+ *
+ * @returns {Promise<number>}
+ */
+export async function clearEveryMsg() {
+  const rooms = await roomCollection.get();
+  let total = 0;
+
+  for (const roomDoc of rooms.docs) {
+    const messages = await messageCollection(roomDoc.id).get();
+    let batch = db.batch();
+    let batchSize = 0;
+
+    for (const messageDoc of messages.docs) {
+      batch.delete(messageDoc.ref);
+      batchSize++;
+      total++;
+
+      if (batchSize >= 400) {
+        await batch.commit();
+        batch = db.batch();
+        batchSize = 0;
+      }
+    }
+
+    if (batchSize > 0) await batch.commit();
+
+    await roomDoc.ref.update({
+      lastMessage: "",
+      lastMessageSenderName: "",
+      lastMessageCreatedAt: null,
+    });
+
+    await redis.del(roomKey(roomDoc.id), recentKey(roomDoc.id), latestKey(roomDoc.id));
+    console.log(`Deleted ${messages.size} messages from room ${roomDoc.id}`);
+  }
+
+  await redis.del("chat:rooms");
+  return total;
 }

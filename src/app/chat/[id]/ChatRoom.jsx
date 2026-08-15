@@ -11,7 +11,8 @@ import ChatInputSection from "./ChatInputSection";
 import "@/styles/chat.css";
 
 /**
- * @typedef {import("@/app/chat/types").ChatMessage} ChatMessage
+ * @typedef {import("@/utils/chat/types").ChatMessage} ChatMessage
+ * @typedef {import("@/utils/chat/types").AnnSender} AnnSender
  */
 
 const CHAT_POLL_INTERVAL = 500;
@@ -37,14 +38,13 @@ function mergeMsg(current, incoming) {
 
 /**
  * @param {{
- *   userData: Object,
- *   userHash: string,
+ *   annUser: AnnSender
  *   room: Object,
  *   msg: ChatMessage[],
  *   cursor: {latest?: string, oldest?: string}
  * }} props
  */
-export default function ChatRoom({ userData, userHash, room, annMsg, cursor }) {
+export default function ChatRoom({ annUser, room, annMsg, cursor }) {
   const im = Array.isArray(annMsg) ? annMsg : [];
   const [messages, setMessages] = useState(im);
   const [sending, setSending] = useState(false);
@@ -54,7 +54,6 @@ export default function ChatRoom({ userData, userHash, room, annMsg, cursor }) {
     oldest: cursor?.oldest || im.at(0)?.createdAt || null,
   });
   const pollingRef = useRef(false);
-
   const roomId = encodeURIComponent(room.id);
 
   /**
@@ -140,11 +139,11 @@ export default function ChatRoom({ userData, userHash, room, annMsg, cursor }) {
     <main className="chat-room">
       <ChatListSection
         messages={messages}
-        email={userData.email}
+        userHash={annUser.hash}
       />
 
       <ChatInputSection
-        userData={userData}
+        sender={annUser}
         disabled={sending}
         onSend={sendMessage}
       />

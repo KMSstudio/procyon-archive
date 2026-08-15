@@ -1,7 +1,6 @@
-"use server"
-
 // @/utils/chat/anonymize.js
 
+import "server-only"
 import crypto from "crypto";
 
 /**
@@ -90,14 +89,14 @@ const SCHOLARS = [
  * @returns {string}
  */
 export function hashSender(sender) {
-  if (!sender?.email || !sender?.name || !sender?.major) {
-    throw new Error("sender.email, sender.name and sender.major are required" ); }
+  if (!sender?.email) {
+    throw new Error("sender.email is required" ); }
   if (!CHAT_ANONYMIZE_SECRET) {
     throw new Error("CHAT_ANONYMIZE_SECRET is not configured"); }
   const payload = JSON.stringify({
     email: sender.email,
-    name: sender.name,
-    major: sender.major,
+    name: sender.name || 'blank',
+    major: sender.major || 'blank',
   });
   return crypto
     .createHmac("sha256", CHAT_ANONYMIZE_SECRET)

@@ -5,31 +5,48 @@
 import { useEffect, useMemo, useRef } from "react";
 
 /**
- * @typedef {import("@/app/chat/types").ChatMessage} ChatMessage
+ * @typedef {import("@/utils/chat/types").AnnChatMsg} AnnChatMsg
  */
 
+/**
+ * 連続する同一送信者のメッセージをグループ化します。
+ *
+ * @param {AnnChatMsg[]} messages
+ */
 function groupMessages(messages) {
   return messages.reduce((groups, message) => {
     const sender = message.sender || {};
     const prevG = groups[groups.length - 1];
-    if (sender.email && prevG?.sender.email === sender.email) { 
-      prevG.messages.push(message); }
-    else { groups.push({ sender, messages: [message]}); }
+
+    if (sender.hash && prevG?.sender.hash === sender.hash) {
+      prevG.messages.push(message);
+    } else {
+      groups.push({ sender, messages: [message] });
+    }
     return groups;
   }, []);
 }
 
-function ChatMessageGroup({group, email}) {
-  const isMine = group.sender.email === email;
+/**
+ * 同一送信者による連続したメッセージを表示します。
+ *
+ * @param {{
+ *   group: { sender: AnnChatMsg["sender"], messages: AnnChatMsg[] },
+ *   userHash: string
+ * }} props
+ */
+function ChatMessageGroup({ group, userHash }) {
+  const isMine = group.sender.hash === userHash;
+
   return (
     <article className={`chat-group ${isMine ? "chat-group--mine" : ""}`}>
       <div className="chat-avatar" aria-hidden="true">
-        {group.sender.name?.slice(0, 3) || "?"}
+        {group.sender.nickname?.slice(0, 3) || "?"}
       </div>
 
       <div className="chat-group__body">
         <header className="chat-sender">
-          <span>{group.sender.name || "Unknown"}</span>
+          <span>{group.sender.nickname || "Unknown"}</span>
           <span className="chat-sender__divider">|</span>
           <span>{group.sender.major || "??"}</span>
         </header>
@@ -50,34 +67,27 @@ function ChatMessageGroup({group, email}) {
  * チャットメッセージ一覧を表示し、メッセージ更新時のスクロールを管理します。
  *
  * @param {{
- *   messages: ChatMessage[],
- *   email: string
+ *   messages: AnnChatMsg[],
+ *   userHash: string
  * }} props
  */
-export default function ChatListSection({ messages, email }) {
+export default function ChatListSection({ messages, userHash }) {
   const containerRef = useRef(null);
-
-  const groupedMessages = useMemo(
-    () => groupMessages(messages),
-    [messages]
-  );
+  const firstRenderRef = useRef(true);
+  const groupedMessages = useMemo(() => groupMessages(messages), [messages]);
 
   useEffect(() => {
     const container = containerRef.current;
-
     if (!container) return;
-
-    const distanceFromBottom =  
-      container.scrollHeight -
-      container.scrollTop -
-      container.clientHeight;
-
-    if (distanceFromBottom < 200) {
-      container.scrollTo({
-        top: container.scrollHeight,
-        behavior: "smooth",
-      });
+    if (firstRenderRef.current) {
+      container.scrollTop = container.scrollHeight;
+      firstRenderRef.current = false;
+      return;
     }
+    const distanceFromBottom =
+      container.scrollHeight - container.scrollTop - container.clientHeight;
+    if (distanceFromBottom < 200) {
+      container.scrollTo({ top: container.scrollHeight, behavior: "smooth" }); }
   }, [messages]);
 
   return (
@@ -85,9 +95,9 @@ export default function ChatListSection({ messages, email }) {
       <div className="chat-list">
         {groupedMessages.map((group) => (
           <ChatMessageGroup
-            key={`${group.senderKey}-${group.messages[0]?.id}`}
+            key={`${group.sender.hash}-${group.messages[0]?.id}`}
             group={group}
-            email={email}
+            userHash={userHash}
           />
         ))}
 

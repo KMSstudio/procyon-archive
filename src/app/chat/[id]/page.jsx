@@ -2,7 +2,7 @@
 
 import ChatRoom from "./ChatRoom";
 import { getUserv2 } from "@/utils/auth";
-import { anonymizeChat, hashSender } from "@/utils/chat/anonymize";
+import { anonymizeChat, anonymizeSender } from "@/utils/chat/anonymize";
 import { fetchRoom, fetchMessages } from "@/utils/database/chatDB";
 import { redirect } from "next/navigation";
 
@@ -17,7 +17,7 @@ export default async function ChatRoomPage({ params }) {
     fetchMessages(roomId),
   ]);
   const annMsg = msg.map(anonymizeChat);
-  const userHash = hashSender({ email: userData.email, name: userData.name, major: userData.major });
+  const annUser = anonymizeSender({ email: userData.email, name: userData.name, major: userData.major });
 
   const cursor = {
     oldest: msg.length ? msg[0].createdAt : null,
@@ -26,8 +26,7 @@ export default async function ChatRoomPage({ params }) {
 
   return (
     <ChatRoom
-      userData={userData}
-      userHast={userHash}
+      annUser={annUser}
       room={room}
       annMsg={annMsg}
       cursor={cursor}

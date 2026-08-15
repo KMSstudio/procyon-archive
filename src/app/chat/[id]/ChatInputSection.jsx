@@ -2,27 +2,30 @@
 
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 /**
- * チャットメッセージ入力欄を表示するコンポーネントです。
- * 入力されたメッセージを管理し、送信処理を実行します。
+ * チャットメッセージの入力と送信を管理します。
  *
  * @param {{
- *   userData: Object,
+ *   sender: AnnSender,
  *   disabled: boolean,
  *   onSend: (text: string) => Promise<boolean>
  * }} props
  */
-export default function ChatInputSection({ userData, disabled, onSend }) {
+export default function ChatInputSection({ sender, disabled, onSend }) {
   const [text, setText] = useState("");
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (!disabled) inputRef.current?.focus();
+  }, [disabled]);
 
   const submit = async () => {
     if (text.length === 0 || disabled) return;
     const m = text; setText("");
     const success = await onSend(m);
-    if (!success) { setText(m); inputRef.current?.focus(); }
+    if (!success) { setText(m); }
   };
 
   const handleKeyDown = (event) => {
@@ -36,13 +39,8 @@ export default function ChatInputSection({ userData, disabled, onSend }) {
     <section className="chat-input-section">
       <div className="chat-input-inner">
         <div className="chat-input__user">
-          <span>
-            {userData.name || "Unknown"}
-          </span>
-
-          {userData.major && (
-            <span> / {userData.major}</span>
-          )}
+          <span>{sender.nickname || "Unknown"}</span>
+          {sender.major && <span> | {sender.major}</span>}
         </div>
 
         <textarea
