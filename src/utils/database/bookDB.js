@@ -1,16 +1,6 @@
 /* @/utils/database/bookDB.js */
 
-import admin from "firebase-admin";
-
-// Initialize Firebase
-if (!admin.apps.length) {
-  const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
-}
-
-const db = admin.firestore();
+import { db } from "@/utils/firebase";
 const bookCollection = db.collection(process.env.FIRE_DB_BOOK_TABLE);
 
 // Cache and TTL settings

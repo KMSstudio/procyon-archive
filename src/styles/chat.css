@@ -1,0 +1,287 @@
+/* @/styles/chat.css */
+
+.chat-room {
+  --chat-input-height: 112px;
+
+  display: flex;
+  flex-direction: column;
+
+  width: 100vw;
+  height: 100dvh;
+
+  overflow: hidden;
+
+  color: #f2f2f2;
+  background: #000;
+}
+
+
+/* ================================
+   Message list
+================================ */
+
+.chat-list-section {
+  flex: 1 1 auto;
+
+  width: 100vw;
+  min-height: 0;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 1.5rem 1.25rem;
+}
+
+.chat-list {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: 900px;
+
+  margin: 0 auto;
+
+  gap: 1rem;
+}
+
+
+/* ================================
+   Message group
+================================ */
+
+.chat-group {
+  display: grid;
+
+  grid-template-columns:
+    38px
+    minmax(0, 1fr);
+
+  gap: 0.65rem;
+
+  align-items: start;
+}
+
+.chat-avatar {
+  display: grid;
+  place-items: center;
+
+  width: 36px;
+  height: 36px;
+
+  border: 1px solid #555;
+  border-radius: 50%;
+
+  color: #aaa;
+
+  font-size: 0.8rem;
+
+  user-select: none;
+}
+
+.chat-group__body {
+  min-width: 0;
+}
+
+
+/* ================================
+   Sender
+================================ */
+
+.chat-sender {
+  display: flex;
+  align-items: center;
+
+  gap: 0.35rem;
+
+  margin-bottom: 0.35rem;
+
+  color: #8f8f8f;
+
+  font-size: 0.82rem;
+  line-height: 1.2;
+}
+
+.chat-sender__divider {
+  color: #555;
+}
+
+
+/* ================================
+   Message
+================================ */
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 0.35rem;
+}
+
+.chat-message {
+  width: fit-content;
+
+  max-width: min(680px, 85%);
+
+  padding: 0.55rem 0.75rem;
+
+  border-radius: 7px;
+
+  background: #242424;
+}
+
+.chat-message p {
+  margin: 0;
+
+  color: #e8e8e8;
+
+  font-size: 0.9rem;
+  line-height: 1.45;
+
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.chat-group--mine .chat-message {
+  background: #303030;
+}
+
+.chat-empty {
+  padding: 2rem 0;
+
+  color: #666;
+
+  font-size: 0.85rem;
+
+  text-align: center;
+}
+
+
+/* ================================
+   Input area
+================================ */
+
+.chat-input-section {
+  flex: 0 0 var(--chat-input-height);
+
+  width: 100vw;
+  height: var(--chat-input-height);
+
+  padding: 0.8rem 1.25rem;
+
+  border-top: 1px solid #222;
+
+  background: #000;
+}
+
+.chat-input-inner {
+  width: 100%;
+  max-width: 900px;
+
+  margin: 0 auto;
+}
+
+.chat-input__user {
+  margin-bottom: 0.45rem;
+
+  color: #888;
+
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+
+.chat-input {
+  display: block;
+
+  width: 100%;
+  height: 58px;
+
+  padding: 0.7rem 0.8rem;
+
+  border: 1px solid #333;
+  border-radius: 6px;
+
+  outline: none;
+  resize: none;
+
+  color: #eee;
+  background: #171717;
+
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.chat-input:focus {
+  border-color: #666;
+}
+
+.chat-input:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+
+/* ================================
+   Mobile
+================================ */
+
+@media (max-width: 640px) {
+  .chat-room {
+    --chat-input-height: 102px;
+  }
+
+  .chat-list-section {
+    padding:
+      1rem
+      0.85rem;
+  }
+
+  .chat-list {
+    gap: 0.8rem;
+  }
+
+  .chat-group {
+    grid-template-columns:
+      32px
+      minmax(0, 1fr);
+
+    gap: 0.5rem;
+  }
+
+  .chat-avatar {
+    width: 30px;
+    height: 30px;
+
+    font-size: 0.7rem;
+  }
+
+  .chat-sender {
+    font-size: 0.75rem;
+  }
+
+  .chat-message {
+    max-width: 92%;
+
+    padding:
+      0.5rem
+      0.65rem;
+  }
+
+  .chat-message p {
+    font-size: 0.85rem;
+  }
+
+  .chat-input-section {
+    padding:
+      0.65rem
+      0.85rem;
+  }
+
+  .chat-input {
+    height: 54px;
+
+    font-size: 0.85rem;
+  }
+}
