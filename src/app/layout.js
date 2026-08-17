@@ -31,7 +31,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head> <meta name="google" content="notranslate" /> </head>
+      <head><meta name="google" content="notranslate" /></head>
       <body className={inter.className} style={{ width: "100vw", height: "100vh" }}>
         <AuthProvider>{children}</AuthProvider>
       </body>
