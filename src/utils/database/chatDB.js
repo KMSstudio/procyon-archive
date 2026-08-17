@@ -92,7 +92,7 @@ async function cacheRecentMessages(roomId, messages) {
   const cachedMessages = newestFirst.slice(0, RECENT_LIMIT);
 
   await redis.del(recentKey(roomId));
-  await redis.lpush(recentKey(roomId), ...cachedMessages);
+  await redis.lpush(recentKey(roomId), ...cachedMessages.slice().reverse());
   await redis.expire(recentKey(roomId), CACHE_TTL);
   await redis.set(latestKey(roomId), cachedMessages[0].createdAt, { ex: CACHE_TTL });
 }

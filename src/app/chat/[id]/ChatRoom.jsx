@@ -11,11 +11,12 @@ import ChatInputSection from "./ChatInputSection";
 import "@/styles/chat.css";
 
 /**
- * @typedef {import("@/utils/chat/types").ChatMessage} ChatMessage
+ * @typedef {import("@/utils/chat/types").AnnChatMsg} AnnChatMsg
  * @typedef {import("@/utils/chat/types").AnnSender} AnnSender
  */
 
 const CHAT_POLL_INTERVAL = 500;
+const CHAT_HISTORY_LIMIT = 50;
 
 /**
  * メッセージを既存の一覧に統合し、
@@ -26,9 +27,9 @@ const CHAT_POLL_INTERVAL = 500;
  * @returns {AnnChatMsg[]}
  */
 function mergeMsg(current, incoming) {
-  if (!Array.isArray(incoming) || incoming.length === 0) { return current; }
-  const msgMap = new Map(current.map((message) => [message.id, message]));
-  incoming.forEach((msg) => { if (msg?.id) {msgMap.set(msg.id, msg);} });
+  if (!Array.isArray(incoming) || incoming.length === 0) return current;
+  const msgMap = new Map(current.map(message => [message.id, message]));
+  incoming.forEach(msg => { if (msg?.id) msgMap.set(msg.id, msg); });
 
   return [...msgMap.values()].sort((a, b) => {
     const cmp = String(a.createdAt).localeCompare(String(b.createdAt));
@@ -38,9 +39,9 @@ function mergeMsg(current, incoming) {
 
 /**
  * @param {{
- *   annUser: AnnSender
+ *   annUser: AnnSender,
  *   room: Object,
- *   msg: ChatMessage[],
+ *   annMsg: AnnChatMsg[],
  *   cursor: {latest?: string, oldest?: string}
  * }} props
  */
@@ -54,18 +55,16 @@ export default function ChatRoom({ annUser, room, annMsg, cursor }) {
     oldest: cursor?.oldest || im.at(0)?.createdAt || null,
   });
   const pollingRef = useRef(false);
+  const olderLoadingRef = useRef(false);
+  const hasOlderRef = useRef(true);
   const roomId = encodeURIComponent(room.id);
 
   /**
-   * Applies incoming messages to the local message state.
-   * Updates the latest and oldest cursors based on the received messages.
+   * @param {AnnChatMsg[]} incoming
    */
   const applyMessages = useCallback((incoming) => {
-    if (!Array.isArray(incoming) || incoming.length === 0) {
-      return;
-    }
-    setMessages((current) => mergeMsg(current, incoming));
-
+    if (!Array.isArray(incoming) || incoming.length === 0) return;
+    setMessages(current => mergeMsg(current, incoming));
     const oldest = incoming.at(0);
     const newest = incoming.at(-1);
     if (
@@ -99,6 +98,43 @@ export default function ChatRoom({ annUser, room, annMsg, cursor }) {
     finally { pollingRef.current = false; }
   }, [applyMessages, roomId]);
 
+  /**
+   * 最古メッセージ以前の履歴を取得します。
+   *
+   * @returns {Promise<boolean>}
+   */
+  const onTop = useCallback(async () => {
+    if (olderLoadingRef.current || !hasOlderRef.current || !cursorRef.current.oldest) return false;
+    olderLoadingRef.current = true;
+
+    try {
+      const searchParams = new URLSearchParams({
+        before: cursorRef.current.oldest,
+        limit: String(CHAT_HISTORY_LIMIT),
+      });
+      const response = await fetch(`/api/chat/rooms/${roomId}/msg/update?${searchParams}`, {
+        method: "GET", cache: "no-store",
+      });
+      if (!response.ok) return false;
+
+      const result = await response.json();
+      if (!result.ok) return false;
+
+      const older = result.data.messages;
+      if (!Array.isArray(older) || older.length === 0) {
+        hasOlderRef.current = false;
+        return false;
+      }
+
+      applyMessages(older);
+      if (!result.data.hasMore) hasOlderRef.current = false;
+      return true;
+    } catch (error) {
+      console.error("Failed to load older chat messages:", error);
+      return false;
+    } finally { olderLoadingRef.current = false; }
+  }, [applyMessages, roomId]);
+
   useEffect(() => {
     let active = true;
     let tid;  // Timeout ID
@@ -108,7 +144,7 @@ export default function ChatRoom({ annUser, room, annMsg, cursor }) {
       if (active) { tid = window.setTimeout(poll, CHAT_POLL_INTERVAL); }
     };
     tid = window.setTimeout(poll, CHAT_POLL_INTERVAL);
-    return () => {active = false; window.clearTimeout(tid); };
+    return () => { active = false; window.clearTimeout(tid); };
   }, [fetchUpdates]);
 
   const sendMessage = useCallback(
@@ -137,16 +173,8 @@ export default function ChatRoom({ annUser, room, annMsg, cursor }) {
 
   return (
     <main className="chat-room">
-      <ChatListSection
-        messages={messages}
-        userHash={annUser.hash}
-      />
-
-      <ChatInputSection
-        sender={annUser}
-        disabled={sending}
-        onSend={sendMessage}
-      />
+      <ChatListSection messages={messages} userHash={annUser.hash} onTop={onTop} />
+      <ChatInputSection sender={annUser} disabled={sending} onSend={sendMessage} />
     </main>
   );
 }

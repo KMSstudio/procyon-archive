@@ -5,13 +5,13 @@
 import { useEffect, useMemo, useRef } from "react";
 
 /**
- * @typedef {import("@/utils/chat/types").AnnChatMsg} AnnChatMsg
+ * @typedef {import("@/utils/chat/types").AnnChat} AnnChat
  */
 
 /**
  * 連続する同一送信者のメッセージをグループ化します。
  *
- * @param {AnnChatMsg[]} messages
+ * @param {AnnChat[]} messages
  */
 function groupMessages(messages) {
   return messages.reduce((groups, message) => {
@@ -31,7 +31,7 @@ function groupMessages(messages) {
  * 同一送信者による連続したメッセージを表示します。
  *
  * @param {{
- *   group: { sender: AnnChatMsg["sender"], messages: AnnChatMsg[] },
+ *   group: { sender: AnnChat["sender"], messages: AnnChat[] },
  *   userHash: string
  * }} props
  */
@@ -67,23 +67,54 @@ function ChatMessageGroup({ group, userHash }) {
  * チャットメッセージ一覧を表示し、メッセージ更新時のスクロールを管理します。
  *
  * @param {{
- *   messages: AnnChatMsg[],
- *   userHash: string
+ *   messages: AnnChat[],
+ *   userHash: string,
+ *   onTop: () => Promise<boolean>
  * }} props
  */
-export default function ChatListSection({ messages, userHash }) {
-  const containerRef = useRef(null);
-  const firstRenderRef = useRef(true);
+export default function ChatListSection({ messages, userHash, onTop }) {
+  const listRef = useRef(null);
+  const isFirstRender = useRef(true);
+  const isLoadingMore = useRef(false);
+  const predenfScroll = useRef(null);
   const groupedMessages = useMemo(() => groupMessages(messages), [messages]);
 
   useEffect(() => {
-    const container = containerRef.current;
+    const container = listRef.current;
     if (!container) return;
-    if (firstRenderRef.current) {
+
+    const handleWheel = async (event) => {
+      if (container.scrollTop > 0 || event.deltaY >= 0 || isLoadingMore.current) return;
+      isLoadingMore.current = true;
+      predenfScroll.current = { height: container.scrollHeight, top: container.scrollTop };
+      const loaded = await onTop();
+      if (!loaded) {
+        predenfScroll.current = null;
+        isLoadingMore.current = false;
+      }
+    };
+    container.addEventListener("wheel", handleWheel);
+    return () => container.removeEventListener("wheel", handleWheel);
+  }, [onTop]);
+
+  useEffect(() => {
+    const container = listRef.current;
+    if (!container) return;
+
+    if (isFirstRender.current) {
       container.scrollTop = container.scrollHeight;
-      firstRenderRef.current = false;
+      isFirstRender.current = false;
       return;
     }
+
+    if (predenfScroll.current) {
+      const { height, top } = predenfScroll.current;
+      container.scrollTop = top + container.scrollHeight - height;
+      predenfScroll.current = null;
+      isLoadingMore.current = false;
+      return;
+    }
+
     const distanceFromBottom =
       container.scrollHeight - container.scrollTop - container.clientHeight;
     if (distanceFromBottom < 200) {
@@ -91,7 +122,7 @@ export default function ChatListSection({ messages, userHash }) {
   }, [messages]);
 
   return (
-    <section ref={containerRef} className="chat-list-section">
+    <section ref={listRef} className="chat-list-section">
       <div className="chat-list">
         {groupedMessages.map((group) => (
           <ChatMessageGroup
