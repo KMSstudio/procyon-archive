@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 
 /**
  * チャットメッセージの入力と送信を管理します。
@@ -13,24 +13,19 @@ import { useRef, useState, useEffect } from "react";
  *   onSend: (text: string) => Promise<boolean>
  * }} props
  */
-export default function ChatInputSection({ sender, disabled, onSend }) {
+export default function ChatInputSection({ sender, sending, onSend }) {
   const [text, setText] = useState("");
-  const inputRef = useRef(null);
-
-  useEffect(() => {
-    if (!disabled) inputRef.current?.focus();
-  }, [disabled]);
 
   const submit = async () => {
-    if (text.length === 0 || disabled) return;
+    if (text.length === 0 || sending) return;
     const m = text; setText("");
     const success = await onSend(m);
-    if (!success) { setText(m); }
+    if (!success) { setText(current => current.length ? current : m); }
   };
 
   const handleKeyDown = (event) => {
     if (event.key !== "Enter") return;
-    if (event.shiftKey || event.altKey) { return; }
+    if (event.shiftKey || event.altKey) return;
     event.preventDefault();
     submit();
   };
@@ -44,16 +39,12 @@ export default function ChatInputSection({ sender, disabled, onSend }) {
         </div>
 
         <textarea
-          ref={inputRef}
           className="chat-input"
           value={text}
           rows={1}
-          disabled={disabled}
           placeholder="Message"
           aria-label="Message"
-          onChange={(event) =>
-            setText(event.target.value)
-          }
+          onChange={(event) => setText(event.target.value)}
           onKeyDown={handleKeyDown}
         />
       </div>

@@ -174,7 +174,7 @@ export default function ChatRoom({ annUser, room, annMsg, cursor }) {
   return (
     <main className="chat-room">
       <ChatListSection messages={messages} userHash={annUser.hash} onTop={onTop} />
-      <ChatInputSection sender={annUser} disabled={sending} onSend={sendMessage} />
+      <ChatInputSection sender={annUser} sending={sending} onSend={sendMessage} />
     </main>
   );
 }
