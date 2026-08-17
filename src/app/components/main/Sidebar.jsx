@@ -1,4 +1,4 @@
-/* @/app/components/Sidebar.js */
+/* @/app/components/Sidebar.jsx */
 
 import SidebarProfile from "./SidebarProfile";
 import ChatRoomMain from "@/app/components/chat/ChatRoomMain";
