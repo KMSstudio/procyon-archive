@@ -6,7 +6,7 @@ import ChatRoomMain from "@/app/components/chat/ChatRoomMain";
 import "@/styles/index.css";
 import "@/styles/components/main/sidebar.css";
 
-export default function Sidebar({ isAdmin, links }) {
+export default function Sidebar({ isAdmin }) {
   return (
     <aside className="sidebar">
       {/* Profile Section */}

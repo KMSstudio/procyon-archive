@@ -25,7 +25,7 @@ export const metadata = {
 export default async function HomePage() {
   // Load Static data
   const userData = await getUserv2();
-  const { navs = [], links = [], buttons = [] } = navData;
+  const { navs = [], buttons = [] } = navData;
   if (userData.login) { 
     logger.behavior(userData.fullName, "페이지 접속", "mainpage");
     updateUserAccessDate(userData.email);
@@ -36,7 +36,7 @@ export default async function HomePage() {
     <div className="main-container">
       <NavBar navs={navs} />
       <div className="content-container">
-        <Sidebar isAdmin={userData.admin} links={links} />
+        <Sidebar isAdmin={userData.admin} />
         <main id="main-content">
           <TrackClient user={{
               email: userData.email,
