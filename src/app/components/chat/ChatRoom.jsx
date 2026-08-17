@@ -1,4 +1,4 @@
-/* app/chat/[id]/ChatRoom.jsx */
+/* @/app/components/chat/ChatRoom.jsx */
 
 "use client";
 
@@ -11,7 +11,7 @@ import ChatInputSection from "./ChatInputSection";
 import "@/styles/chat.css";
 
 /**
- * @typedef {import("@/utils/chat/types").AnnChatMsg} AnnChatMsg
+ * @typedef {import("@/utils/chat/types").AnnChat} AnnChat
  * @typedef {import("@/utils/chat/types").AnnSender} AnnSender
  */
 
@@ -22,9 +22,9 @@ const CHAT_HISTORY_LIMIT = 50;
  * メッセージを既存の一覧に統合し、
  * IDによる重複除去と時系列順の整列を行います。
  *
- * @param {AnnChatMsg[]} current
- * @param {AnnChatMsg[]} incoming
- * @returns {AnnChatMsg[]}
+ * @param {AnnChat[]} current
+ * @param {AnnChat[]} incoming
+ * @returns {AnnChat[]}
  */
 function mergeMsg(current, incoming) {
   if (!Array.isArray(incoming) || incoming.length === 0) return current;
@@ -41,11 +41,12 @@ function mergeMsg(current, incoming) {
  * @param {{
  *   annUser: AnnSender,
  *   room: Object,
- *   annMsg: AnnChatMsg[],
- *   cursor: {latest?: string, oldest?: string}
+ *   annMsg: AnnChat[],
+ *   cursor: {latest?: string, oldest?: string},
+ *   embedded: boolean
  * }} props
  */
-export default function ChatRoom({ annUser, room, annMsg, cursor }) {
+export default function ChatRoom({ annUser, room, annMsg, cursor, embedded }) {
   const im = Array.isArray(annMsg) ? annMsg : [];
   const [messages, setMessages] = useState(im);
   const [sending, setSending] = useState(false);
@@ -60,7 +61,7 @@ export default function ChatRoom({ annUser, room, annMsg, cursor }) {
   const roomId = encodeURIComponent(room.id);
 
   /**
-   * @param {AnnChatMsg[]} incoming
+   * @param {AnnChat[]} incoming
    */
   const applyMessages = useCallback((incoming) => {
     if (!Array.isArray(incoming) || incoming.length === 0) return;
@@ -172,7 +173,7 @@ export default function ChatRoom({ annUser, room, annMsg, cursor }) {
   );
 
   return (
-    <section className="chat-room">
+    <section className={`chat-room ${embedded ? "chat-room--embedded" : ""}`} >
       <ChatListSection messages={messages} userHash={annUser.hash} onTop={onTop} />
       <ChatInputSection sender={annUser} sending={sending} onSend={sendMessage} />
     </section>

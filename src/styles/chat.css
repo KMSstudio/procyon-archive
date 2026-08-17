@@ -1,7 +1,7 @@
 /* @/styles/chat.css */
 
 .chat-room {
-  --chat-input-height: 112px;
+  --chat-input-height: 70px;
 
   display: flex;
   flex-direction: column;
@@ -54,14 +54,15 @@
 
 .chat-group {
   display: grid;
-
   grid-template-columns:
     38px
     minmax(0, 1fr);
-
   gap: 0.65rem;
-
   align-items: start;
+}
+
+.chat-room--embedded .chat-group {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .chat-avatar {
@@ -79,6 +80,10 @@
   font-size: 0.8rem;
 
   user-select: none;
+}
+
+.chat-room--embedded .chat-avatar {
+  display: none;
 }
 
 .chat-group__body {
@@ -154,16 +159,19 @@
 ================================ */
 
 .chat-input-section {
-  flex: 0 0 var(--chat-input-height);
+  flex: 0 0 auto;
 
-  width: 100vw;
-  height: var(--chat-input-height);
+  width: 100%;
   box-sizing: border-box;
 
-  padding: 0.8rem 1.25rem;
+  padding: 10px 20px;
 
   border-top: 1px solid #222;
   background: #000;
+}
+
+.chat-room--embedded .chat-input-section {
+  padding: 5px 20px;
 }
 
 .chat-input-inner {
@@ -183,14 +191,18 @@
   line-height: 1.2;
 }
 
+.chat-room--embedded .chat-input__user {
+  display: none;
+}
+
 .chat-input {
   display: block;
 
   width: 100%;
-  height: 58px;
+  height: calc(1.4em + 1.4rem + 2px);
   box-sizing: border-box;
 
-  padding: 0.7rem 0.8rem;
+  padding: 10px;
 
   border: 1px solid #333;
   border-radius: 6px;
@@ -204,6 +216,11 @@
   font: inherit;
   font-size: 0.9rem;
   line-height: 1.4;
+}
+
+.chat-room--embedded .chat-input {
+  height: 2.5rem;
+  padding: 10px;
 }
 
 .chat-input:focus {

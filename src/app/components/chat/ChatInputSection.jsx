@@ -1,4 +1,4 @@
-/* app/chat/[id]/ChatInputSection.jsx */
+/* @/app/components/chat/ChatInputSection.jsx */
 
 "use client";
 
@@ -9,7 +9,7 @@ import { useState } from "react";
  *
  * @param {{
  *   sender: AnnSender,
- *   disabled: boolean,
+ *   sending: boolean,
  *   onSend: (text: string) => Promise<boolean>
  * }} props
  */

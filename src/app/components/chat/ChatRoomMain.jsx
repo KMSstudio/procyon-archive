@@ -1,14 +1,14 @@
-/* app/chat/[id]/ChatRoomMain.js */
+/* @/app/components/chat/ChatRoomMain.js */
 
 import ChatRoom from "./ChatRoom";
 import { getUserv2 } from "@/utils/auth";
 import { anonymizeChat, anonymizeSender } from "@/utils/chat/anonymize";
 import { fetchRoom, fetchMessages } from "@/utils/database/chatDB";
-import { redirect } from "next/navigation";
 
-export default async function ChatRoomMain({ roomId }) {
+export default async function ChatRoomMain({ roomId, embedded = false }) {
   const userData = await getUserv2();
-  if (!userData.login) { redirect("/"); }
+  if (!userData.login) {
+    return <div className="chat-login-required">Login required.</div>; }
 
   const [room, msg] = await Promise.all([
     fetchRoom(roomId),
@@ -28,6 +28,7 @@ export default async function ChatRoomMain({ roomId }) {
       room={room}
       annMsg={annMsg}
       cursor={cursor}
+      embedded={embedded}
     />
   );
 }

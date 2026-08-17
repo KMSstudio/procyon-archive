@@ -6,6 +6,8 @@
 
 .sidebar {
     width: 300px;
+    height: 100%;
+    box-sizing: border-box;
     background-color: #000;
     padding: 20px;
     display: flex;
@@ -196,6 +198,15 @@
 .link-icon {
     width: 24px;
     height: 24px;
+}
+
+/* Chat Section */
+
+#chat-section {
+  flex: 1 1 0;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
 }
 
 /* Special Thanks */

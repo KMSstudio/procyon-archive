@@ -27,8 +27,8 @@ body { -ms-overflow-style: none; }
 
 .content-container {
   display: flex;
-  flex-grow: 1;
-  height: auto;
+  flex: 1 1 0;
+  min-height: 0;
   min-width: 100vw;
   position: relative;
 }

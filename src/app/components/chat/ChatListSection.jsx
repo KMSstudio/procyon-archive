@@ -1,4 +1,4 @@
-/* app/chat/[id]/ChatListSection.jsx */
+/* @/app/components/chat/ChatListSection.jsx */
 
 "use client";
 

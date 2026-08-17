@@ -11,13 +11,6 @@
   flex-direction: column;
 }
 
-.content-container {
-  display: flex;
-  flex-grow: 1;
-  height: auto;
-  position: relative;
-}
-
 .content-container-vert {
   width: 100vw;
   height: calc(100vh - 66px);
