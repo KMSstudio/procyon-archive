@@ -25,6 +25,7 @@
 
   width: 100vw;
   min-height: 0;
+  box-sizing: border-box;
 
   overflow-y: auto;
   overflow-x: hidden;
@@ -113,47 +114,35 @@
 .chat-messages {
   display: flex;
   flex-direction: column;
-
   align-items: flex-start;
-
   gap: 0.35rem;
 }
 
 .chat-message {
   width: fit-content;
-
   max-width: min(680px, 85%);
-
   padding: 0.55rem 0.75rem;
-
   border-radius: 7px;
-
-  background: #242424;
+  background: #333;
 }
 
 .chat-message p {
   margin: 0;
-
   color: #e8e8e8;
-
   font-size: 0.9rem;
   line-height: 1.45;
-
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 
 .chat-group--mine .chat-message {
-  background: #303030;
+  background: #333;
 }
 
 .chat-empty {
   padding: 2rem 0;
-
   color: #666;
-
   font-size: 0.85rem;
-
   text-align: center;
 }
 
