@@ -6,12 +6,12 @@ import { useEffect, useMemo, useRef } from "react";
 
 /**
  * @typedef {import("@/utils/chat/types").AnnChat} AnnChat
+ * @typedef {import("@/utils/chat/types").AnnChatGroup} AnnChatGroup
  */
 
 /**
- * 連続する同一送信者のメッセージをグループ化します。
- *
  * @param {AnnChat[]} messages
+ * @returns {AnnChatGroup[]}
  */
 function groupMessages(messages) {
   return messages.reduce((groups, message) => {
@@ -31,7 +31,7 @@ function groupMessages(messages) {
  * 同一送信者による連続したメッセージを表示します。
  *
  * @param {{
- *   group: { sender: AnnChat["sender"], messages: AnnChat[] },
+ *   group: AnnChatGroup,
  *   userHash: string
  * }} props
  */

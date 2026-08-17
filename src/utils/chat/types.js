@@ -30,4 +30,10 @@
  * @property {AnnSender} sender
  */
 
+/**
+ * @typedef {Object} AnnChatGroup
+ * @property {AnnSender} sender
+ * @property {AnnChat[]} messages
+ */
+
 export {};
