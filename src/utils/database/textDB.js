@@ -1,6 +1,16 @@
 // @/utils/database/textDB.js
 
-import { db } from "@/utils/firebase";
+import admin from "firebase-admin";
+
+// Initialize Firebase
+if (!admin.apps.length) {
+  const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+  });
+}
+
+const db = admin.firestore();
 
 // Caching
 const CACHE_TTL = (process.env.TTL_TEXT_DB).split("*").map(Number).reduce((a, b) => a * b, 1);

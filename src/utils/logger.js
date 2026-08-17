@@ -1,18 +1,16 @@
 // @/utils/logger.js
 
-import { cert, getApps, initializeApp } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
+import admin from "firebase-admin";
 
-// Initialize Firebase
-if (!getApps().length) {
+// Initialize Firebase Admin SDK
+if (!admin.apps.length) {
   const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-
-  initializeApp({
-    credential: cert(serviceAccount),
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
   });
 }
 
-const db = getFirestore();
+const db = admin.firestore();
 const logCollection = db.collection(process.env.FIRE_DB_LOG_TABLE);
 
 class Logger {
