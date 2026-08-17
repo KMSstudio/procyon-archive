@@ -14,6 +14,8 @@ export default async function ChatRoomMain({ roomId, embedded = false }) {
     fetchRoom(roomId),
     fetchMessages(roomId),
   ]);
+  if (!room) {
+    return <div className="chat-login-required">Invalid.</div>; }
   const annMsg = msg.map(anonymizeChat);
   const annUser = anonymizeSender({ email: userData.email, name: userData.name, major: userData.major });
 

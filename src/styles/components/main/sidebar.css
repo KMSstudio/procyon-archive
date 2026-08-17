@@ -22,7 +22,7 @@
 }
 
 #profile-section {
-    margin: 30px 0 50px 0;
+    margin: 30px 0 30px 0;
     text-align: center;
 }
 
@@ -212,14 +212,14 @@
 /* Special Thanks */
 
 .special-thanks {
-    margin-top: auto;
-    margin-bottom: 30px;
+    margin-top: 20px;
+    margin-bottom: 10px;
     font-size: 18px;
     height: 25px;
 }
 
 .special-thanks a {
-    background-color: #ddd;
+    background-color: #aaa;
     color: transparent;
     background-clip: text;
 

@@ -42,7 +42,7 @@ export default function ChatInputSection({ sender, sending, onSend }) {
           className="chat-input"
           value={text}
           rows={1}
-          placeholder="Message"
+          placeholder="메시지 보내기"
           aria-label="Message"
           onChange={(event) => setText(event.target.value)}
           onKeyDown={handleKeyDown}
