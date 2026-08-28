@@ -50,6 +50,7 @@ export default function ChatRoom({ annUser, room, annMsg, cursor, embedded }) {
   const im = Array.isArray(annMsg) ? annMsg : [];
   const [messages, setMessages] = useState(im);
   const [sending, setSending] = useState(false);
+  const [fetchActive, setFetchActive] = useState(!embedded);
 
   const cursorRef = useRef({
     latest: cursor?.latest || im.at(-1)?.createdAt || null,
@@ -105,6 +106,7 @@ export default function ChatRoom({ annUser, room, annMsg, cursor, embedded }) {
    * @returns {Promise<boolean>}
    */
   const onTop = useCallback(async () => {
+    if (!fetchActive) return false;
     if (olderLoadingRef.current || !hasOlderRef.current || !cursorRef.current.oldest) return false;
     olderLoadingRef.current = true;
 
@@ -134,9 +136,11 @@ export default function ChatRoom({ annUser, room, annMsg, cursor, embedded }) {
       console.error("Failed to load older chat messages:", error);
       return false;
     } finally { olderLoadingRef.current = false; }
-  }, [applyMessages, roomId]);
+  }, [applyMessages, roomId, fetchActive]);
 
   useEffect(() => {
+    if (!fetchActive) return;
+
     let active = true;
     let tid;  // Timeout ID
     const poll = async () => {
@@ -146,7 +150,7 @@ export default function ChatRoom({ annUser, room, annMsg, cursor, embedded }) {
     };
     tid = window.setTimeout(poll, CHAT_POLL_INTERVAL);
     return () => { active = false; window.clearTimeout(tid); };
-  }, [fetchUpdates]);
+  }, [fetchUpdates, fetchActive]);
 
   const sendMessage = useCallback(
     async (text) => {
@@ -156,7 +160,7 @@ export default function ChatRoom({ annUser, room, annMsg, cursor, embedded }) {
         const headers = {"Content-Type": "application/json",};
         const body = JSON.stringify({ text });
         const options = {method: "POST", headers, body,};
-        const response = await fetch( `/api/chat/rooms/${roomId}/msg/send`, options);
+        const response = await fetch(`/api/chat/rooms/${roomId}/msg/send`, options);
         const result = await response.json();
         if (!response.ok || !result.ok) { 
           console.error(result.error || "Failed to send message"); return false; }
@@ -172,8 +176,18 @@ export default function ChatRoom({ annUser, room, annMsg, cursor, embedded }) {
     ]
   );
 
+  const handleFocus = useCallback((event) => {
+    if (!embedded || fetchActive) return;
+    if (event.target.matches("input, textarea, [contenteditable='true']")) {
+      setFetchActive(true);
+    }
+  }, [embedded, fetchActive]);
+
   return (
-    <section className={`chat-room ${embedded ? "chat-room--embedded" : ""}`} >
+    <section
+      className={`chat-room ${embedded ? "chat-room--embedded" : ""}`}
+      onFocusCapture={handleFocus}
+    >
       <ChatListSection messages={messages} userHash={annUser.hash} onTop={onTop} />
       <ChatInputSection sender={annUser} sending={sending} onSend={sendMessage} />
     </section>
