@@ -15,7 +15,11 @@ import "@/styles/chat.css";
  * @typedef {import("@/utils/chat/types").AnnSender} AnnSender
  */
 
-const CHAT_POLL_INTERVAL = 500;
+const CHAT_POLLING = {
+  activeIntervalMs: 500,
+  idleIntervalMs: 10_000,
+  idleAfterMs: 30_000,
+};
 const CHAT_HISTORY_LIMIT = 50;
 
 /**
@@ -42,23 +46,24 @@ function mergeMsg(current, incoming) {
  *   annUser: AnnSender,
  *   room: Object,
  *   annMsg: AnnChat[],
- *   cursor: {latest?: string, oldest?: string},
  *   embedded: boolean
  * }} props
  */
-export default function ChatRoom({ annUser, room, annMsg, cursor, embedded }) {
+export default function ChatRoom({ annUser, room, annMsg, embedded }) {
   const im = Array.isArray(annMsg) ? annMsg : [];
-  const [messages, setMessages] = useState(im);
-  const [sending, setSending] = useState(false);
-  const [fetchActive, setFetchActive] = useState(!embedded);
+  const [msgs, setMsgs] = useState(im);
+  const [isSending, setIsSending] = useState(false);
+  const [fetchActive, setFetchActive] = useState(embedded ? false : true);
 
-  const cursorRef = useRef({
-    latest: cursor?.latest || im.at(-1)?.createdAt || null,
-    oldest: cursor?.oldest || im.at(0)?.createdAt || null,
+  const msgCursorsRef = useRef({
+    latest: im.at(-1)?.createdAt || null,
+    oldest: im.at(0)?.createdAt || null,
   });
-  const pollingRef = useRef(false);
-  const olderLoadingRef = useRef(false);
-  const hasOlderRef = useRef(true);
+  const isFetching = useRef(false);
+  const lastActivityAtRef = useRef(Date.now());
+  const scheduleNextPollRef = useRef(null);
+  const isFetchingHistoryRef = useRef(false);
+  const hasMoreHistoryRef = useRef(true);
   const roomId = encodeURIComponent(room.id);
 
   /**
@@ -66,38 +71,44 @@ export default function ChatRoom({ annUser, room, annMsg, cursor, embedded }) {
    */
   const applyMessages = useCallback((incoming) => {
     if (!Array.isArray(incoming) || incoming.length === 0) return;
-    setMessages(current => mergeMsg(current, incoming));
+    setMsgs(current => mergeMsg(current, incoming));
     const oldest = incoming.at(0);
     const newest = incoming.at(-1);
     if (
       newest?.createdAt &&
-      (!cursorRef.current.latest || newest.createdAt > cursorRef.current.latest)
-    ) { cursorRef.current.latest = newest.createdAt; }
+      (!msgCursorsRef.current.latest || newest.createdAt > msgCursorsRef.current.latest)
+    ) { msgCursorsRef.current.latest = newest.createdAt; }
     if (
       oldest?.createdAt &&
-      (!cursorRef.current.oldest || oldest.createdAt < cursorRef.current.oldest)
-    ) {cursorRef.current.oldest = oldest.createdAt;}
+      (!msgCursorsRef.current.oldest || oldest.createdAt < msgCursorsRef.current.oldest)
+    ) {msgCursorsRef.current.oldest = oldest.createdAt;}
   }, []);
 
   /**
    * Fetches messages created after the latest cursor from the server.
    * Prevents overlapping requests and applies newly received messages.
    */
-  const fetchUpdates = useCallback(async () => {
-    if (pollingRef.current) return;
-    pollingRef.current = true;
+  const fetchUpdates = useCallback(async (signal) => {
+    if (isFetching.current) return;
+    isFetching.current = true;
     try {
       const searchParams = new URLSearchParams({limit: "100",});
-      if (cursorRef.current.latest) { searchParams.set("after", cursorRef.current.latest); }
+      if (msgCursorsRef.current.latest) { searchParams.set("after", msgCursorsRef.current.latest); }
       const response = await fetch(
         `/api/chat/rooms/${roomId}/msg/update?${searchParams}`,
-        { method: "GET", cache: "no-store", }
-      ); if (!response.ok) return;
+        { method: "GET", cache: "no-store", signal }
+      ); if (!response.ok) return false;
       const result = await response.json();
-      if (!result.ok) return;
+      if (!result.ok) return false;
+      if (signal.aborted) return;
       applyMessages(result.data.messages);
-    } catch (error) { console.error("Failed to update chat messages:", error); }
-    finally { pollingRef.current = false; }
+      if (result.data.messages.length) lastActivityAtRef.current = Date.now();
+      return true;
+    } catch (error) {
+      if (error.name !== "AbortError") console.error("Failed to update chat messages:", error);
+      return false;
+    }
+    finally { isFetching.current = false; }
   }, [applyMessages, roomId]);
 
   /**
@@ -107,12 +118,12 @@ export default function ChatRoom({ annUser, room, annMsg, cursor, embedded }) {
    */
   const onTop = useCallback(async () => {
     if (!fetchActive) return false;
-    if (olderLoadingRef.current || !hasOlderRef.current || !cursorRef.current.oldest) return false;
-    olderLoadingRef.current = true;
+    if (isFetchingHistoryRef.current || !hasMoreHistoryRef.current || !msgCursorsRef.current.oldest) return false;
+    isFetchingHistoryRef.current = true;
 
     try {
       const searchParams = new URLSearchParams({
-        before: cursorRef.current.oldest,
+        before: msgCursorsRef.current.oldest,
         limit: String(CHAT_HISTORY_LIMIT),
       });
       const response = await fetch(`/api/chat/rooms/${roomId}/msg/update?${searchParams}`, {
@@ -125,37 +136,83 @@ export default function ChatRoom({ annUser, room, annMsg, cursor, embedded }) {
 
       const older = result.data.messages;
       if (!Array.isArray(older) || older.length === 0) {
-        hasOlderRef.current = false;
+        hasMoreHistoryRef.current = false;
         return false;
       }
 
       applyMessages(older);
-      if (!result.data.hasMore) hasOlderRef.current = false;
+      if (!result.data.hasMore) hasMoreHistoryRef.current = false;
       return true;
     } catch (error) {
       console.error("Failed to load older chat messages:", error);
       return false;
-    } finally { olderLoadingRef.current = false; }
+    } finally { isFetchingHistoryRef.current = false; }
   }, [applyMessages, roomId, fetchActive]);
 
   useEffect(() => {
     if (!fetchActive) return;
 
-    let active = true;
-    let tid;  // Timeout ID
-    const poll = async () => {
-      if (!active) return;
-      await fetchUpdates();
-      if (active) { tid = window.setTimeout(poll, CHAT_POLL_INTERVAL); }
+    let isPollingEnabled = true;
+    let pollTimeoutId;
+    let isRequestPending = false;
+    let lastPollStartedAt = 0;
+    let retryDelayMs = 0;
+    const abortController = new AbortController();
+    const getPollingInterval = () => {
+      const inactiveDurationMs = Date.now() - lastActivityAtRef.current;
+      const intervalMs = inactiveDurationMs < CHAT_POLLING.idleAfterMs
+        ? CHAT_POLLING.activeIntervalMs : CHAT_POLLING.idleIntervalMs;
+      return Math.max(intervalMs, retryDelayMs);
     };
-    tid = window.setTimeout(poll, CHAT_POLL_INTERVAL);
-    return () => { active = false; window.clearTimeout(tid); };
+    const schedulePoll = (delayMs) => {
+      window.clearTimeout(pollTimeoutId);
+      if (isPollingEnabled && !document.hidden) {
+        pollTimeoutId = window.setTimeout(poll, delayMs);
+      }
+    };
+    const poll = async () => {
+      if (!isPollingEnabled || document.hidden || isRequestPending) return;
+      isRequestPending = true;
+      lastPollStartedAt = Date.now();
+      const succeeded = await fetchUpdates(abortController.signal);
+      retryDelayMs = succeeded === false
+        ? Math.min(CHAT_POLLING.idleIntervalMs,
+          (retryDelayMs || CHAT_POLLING.activeIntervalMs) * 2)
+        : 0;
+      isRequestPending = false;
+      // Maintain a 500 ms start-to-start cadence without overlapping requests.
+      const requestDurationMs = Date.now() - lastPollStartedAt;
+      schedulePoll(Math.max(0, getPollingInterval() - requestDurationMs));
+    };
+    const resumePolling = () => {
+      if (isRequestPending || document.hidden) return;
+      const elapsedSinceLastPollMs = Date.now() - lastPollStartedAt;
+      schedulePoll(Math.max(0,
+        Math.max(CHAT_POLLING.activeIntervalMs, retryDelayMs) - elapsedSinceLastPollMs));
+    };
+    const handleVisibility = () => {
+      window.clearTimeout(pollTimeoutId);
+      if (!document.hidden) {
+        lastActivityAtRef.current = Date.now();
+        resumePolling();
+      }
+    };
+    scheduleNextPollRef.current = resumePolling;
+    document.addEventListener("visibilitychange", handleVisibility);
+    schedulePoll(0);
+    return () => {
+      isPollingEnabled = false;
+      window.clearTimeout(pollTimeoutId);
+      abortController.abort();
+      scheduleNextPollRef.current = null;
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
   }, [fetchUpdates, fetchActive]);
 
   const sendMessage = useCallback(
     async (text) => {
-      if (sending) return false;
-      setSending(true);
+      if (isSending) return false;
+      setIsSending(true);
       try {
         const headers = {"Content-Type": "application/json",};
         const body = JSON.stringify({ text });
@@ -165,31 +222,40 @@ export default function ChatRoom({ annUser, room, annMsg, cursor, embedded }) {
         if (!response.ok || !result.ok) { 
           console.error(result.error || "Failed to send message"); return false; }
         applyMessages([result.data.message]);
+        lastActivityAtRef.current = Date.now();
+        scheduleNextPollRef.current?.();
         return true;
       } catch (error) { console.error("Failed to send chat message:", error); return false; }
-      finally { setSending(false); }
+      finally { setIsSending(false); }
     },
     [
       applyMessages,
       roomId,
-      sending,
+      isSending,
     ]
   );
 
-  const handleFocus = useCallback((event) => {
-    if (!embedded || fetchActive) return;
-    if (event.target.matches("input, textarea, [contenteditable='true']")) {
-      setFetchActive(true);
-    }
-  }, [embedded, fetchActive]);
+  const handleInteraction = useCallback(() => {
+    lastActivityAtRef.current = Date.now();
+    // Embedded previews stay quiet until an explicit click activates them.
+    if (fetchActive) scheduleNextPollRef.current?.();
+  }, [fetchActive]);
+
+  const handleClick = useCallback(() => {
+    handleInteraction();
+    if (embedded && !fetchActive) setFetchActive(true);
+  }, [embedded, fetchActive, handleInteraction]);
 
   return (
     <section
       className={`chat-room ${embedded ? "chat-room--embedded" : ""}`}
-      onFocusCapture={handleFocus}
+      onClickCapture={handleClick}
+      onKeyDownCapture={handleInteraction}
+      onWheelCapture={handleInteraction}
+      onTouchMoveCapture={handleInteraction}
     >
-      <ChatListSection messages={messages} userHash={annUser.hash} onTop={onTop} />
-      <ChatInputSection sender={annUser} sending={sending} onSend={sendMessage} />
+      <ChatListSection messages={msgs} userHash={annUser.hash} onTop={onTop} />
+      <ChatInputSection sender={annUser} sending={isSending} onSend={sendMessage} />
     </section>
   );
 }

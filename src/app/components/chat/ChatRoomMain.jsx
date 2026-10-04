@@ -19,17 +19,11 @@ export default async function ChatRoomMain({ roomId, embedded = false }) {
   const annMsg = msg.map(anonymizeChat);
   const annUser = anonymizeSender({ email: userData.email, name: userData.name, major: userData.major });
 
-  const cursor = {
-    oldest: msg.length ? msg[0].createdAt : null,
-    latest: msg.length ? msg[msg.length - 1].createdAt : null,
-  };
-
   return (
     <ChatRoom
       annUser={annUser}
       room={room}
       annMsg={annMsg}
-      cursor={cursor}
       embedded={embedded}
     />
   );

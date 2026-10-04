@@ -2,7 +2,7 @@
 
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useLayoutEffect, useMemo, useRef } from "react";
 
 /**
  * @typedef {import("@/utils/chat/types").AnnChat} AnnChat
@@ -16,13 +16,14 @@ import { useEffect, useMemo, useRef } from "react";
 function groupMessages(messages) {
   return messages.reduce((groups, message) => {
     const sender = message.sender || {};
-    const prevG = groups[groups.length - 1];
+    const prevGroup = groups[groups.length - 1];
 
-    if (sender.hash && prevG?.sender.hash === sender.hash) {
-      prevG.messages.push(message);
+    if (sender.hash && prevGroup?.sender.hash === sender.hash) {
+      prevGroup.messages.push(message);
     } else {
       groups.push({ sender, messages: [message] });
     }
+
     return groups;
   }, []);
 }
@@ -73,56 +74,59 @@ function ChatMessageGroup({ group, userHash }) {
  * }} props
  */
 export default function ChatListSection({ messages, userHash, onTop }) {
-  const listRef = useRef(null);
-  const isFirstRender = useRef(true);
-  const isLoadingMore = useRef(false);
-  const predenfScroll = useRef(null);
-  const groupedMessages = useMemo(() => groupMessages(messages), [messages]);
+  const htmlRef = useRef(null);
+  const scrollSnapshot = useRef(null);
 
-  useEffect(() => {
-    const container = listRef.current;
+  const groupedMessages = useMemo(
+    () => groupMessages(messages),
+    [messages]
+  );
+
+  // Set the scroll position to the bottom during the initial render.
+  useLayoutEffect(() => {
+    const container = htmlRef.current;
     if (!container) return;
 
-    const handleWheel = async (event) => {
-      if (container.scrollTop > 0 || event.deltaY >= 0 || isLoadingMore.current) return;
-      isLoadingMore.current = true;
-      predenfScroll.current = { height: container.scrollHeight, top: container.scrollTop };
-      const loaded = await onTop();
-      if (!loaded) {
-        predenfScroll.current = null;
-        isLoadingMore.current = false;
+    container.scrollTop = container.scrollHeight;
+  }, []);
+
+  // Amend the scroll position when the message list changes.
+  useLayoutEffect(() => {
+    const container = htmlRef.current;
+    if (!container) return;
+    if (scrollSnapshot.current) {
+      const { height, top } = scrollSnapshot.current;
+      container.scrollTop =
+        top + container.scrollHeight - height;
+      scrollSnapshot.current = null;
+    } else {
+      const distanceFromBottom =
+        container.scrollHeight -
+        container.scrollTop -
+        container.clientHeight;
+      if (distanceFromBottom < 200) {
+        container.scrollTo({
+          top: container.scrollHeight,
+          behavior: "smooth",
+        });
       }
-    };
-    container.addEventListener("wheel", handleWheel);
-    return () => container.removeEventListener("wheel", handleWheel);
-  }, [onTop]);
-
-  useEffect(() => {
-    const container = listRef.current;
-    if (!container) return;
-
-    if (isFirstRender.current) {
-      container.scrollTop = container.scrollHeight;
-      isFirstRender.current = false;
-      return;
     }
-
-    if (predenfScroll.current) {
-      const { height, top } = predenfScroll.current;
-      container.scrollTop = top + container.scrollHeight - height;
-      predenfScroll.current = null;
-      isLoadingMore.current = false;
-      return;
-    }
-
-    const distanceFromBottom =
-      container.scrollHeight - container.scrollTop - container.clientHeight;
-    if (distanceFromBottom < 200) {
-      container.scrollTo({ top: container.scrollHeight, behavior: "smooth" }); }
   }, [messages]);
 
+  // Load older messages when the user scrolls beyond the top of the chat.
+  const handleWheel = async (event) => {
+    const container = event.currentTarget;
+    if (container.scrollTop > 0 || event.deltaY >= 0 || scrollSnapshot.current ) { return; }
+    scrollSnapshot.current = {
+      height: container.scrollHeight,
+      top: container.scrollTop,
+    };
+    const loaded = await onTop();
+    if (!loaded) { scrollSnapshot.current = null; }
+  };
+
   return (
-    <section ref={listRef} className="chat-list-section">
+    <section ref={htmlRef} className="chat-list-section" onWheel={handleWheel}>
       <div className="chat-list">
         {groupedMessages.map((group) => (
           <ChatMessageGroup
