@@ -47,7 +47,6 @@ export default async function HomePage() {
             <h1>CSE: Archive</h1>
             <div className="main-content-title__under-title">
               <p className="main-content-title__description">Seoul National University - Computer Science and Engineering Archive</p>
-              {/* <Link href={`/text/notice/view/${post.id}`} className="main-content-title__recent-post">{post.title}</Link> */}
             </div>
           </div>
           <div className="buttons">
