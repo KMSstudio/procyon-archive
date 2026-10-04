@@ -4,6 +4,7 @@
 
 // React
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 // Component
 import ChatListSection from "./ChatListSection";
 import ChatInputSection from "./ChatInputSection";
@@ -50,10 +51,11 @@ function mergeMsg(current, incoming) {
  * }} props
  */
 export default function ChatRoom({ annUser, room, annMsg, embedded }) {
+  const router = useRouter();
+
   const im = Array.isArray(annMsg) ? annMsg : [];
   const [msgs, setMsgs] = useState(im);
   const [isSending, setIsSending] = useState(false);
-  const [fetchActive, setFetchActive] = useState(embedded ? false : true);
 
   const msgCursorsRef = useRef({
     latest: im.at(-1)?.createdAt || null,
@@ -117,7 +119,7 @@ export default function ChatRoom({ annUser, room, annMsg, embedded }) {
    * @returns {Promise<boolean>}
    */
   const onTop = useCallback(async () => {
-    if (!fetchActive) return false;
+    if (embedded) return false;
     if (isFetchingHistoryRef.current || !hasMoreHistoryRef.current || !msgCursorsRef.current.oldest) return false;
     isFetchingHistoryRef.current = true;
 
@@ -147,11 +149,9 @@ export default function ChatRoom({ annUser, room, annMsg, embedded }) {
       console.error("Failed to load older chat messages:", error);
       return false;
     } finally { isFetchingHistoryRef.current = false; }
-  }, [applyMessages, roomId, fetchActive]);
+  }, [applyMessages, roomId]);
 
   useEffect(() => {
-    if (!fetchActive) return;
-
     let isPollingEnabled = true;
     let pollTimeoutId;
     let isRequestPending = false;
@@ -207,7 +207,7 @@ export default function ChatRoom({ annUser, room, annMsg, embedded }) {
       scheduleNextPollRef.current = null;
       document.removeEventListener("visibilitychange", handleVisibility);
     };
-  }, [fetchUpdates, fetchActive]);
+  }, [fetchUpdates]);
 
   const sendMessage = useCallback(
     async (text) => {
@@ -235,24 +235,14 @@ export default function ChatRoom({ annUser, room, annMsg, embedded }) {
     ]
   );
 
-  const handleInteraction = useCallback(() => {
-    lastActivityAtRef.current = Date.now();
-    // Embedded previews stay quiet until an explicit click activates them.
-    if (fetchActive) scheduleNextPollRef.current?.();
-  }, [fetchActive]);
-
   const handleClick = useCallback(() => {
-    handleInteraction();
-    if (embedded && !fetchActive) setFetchActive(true);
-  }, [embedded, fetchActive, handleInteraction]);
+    if (embedded) { router.push(`/chat/${roomId}`); }
+  }, [embedded, roomId, router]);
 
   return (
     <section
       className={`chat-room ${embedded ? "chat-room--embedded" : ""}`}
       onClickCapture={handleClick}
-      onKeyDownCapture={handleInteraction}
-      onWheelCapture={handleInteraction}
-      onTouchMoveCapture={handleInteraction}
     >
       <ChatListSection messages={msgs} userHash={annUser.hash} onTop={onTop} />
       <ChatInputSection sender={annUser} sending={isSending} onSend={sendMessage} />
