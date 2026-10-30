@@ -4,7 +4,7 @@ import TrackClient from "@/app/components/MixPanel";
 // Utils (Google Drive)
 import { getExamFiles } from "@/utils/exam/examShow";
 // Utils (User Logger)
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import logger from "@/utils/logger";
 // Utils (Exam Statistics)
 import { countView } from "@/utils/exam/examStats";

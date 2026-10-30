@@ -3,7 +3,7 @@
 // Util for jebo
 import { jeboFile } from "@/utils/drive/jebo";
 // Util for logger
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import logger from "@/utils/logger";
 // Form
 import { IncomingForm } from "formidable";

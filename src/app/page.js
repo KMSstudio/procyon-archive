@@ -10,7 +10,7 @@ import navData from "@/config/navConstant.json";
 // Utils
 import { updateUserAccessDate } from "@/utils/database/userDB"
 import { getRecentDBTexts } from "@/utils/database/textDB";
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 // Loggers
 import logger from "@/utils/logger";
 import TrackClient from "@/app/components/MixPanel";

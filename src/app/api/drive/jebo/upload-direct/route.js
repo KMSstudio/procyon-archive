@@ -3,7 +3,7 @@
 // Google Driveユーティリティ
 import { jeboFile, jeboFileDirectly } from "@/utils/drive/jebo";
 // ユーザー認証とロガー
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import logger from "@/utils/logger";
 // Node.jsモジュール
 import fs from "fs/promises";

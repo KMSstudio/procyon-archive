@@ -9,7 +9,7 @@ import BookSection from "@/app/components/admin/booksection";
 // Redirect
 import { redirect } from "next/navigation";
 // Utils
-import { getUser } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import { getDriveFiles } from "@/utils/drive/show";
 import { getAllDBBooks } from "@/utils/database/bookDB";
 // Constants
@@ -18,9 +18,9 @@ import coreTags from "@/config/view/coreTag.json";
 
 export default async function AdminPage() {
   // Load Static data
-  const userData = await getUser();
+  const userData = await getUserv2();
   
-  if (!userData?.is_user_admin) { redirect("/"); }
+  if (!userData?.admin) { redirect("/"); }
   const files = await getDriveFiles("book/stage");
   const books = await getAllDBBooks();
 

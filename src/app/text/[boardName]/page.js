@@ -8,7 +8,7 @@ import TrackClient from "@/app/components/MixPanel";
 // Constants
 import boardConfig from "@/config/board-config.json";
 // Utils
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import { getRecentDBTexts } from "@/utils/database/textDB";
 import logger from "@/utils/logger";
 

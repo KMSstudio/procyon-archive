@@ -11,7 +11,7 @@ import NoLoginComponent from "@/app/drive/no-login";
 import navData from "@/config/navConstant.json";
 import boardConfig from "@/config/board-config.json";
 // Utils
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import { updateUserAccessDate } from "@/utils/database/userDB";
 
 export default async function DriveLayout({ children, params }) {

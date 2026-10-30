@@ -10,7 +10,7 @@ import navData from "@/config/navConstant.json";
 // Style (CSS)
 import "@/styles/thanks.css";
 // Utils
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import logger from "@/utils/logger";
 
 export const metadata = {

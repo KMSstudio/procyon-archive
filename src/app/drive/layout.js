@@ -5,7 +5,7 @@ import NavBar from "@/app/components/NavBar";
 import NoLoginComponent from "@/app/drive/no-login";
 // Constants
 import navData from "@/config/navConstant.json";
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import { updateUserAccessDate } from "@/utils/database/userDB"
 // Style (CSS)
 import "@/styles/drive.css";

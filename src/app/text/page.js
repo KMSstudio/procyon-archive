@@ -7,7 +7,7 @@ import NavBar from "@/app/components/NavBar";
 import TextList from "@/app/components/list/TextList";
 import TrackClient from "@/app/components/MixPanel";
 // Utils
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import { getRecentDBTexts } from "@/utils/database/textDB";
 import logger from "@/utils/logger";
 // Constants

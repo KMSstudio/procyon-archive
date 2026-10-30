@@ -3,7 +3,7 @@
 // Component
 import NoAdminComponent from "@/app/drive/no-admin";
 // Utils
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 
 export default async function BookLayout({ children }) {
   if (process.env.BOOKPAGE_PUBLIC === "TRUE") {

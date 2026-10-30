@@ -1,7 +1,7 @@
 /* @/app/components/chat/ChatRoomMain.js */
 
 import ChatRoom from "./ChatRoom";
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import { anonymizeChat, anonymizeSender } from "@/utils/chat/anonymize";
 import { fetchRoom, fetchMessages } from "@/utils/database/chatDB";
 

@@ -6,7 +6,7 @@ import "@/styles/drive.css";
 import BookList from "@/app/components/list/BookList";
 import EOBookList from "./EOBookList";
 // Utils
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import { getAllDBBooks } from "@/utils/database/bookDB";
 // Constants
 import coreTags from "@/config/view/coreTag.json";

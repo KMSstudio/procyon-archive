@@ -11,7 +11,7 @@ import { redirect } from "next/navigation";
 // Constants
 import navData from "@/config/navConstant.json";
 // Utils
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import { fetchAllUser } from "@/utils/database/userDB";
 import { getDriveFiles } from "@/utils/drive/show";
 

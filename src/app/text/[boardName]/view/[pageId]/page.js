@@ -3,7 +3,7 @@
 // Utils
 import { getDriveText } from "@/utils/drive/text";
 import { getDBText } from "@/utils/database/textDB";
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import logger from "@/utils/logger"
 // Components
 import MarkdownViewServer from "@/app/components/view/MarkdownViewServer";

@@ -4,7 +4,7 @@
 import { NextResponse } from "next/server";
 // Utilities
 import { exportDriveFile } from "@/utils/drive/export";
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import logger from "@/utils/logger";
 
 export async function GET(req, { params }) {

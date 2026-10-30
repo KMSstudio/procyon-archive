@@ -9,7 +9,7 @@ import ModifyCSRPage from "./csrpage";
 import { getDBText } from "@/utils/database/textDB";
 import { getDriveText } from "@/utils/drive/text";
 // Utils - User
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 
 export default async function ModifyTextPage({ params }) {
   const { boardName, pageId } = params;

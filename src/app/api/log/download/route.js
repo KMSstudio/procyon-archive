@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 // Logger
 import logger from "@/utils/logger";
 // Utils
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 
 export async function GET(req) {
   const logs = await logger.getBuffer();

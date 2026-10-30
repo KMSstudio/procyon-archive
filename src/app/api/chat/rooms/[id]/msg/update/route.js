@@ -2,7 +2,7 @@
 
 import { isValidRoomId, fetchMessagesByTime } from "@/utils/database/chatDB";
 import { anonymizeChat } from "@/utils/chat/anonymize";
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 
 export const runtime = "nodejs";
 

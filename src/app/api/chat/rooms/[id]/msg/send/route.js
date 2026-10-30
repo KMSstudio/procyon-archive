@@ -6,7 +6,7 @@ import {
   saveMessage,
 } from "@/utils/database/chatDB";
 
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import { anonymizeChat } from "@/utils/chat/anonymize";
 
 export const runtime = "nodejs";

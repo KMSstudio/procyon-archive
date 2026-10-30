@@ -4,7 +4,7 @@
 import { NextResponse } from "next/server";
 // Utils
 import { registerText } from "@/utils/text/regist";
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 import logger from "@/utils/logger";
 // Constants
 import boardConfig from "@/config/board-config.json";

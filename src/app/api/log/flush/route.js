@@ -1,7 +1,7 @@
 // @/app/api/log/flush/route.js
 
 import logger from "@/utils/logger";
-import { getUserv2 } from "@/utils/auth";
+import { getUserv2 } from "@/utils/getUser";
 
 export async function POST() {
   const userData = await getUserv2();
