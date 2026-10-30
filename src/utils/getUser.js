@@ -1,17 +1,16 @@
-// @/utils/getUser.js
+/* @/utils/getUser.js */
 
+// Server Only
+import "server-only";
 // React
 import { cache } from "react";
-// NextAuth
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+// Next
+import { headers } from "next/headers";
+import { getToken } from "next-auth/jwt";
 // Database
 import { fetchUser } from "@/utils/database/userDB";
 
 /**
- * Returns the authenticated user's information with a consistent structure.
- * The result is memoized within a single React server render.
- *
  * @returns {Promise<{
  *   login: boolean,
  *   admin: boolean,
@@ -26,9 +25,14 @@ import { fetchUser } from "@/utils/database/userDB";
  * }>}
  */
 async function getUserv2Impl() {
-  // Get server session
-  const session = await getServerSession(authOptions);
-  if (!session?.user?.email) {
+  // Get and verify JWT
+  const requestHeaders = await headers();
+  const token = await getToken({
+    req: { headers: { cookie: requestHeaders.get("cookie") ?? "" } },
+    secret: process.env.NEXTAUTH_SECRET,
+  });
+
+  if (!token?.email) {
     return {
       login: false, admin: false, prestige: false,
       email: null, name: "", position: "", major: "", fullName: "",
@@ -37,7 +41,7 @@ async function getUserv2Impl() {
   }
 
   // Fetch user from database
-  const email = session.user.email;
+  const email = token.email;
   const user = await fetchUser(email);
 
   const name = user?.studentName ?? "";
