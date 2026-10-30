@@ -28,6 +28,12 @@ function groupMessages(messages) {
   }, []);
 }
 
+/** Generates a deterministic avatar color from a sender hash. */
+function getAvatarColor(hash) {
+  const hue = parseInt(hash.slice(0, 8), 16) % 360;
+  return `hsl(${hue}, 45%, 45%)`;
+}
+
 /**
  * 同一送信者による連続したメッセージを表示します。
  *
@@ -43,7 +49,7 @@ function ChatMessageGroup({ group, userHash }) {
     <article className={`chat-group ${isMine ? "chat-group--mine" : ""}`}>
       <div
         className="chat-avatar"
-        style={{ backgroundColor: `#${userHash.slice(-6)}` }}
+        style={{ backgroundColor: getAvatarColor(group.sender.hash) }}
         aria-hidden="true"
       />
 
