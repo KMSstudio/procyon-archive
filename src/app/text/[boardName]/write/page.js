@@ -8,7 +8,7 @@ import TextWriteConsole from "@/app/components/console/TextWriteConsole";
 // Style
 import "@/styles/text.css";
 
-export default function BoardWritePage({ params }) {
+export default async function BoardWritePage({ params }) {
   const { boardName } = await params;
   const [markdown, setMarkdown] = useState("");
 
