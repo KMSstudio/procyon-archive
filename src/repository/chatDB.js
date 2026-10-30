@@ -1,7 +1,7 @@
-/* @/utils/database/chatDB.js */
+/* @/repository/chatDB.js */
 
-import { db } from "@/utils/firebase";
-import { redis } from "@/utils/redis";
+import { db } from "@/utils/database/firebase";
+import { redis } from "@/utils/database/redis";
 
 /**
  * @typedef {import("@/utils/chat/types").Sender} Sender

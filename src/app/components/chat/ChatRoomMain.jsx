@@ -3,7 +3,7 @@
 import ChatRoom from "./ChatRoom";
 import { getUserv2 } from "@/utils/getUser";
 import { anonymizeChat, anonymizeSender } from "@/utils/chat/anonymize";
-import { fetchRoom, fetchMessages } from "@/utils/database/chatDB";
+import { fetchRoom, fetchMessages } from "@/repository/chatDB";
 
 export default async function ChatRoomMain({ roomId, embedded = false }) {
   const userData = await getUserv2();

@@ -6,7 +6,7 @@ import "@/styles/text.css";
 // Components
 import ModifyCSRPage from "./csrpage";
 // Utils - Text
-import { getDBText } from "@/utils/database/textDB";
+import { getDBText } from "@/repository/textDB";
 import { getDriveText } from "@/utils/drive/text";
 // Utils - User
 import { getUserv2 } from "@/utils/getUser";

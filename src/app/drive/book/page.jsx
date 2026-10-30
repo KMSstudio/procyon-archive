@@ -7,7 +7,7 @@ import BookList from "@/app/components/list/BookList";
 import EOBookList from "./EOBookList";
 // Utils
 import { getUserv2 } from "@/utils/getUser";
-import { getAllDBBooks } from "@/utils/database/bookDB";
+import { getAllDBBooks } from "@/repository/bookDB";
 // Constants
 import coreTags from "@/config/view/coreTag.json";
 // Logger

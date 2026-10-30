@@ -12,7 +12,7 @@ import { redirect } from "next/navigation";
 import navData from "@/config/navConstant.json";
 // Utils
 import { getUserv2 } from "@/utils/getUser";
-import { fetchAllUser } from "@/utils/database/userDB";
+import { fetchAllUser } from "@/repository/userDB";
 import { getDriveFiles } from "@/utils/drive/show";
 
 export default async function AdminPage() {

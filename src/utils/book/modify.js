@@ -1,7 +1,7 @@
 /* @/utils/book/modify.js */
 
 // Utils
-import { updateDBBook } from "@/utils/database/bookDB";
+import { updateDBBook } from "@/repository/bookDB";
 
 /**
  * AWS DynamoDB の本のデータを更新する（cover, content を除く）。

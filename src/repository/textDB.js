@@ -1,6 +1,6 @@
-// @/utils/database/textDB.js
+// @/repository/textDB.js
 
-import { db } from "@/utils/firebase";
+import { db } from "@/utils/database/firebase";
 
 // Caching
 const CACHE_TTL = (process.env.TTL_TEXT_DB).split("*").map(Number).reduce((a, b) => a * b, 1);

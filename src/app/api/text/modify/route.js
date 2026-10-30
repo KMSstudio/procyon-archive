@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 // Utils
 import { modifyText } from "@/utils/text/modify";
 import { getUserv2 } from "@/utils/getUser";
-import { getDBText } from "@/utils/database/textDB";
+import { getDBText } from "@/repository/textDB";
 // Constants
 import boardConfig from "@/config/board-config.json";
 

@@ -12,7 +12,7 @@ import navData from "@/config/navConstant.json";
 import boardConfig from "@/config/board-config.json";
 // Utils
 import { getUserv2 } from "@/utils/getUser";
-import { updateUserAccessDate } from "@/utils/database/userDB";
+import { updateUserAccessDate } from "@/repository/userDB";
 
 export default async function DriveLayout({ children, params }) {
   const { boardName } = params;

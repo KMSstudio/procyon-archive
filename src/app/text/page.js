@@ -8,7 +8,7 @@ import TextList from "@/app/components/list/TextList";
 import TrackClient from "@/app/components/MixPanel";
 // Utils
 import { getUserv2 } from "@/utils/getUser";
-import { getRecentDBTexts } from "@/utils/database/textDB";
+import { getRecentDBTexts } from "@/repository/textDB";
 import logger from "@/utils/logger";
 // Constants
 import navData from "@/config/navConstant.json";

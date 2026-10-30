@@ -65,13 +65,9 @@
   width: 28px;
   height: 28px;
 
-  border: 1px solid #555;
   border-radius: 50%;
-
   color: #aaa;
-
   font-size: 0.65rem;
-
   user-select: none;
 }
 

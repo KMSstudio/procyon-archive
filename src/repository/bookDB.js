@@ -1,6 +1,6 @@
-/* @/utils/database/bookDB.js */
+/* @/reposiotry/bookDB.js */
 
-import { db } from "@/utils/firebase";
+import { db } from "@/utils/database/firebase";
 const bookCollection = db.collection(process.env.FIRE_DB_BOOK_TABLE);
 
 // Cache and TTL settings

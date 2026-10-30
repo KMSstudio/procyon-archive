@@ -1,6 +1,6 @@
 /* app/chat/[id]/layout.jsx */
 
-import { isRoomExist } from "@/utils/database/chatDB";
+import { isRoomExist } from "@/repository/chatDB";
 import { notFound } from "next/navigation";
 
 export default async function ChatRoomLayout({ children, params }) {

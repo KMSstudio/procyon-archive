@@ -9,7 +9,7 @@ import { cache } from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 // Database
-import { fetchUser } from "@/utils/database/userDB";
+import { fetchUser } from "@/repository/userDB";
 
 /**
  * @returns {Promise<{

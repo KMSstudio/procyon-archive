@@ -9,7 +9,7 @@ import TrackClient from "@/app/components/MixPanel";
 import boardConfig from "@/config/board-config.json";
 // Utils
 import { getUserv2 } from "@/utils/getUser";
-import { getRecentDBTexts } from "@/utils/database/textDB";
+import { getRecentDBTexts } from "@/repository/textDB";
 import logger from "@/utils/logger";
 
 export default async function BoardListPage({ params }) {

@@ -8,8 +8,8 @@ import Sidebar from "@/app/components/main/Sidebar";
 // Constants
 import navData from "@/config/navConstant.json";
 // Utils
-import { updateUserAccessDate } from "@/utils/database/userDB"
-import { getRecentDBTexts } from "@/utils/database/textDB";
+import { updateUserAccessDate } from "@/repository/userDB"
+import { getRecentDBTexts } from "@/repository/textDB";
 import { getUserv2 } from "@/utils/getUser";
 // Loggers
 import logger from "@/utils/logger";

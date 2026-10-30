@@ -1,5 +1,5 @@
 import { getDriveText, putDriveText, updateDriveText } from "@/utils/drive/text";
-import { updateDBText, getDBText } from "@/utils/database/textDB";
+import { updateDBText, getDBText } from "@/repository/textDB";
 
 export async function modifyText(boardName, textId, newTitle, newMarkdown, lastModifyerName, lastModifyerEmail, archived = true) {
   if (!boardName || !textId) throw new Error("boardName and textId are required.");

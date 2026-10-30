@@ -2,7 +2,7 @@
 
 import { v4 as uuidv4 } from "uuid";
 import { putDriveText } from "@/utils/drive/text";
-import { createDBText } from "@/utils/database/textDB";
+import { createDBText } from "@/repository/textDB";
 
 /**
  * Registers a new markdown-based post by uploading it to Google Drive

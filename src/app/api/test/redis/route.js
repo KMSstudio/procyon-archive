@@ -1,4 +1,4 @@
-import { redis } from "@/utils/redis";
+import { redis } from "@/utils/database/redis";
 
 export async function GET() {
   await redis.set("test:redis", "ok", { ex: 60 });

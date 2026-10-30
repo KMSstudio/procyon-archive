@@ -1,6 +1,6 @@
 // @/utils/text/delete.js
 
-import { deleteDBText, getDBText } from "@/utils/database/textDB";
+import { deleteDBText, getDBText } from "@/repository/textDB";
 import { google } from "googleapis";
 
 // Google Drive 인증

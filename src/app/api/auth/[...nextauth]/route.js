@@ -2,7 +2,7 @@
 
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { isUserExist, updateUserAccess } from '@/utils/database/userDB';
+import { isUserExist, updateUserAccess } from '@/repository/userDB';
 import logger from "@/utils/logger";
 
 const JWT_VERSION = parseInt(process.env.AUTH_JWT_VERSION || "1");

@@ -6,7 +6,7 @@ import NoLoginComponent from "@/app/drive/no-login";
 // Constants
 import navData from "@/config/navConstant.json";
 import { getUserv2 } from "@/utils/getUser";
-import { updateUserAccessDate } from "@/utils/database/userDB"
+import { updateUserAccessDate } from "@/repository/userDB"
 // Style (CSS)
 import "@/styles/drive.css";
 

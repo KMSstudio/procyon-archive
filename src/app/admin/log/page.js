@@ -12,7 +12,7 @@ import LogSection from "@/app/components/admin/logsection";
 import navData from "@/config/navConstant.json";
 // Utils
 import { getUserv2 } from "@/utils/getUser";
-import { fetchAllUser } from "@/utils/database/userDB";
+import { fetchAllUser } from "@/repository/userDB";
 
 export default async function AdminPage() {
   // Load Static data

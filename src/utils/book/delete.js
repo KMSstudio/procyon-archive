@@ -1,7 +1,7 @@
 /* @/utils/book/delete.js */
 
 // Utils
-import { getDBBook, deleteDBBook } from "@/utils/database/bookDB";
+import { getDBBook, deleteDBBook } from "@/repository/bookDB";
 import { deleteDriveFile, deleteS3File } from "@/utils/book/driveUtils";
 
 /**

@@ -2,7 +2,7 @@
 
 // Utils
 import { getDriveText } from "@/utils/drive/text";
-import { getDBText } from "@/utils/database/textDB";
+import { getDBText } from "@/repository/textDB";
 import { getUserv2 } from "@/utils/getUser";
 import logger from "@/utils/logger"
 // Components

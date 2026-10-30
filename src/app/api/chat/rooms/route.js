@@ -1,6 +1,6 @@
 /* app/api/chat/rooms/route.js */
 
-import { fetchAllRooms, upsertRoom } from "@/utils/database/chatDB";
+import { fetchAllRooms, upsertRoom } from "@/repository/chatDB";
 
 export const runtime = "nodejs";
 

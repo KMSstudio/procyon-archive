@@ -1,6 +1,6 @@
-/* @/utils/database/userDB.js */
+/* @/repository/userDB.js */
 
-import { db } from "@/utils/firebase";
+import { db } from "@/utils/database/firebase";
 const userCollection = db.collection(process.env.FIRE_DB_USER_TABLE);
 
 function getKoreanHourString() {
