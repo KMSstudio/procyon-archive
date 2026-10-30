@@ -15,7 +15,7 @@ import { getUserv2 } from "@/utils/getUser";
 import { updateUserAccessDate } from "@/repository/userDB";
 
 export default async function DriveLayout({ children, params }) {
-  const { boardName } = params;
+  const { boardName } = await params;
   const userData = await getUserv2();
   const content = userData.login ? children : <NoLoginComponent />;
   

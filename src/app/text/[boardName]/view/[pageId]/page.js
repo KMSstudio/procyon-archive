@@ -14,7 +14,7 @@ import boardConfig from "@/config/board-config.json";
 import "@/styles/text.css";
 
 export default async function NoticeViewPage({ params }) {
-  const { boardName, pageId } = params;
+  const { boardName, pageId } = await params;
   const userData = await getUserv2();
   const boardMeta = boardConfig[boardName];
   

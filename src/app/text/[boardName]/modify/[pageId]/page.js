@@ -12,7 +12,7 @@ import { getDriveText } from "@/utils/drive/text";
 import { getUserv2 } from "@/utils/getUser";
 
 export default async function ModifyTextPage({ params }) {
-  const { boardName, pageId } = params;
+  const { boardName, pageId } = await params;
 
   const textData = await getDBText(boardName, pageId);
   if (!textData) { return <div className="container">We Cannot Find the Post Metadata.</div>; }

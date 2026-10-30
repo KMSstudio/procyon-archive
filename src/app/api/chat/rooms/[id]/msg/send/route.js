@@ -4,7 +4,7 @@ import {
   isValidRoomId,
   isRoomExist,
   saveMessage,
-} from "@/repository/chatDB";
+} from "@/repository/chatRepository";
 
 import { getUserv2 } from "@/utils/getUser";
 import { anonymizeChat } from "@/utils/chat/anonymize";

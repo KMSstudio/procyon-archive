@@ -1,6 +1,6 @@
 /* app/api/chat/rooms/[id]/msg/update/route.js */
 
-import { isValidRoomId, fetchMessagesByTime } from "@/repository/chatDB";
+import { isValidRoomId, fetchMessagesByTime } from "@/repository/chatRepository";
 import { anonymizeChat } from "@/utils/chat/anonymize";
 import { getUserv2 } from "@/utils/getUser";
 

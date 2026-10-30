@@ -13,7 +13,7 @@ import { getRecentDBTexts } from "@/repository/textDB";
 import logger from "@/utils/logger";
 
 export default async function BoardListPage({ params }) {
-  const { boardName } = params;
+  const { boardName } = await params;
   const posts = await getRecentDBTexts(boardName, 40, 1);
   
   const userData = await getUserv2();
