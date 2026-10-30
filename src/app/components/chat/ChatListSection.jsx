@@ -41,9 +41,11 @@ function ChatMessageGroup({ group, userHash }) {
 
   return (
     <article className={`chat-group ${isMine ? "chat-group--mine" : ""}`}>
-      <div className="chat-avatar" aria-hidden="true">
-        {group.sender.nickname?.slice(0, 3) || "?"}
-      </div>
+      <div
+        className="chat-avatar"
+        style={{ backgroundColor: `#${userHash.slice(-6)}` }}
+        aria-hidden="true"
+      />
 
       <div className="chat-group__body">
         <header className="chat-sender">

@@ -226,13 +226,6 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .chat-avatar {
-    width: 25px;
-    height: 25px;
-
-    font-size: 0.6rem;
-  }
-
   .chat-sender {
     gap: 0.2rem;
 

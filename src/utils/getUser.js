@@ -1,12 +1,13 @@
+
 /* @/utils/getUser.js */
 
 // Server Only
 import "server-only";
 // React
 import { cache } from "react";
-// Next
-import { headers } from "next/headers";
-import { getToken } from "next-auth/jwt";
+// NextAuth
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 // Database
 import { fetchUser } from "@/utils/database/userDB";
 
@@ -25,14 +26,9 @@ import { fetchUser } from "@/utils/database/userDB";
  * }>}
  */
 async function getUserv2Impl() {
-  // Get and verify JWT
-  const requestHeaders = await headers();
-  const token = await getToken({
-    req: { headers: { cookie: requestHeaders.get("cookie") ?? "" } },
-    secret: process.env.NEXTAUTH_SECRET,
-  });
-
-  if (!token?.email) {
+  // Get server session
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.email) {
     return {
       login: false, admin: false, prestige: false,
       email: null, name: "", position: "", major: "", fullName: "",
@@ -41,7 +37,7 @@ async function getUserv2Impl() {
   }
 
   // Fetch user from database
-  const email = token.email;
+  const email = session.user.email;
   const user = await fetchUser(email);
 
   const name = user?.studentName ?? "";
